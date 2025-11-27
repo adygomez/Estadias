@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Admin - SIIR 272</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="relative min-h-screen flex flex-col" style="background: url('/images/Fondo-Login.png') no-repeat center center fixed; background-size: cover;">
+  <!-- Header Superior -->
+  <div class="relative z-10 bg-[#4C0000] w-full py-3 flex items-center justify-center">
+    <!-- Título INSCRIPCIÓN - Centrado perfecto sin interferencias -->
+    <h1 class="text-white text-center text-2xl md:text-4xl font-bold tracking-wide">SIIR 272</h1>
+    
+    <!-- Botón Regresar - Posicionado absolutamente para no afectar el centrado -->
+    <a href="index.html" class="absolute left-4 md:left-6 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 md:px-6 md:py-2.5 rounded-lg font-bold tracking-wide text-sm md:text-base transition-colors duration-200 flex items-center space-x-2 shadow-md">
+      <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      <span>Regresar</span>
+    </a>
+  </div>
+
+  <!-- Panel de Login -->
+  <div class="relative z-10 flex-1 flex items-center justify-center py-8 px-4">
+    <div class="w-full max-w-[580px] bg-gray-50 rounded-2xl shadow-2xl overflow-hidden">
+      <!-- Título del Panel -->
+      <div class="w-full bg-gray-300 py-4">
+        <h2 class="text-2xl font-semibold text-gray-800 text-center">Iniciar Sesión</h2>
+        <h2 class="text-2xl font-semibold text-gray-800 text-center">Administrador</h2>
+      </div>
+      
+      <!-- Logo DG ETI (centrado) -->
+      <div class="flex justify-center pt-4 pb-2">
+        <img src="/images/image 14.png" alt="Logo DG ETI" class="h-44 w-48 object-contain" />
+      </div>
+
+      <!-- Formulario -->
+      <form id="loginForm" class="px-8 pt-2 pb-6 space-y-5">
+        <!-- Campo Usuario -->
+        <div class="flex flex-col items-center">
+          <label class="block text-gray-700 text-sm font-semibold mb-2 w-full max-w-[450px]">Usuario</label>
+          <div class="relative w-full max-w-[450px]">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <input 
+              type="text" 
+              id="username" 
+              placeholder="Ingresa tu usuario"
+              required
+              class="w-full h-[56px] bg-[#4C0000] text-white pl-10 pr-4 rounded-full focus:outline-none focus:ring-2 focus:ring-[#6a0000] transition-all duration-200 placeholder-gray-300"
+            />
+          </div>
+        </div>
+
+        <!-- Campo Contraseña -->
+        <div class="flex flex-col items-center">
+          <label class="block text-gray-700 text-sm font-semibold mb-2 w-full max-w-[450px]">Contraseña</label>
+          <div class="relative w-full max-w-[450px]">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <input 
+              type="password" 
+              id="password" 
+              placeholder="Ingresa tu contraseña"
+              required
+              class="w-full h-[56px] bg-[#4C0000] text-white pl-10 pr-24 rounded-full focus:outline-none focus:ring-2 focus:ring-[#6a0000] transition-all duration-200 placeholder-gray-300"
+            />
+            <button 
+              type="button"
+              onclick="togglePassword()"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center"
+            >
+              <span class="text-white text-sm font-medium">Mostrar</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Enlace de recuperación -->
+        <div class="flex justify-center">
+          <a href="#" class="text-[#4C0000] text-sm hover:underline">¿Olvidó su nombre de usuario o contraseña?</a>
+        </div>
+
+        <!-- Botón Ingresar -->
+        <div class="flex justify-center">
+          <button 
+            type="submit" 
+            class="w-full max-w-[450px] h-[56px] bg-[#4C0000] text-white rounded-full font-semibold hover:bg-[#6a0000] transition-all duration-200 transform hover:scale-[1.02] shadow-lg"
+          >
+            Ingresar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="relative z-10 text-center py-4">
+    <p class="text-white text-sm">© 2024 SIIR 272. Todos los derechos reservados.</p>
+  </div>
+
+ <script>
+  function togglePassword() {
+    const passwordInput = document.getElementById('password');
+    const isPassword = passwordInput.type === 'password';
+    passwordInput.type = isPassword ? 'text' : 'password';
+  }
+
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.token) {
+        // ✅ Guarda token JWT y datos del usuario
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('login', 'true'); // Mantener para compatibilidad
+        
+        // Verificar que el usuario sea admin antes de redirigir
+        if (data.user.role === 'admin') {
+          window.location.href = '/dashboard-admin';
+        } else {
+          alert('Acceso denegado. Solo los administradores pueden acceder al dashboard.');
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          localStorage.removeItem('login');
+        }
+      } else {
+        alert(data.message || 'Error al iniciar sesión');
+      }
+    } catch (error) {
+      console.error('❌ Error en login:', error);
+      alert('Error de conexión con el servidor.');
+    }
+  });
+</script>
+
+
+</body>
+</html>

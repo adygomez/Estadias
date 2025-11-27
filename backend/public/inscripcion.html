@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INSCRIPCIÓN</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="relative min-h-screen flex flex-col" style="background: url('/images/Fondo-Login.png') no-repeat center center fixed; background-size: cover;">
+  
+  <!-- Header Superior -->
+  <div class="relative z-10 bg-[#4C0000] w-full py-3 flex items-center justify-center">
+    <!-- Título INSCRIPCIÓN - Centrado perfecto sin interferencias -->
+    <h1 class="text-white text-center text-2xl md:text-4xl font-bold tracking-wide">INSCRIPCIÓN</h1>
+    
+    <!-- Botón Regresar - Posicionado absolutamente para no afectar el centrado -->
+    <a href="index.html" class="absolute left-4 md:left-6 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 md:px-6 md:py-2.5 rounded-lg font-bold tracking-wide text-sm md:text-base transition-colors duration-200 flex items-center space-x-2 shadow-md">
+      <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      <span>Regresar</span>
+    </a>
+  </div>
+
+  <!-- Panel Principal -->
+  <div class="relative z-10 flex-1 flex items-center justify-center py-8 px-4">
+    <div class="w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden">
+      <!-- Header gris claro con "REGISTRATE" -->
+      <div class="w-full bg-gray-300 py-4">
+        <h2 class="text-black text-center text-2xl md:text-3xl font-bold uppercase tracking-wide">REGISTRATE</h2>
+      </div>
+      
+      <!-- Contenido Principal -->
+      <div class="px-6 md:px-12 py-8 md:py-12">
+        <!-- Logo DG ETI centrado -->
+        <div class="flex justify-center mb-8 md:mb-12">
+          <img src="/images/image 14.png" alt="Logo DG ETI" class="h-32 md:h-44 w-auto object-contain" />
+        </div>
+
+        <!-- Sección de Registro -->
+        <div class="mb-6 md:mb-8">
+          <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
+            <label class="text-gray-600 text-base md:text-lg font-normal w-full md:w-32 md:text-left text-center md:text-left">
+              Registro
+            </label>
+            <div class="flex-1 w-full flex flex-col md:flex-row gap-4">
+              <input 
+                type="text" 
+                placeholder="Coloca tu folio para registrarte"
+                class="bg-[#4C0000] text-white px-6 md:px-8 py-3 md:py-4 rounded-3xl text-base md:text-lg font-normal placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#6a0000] transition-all duration-200 flex-1 w-full"
+              />
+              <button class="bg-orange-500 hover:bg-orange-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-3xl text-base md:text-lg font-bold transition-colors duration-200 w-full md:w-auto md:flex-shrink-0">
+                Buscar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección de Reimpresión -->
+        <div class="mb-8 md:mb-12">
+          <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
+            <label class="text-gray-600 text-base md:text-lg font-normal w-full md:w-32 md:text-left text-center md:text-left">
+              Reimpresión
+            </label>
+            <div class="flex-1 w-full flex flex-col md:flex-row gap-4">
+              <input 
+                type="text" 
+                placeholder="Coloca tu folio para reimprimir tu constancia de inscripción"
+                class="bg-[#4C0000] text-white px-6 md:px-8 py-3 md:py-4 rounded-3xl text-base md:text-lg font-normal placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#6a0000] transition-all duration-200 flex-1 w-full"
+              />
+              <button class="bg-orange-500 hover:bg-orange-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-3xl text-base md:text-lg font-bold transition-colors duration-200 w-full md:w-auto md:flex-shrink-0">
+                Buscar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Texto informativo -->
+        <div class="text-center">
+          <p class="text-[#4C0000] text-sm md:text-base font-normal">
+            Dirigido a alumnos de nuevo ingreso que fueron seleccionados tras presentar el examen CENEVAL.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="relative z-10 text-center py-4">
+    <p class="text-white text-sm">© 2024 SIIR 272. Todos los derechos reservados.</p>
+  </div>
+
+
+</body>
+</html>

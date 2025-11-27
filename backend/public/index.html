@@ -1,0 +1,378 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Búsqueda de Folio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.png" type="image/png">
+</head>
+<body class="relative min-h-screen font-['Montserrat']">
+<!-- Navbar Principal -->
+<nav class="relative z-10 bg-[#4C0000] w-full py-3">
+  <div class="flex items-center justify-between px-4 md:px-6">
+    <!-- Logo Section (Left) -->
+    <div class="flex items-center space-x-4">
+      
+    </div>
+    
+    <!-- Navigation Links (Right) -->
+    <div class="flex items-center space-x-8">
+      <!-- Navigation Links -->
+      <div class="hidden md:flex items-center space-x-6">
+        <a href="index.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Inicio</a>
+        <a href="inscripcion.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Inscripción</a>
+        <a href="reinscripcion.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Reinscripción</a>
+      </div>
+      
+      <!-- Login Button -->
+      <a href="login.html" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-white">Iniciar Sesión</span>
+      </a>
+      
+      <!-- Mobile Menu Button -->
+      <button class="md:hidden text-white hover:text-gray-200" onclick="toggleMobileMenu()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="md:hidden mt-4 pb-4 border-t border-red-800 hidden">
+    <div class="flex flex-col space-y-3 pt-4 px-4 md:px-6">
+      <a href="index.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Inicio</a>
+      <a href="inscripcion.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Inscripción</a>
+      <a href="reinscripcion.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Reinscripción</a>
+      <a href="login.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Iniciar Sesión</a>
+    </div>
+  </div>
+</nav>
+
+  <script>
+    function toggleMobileMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    }
+  </script>
+
+  <!-- Sección Principal con Imagen de Fondo -->
+  <div class="relative w-full h-[16.25rem] flex items-center justify-center overflow-hidden" style="background: url('/images/imagen-home.png') no-repeat center center; background-size: cover;">
+    <!-- Overlay oscuro para mejorar legibilidad del texto -->
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+    
+    <!-- Contenido de Texto -->
+    <div class="relative z-10 max-w-4xl mx-auto px-4 md:px-6 lg:px-8 text-center h-full flex flex-col justify-center">
+      <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-2 md:mb-3">
+        Acerca de Nosotros
+      </h1>
+      
+      <div class="space-y-1 md:space-y-2 text-white text-xs md:text-sm lg:text-base leading-tight md:leading-snug">
+        <p>
+          El Centro de Bachillerato Tecnológico Industrial y de Servicios No. 272 "Sor Juana Inés de la Cruz" es una institución educativa perteneciente a la Dirección General de Educación Tecnológica Industrial y de Servicios (DGETI), comprometida con la formación integral de jóvenes quintanarroenses.
+        </p>
+        
+        <p>
+          Desde su fundación, el CBTis 272 se ha consolidado como un espacio de aprendizaje técnico y humano, enfocado en preparar a los estudiantes para continuar sus estudios superiores o incorporarse al campo laboral con las competencias y valores que exige la sociedad actual.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logros -->
+  <section class="bg-white py-12 md:py-16 px-6 md:px-12">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Nuestros Logros</h2>
+      <div class="grid gap-8 md:grid-cols-2" id="logrosSection">
+        <!-- Los logros se cargarán aquí dinámicamente -->
+        <div class="flex items-start space-x-4">
+          <img src="/images/Icon-Logros.svg" alt="Icono logro" class="w-9 h-9 md:w-10 md:h-10">
+          <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex-1">
+            <h3 class="text-sm md:text-base font-semibold text-gray-900">Cargando...</h3>
+            <p class="text-xs md:text-sm text-gray-600 mt-2">Cargando logros...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Carreras -->
+  <section class="bg-white py-12 md:py-16 px-6 md:px-12">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Nuestras Carreras</h2>
+      <div class="grid gap-8 md:grid-cols-2 items-stretch">
+        <!-- Card 1 -->
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col">
+          <div class="h-48 bg-gray-200"></div>
+          <div class="p-6 flex flex-col flex-grow">
+            <div class="space-y-6 flex-grow">
+              <div class="space-y-2">
+                <span class="inline-block bg-emerald-100 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full">Cocina</span>
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">Preparación de alimentos y bebidas</h3>
+                  <p class="text-sm text-gray-600 mt-2">
+                    La carrera de Técnico en Preparación de Alimentos y Bebidas forma especialistas en la elaboración y servicio de comida y bebidas, dentro del ámbito de los servicios turísticos.
+                  </p>
+                </div>
+              </div>
+              <div class="grid grid-cols-3 gap-4 text-center text-xs text-gray-600">
+                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
+                  Repostería y Panadería
+                </div>
+                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
+                  Repostería y Panadería
+                </div>
+                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
+                  Repostería y Panadería
+                </div>
+              </div>
+            </div>
+            <div class="w-full bg-[#4C0000] text-white font-semibold py-2 rounded-md text-center mt-6">
+              CBTIS 272
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col">
+          <div class="h-48 bg-gray-200"></div>
+          <div class="p-6 flex flex-col flex-grow">
+            <div class="space-y-6 flex-grow">
+              <div class="space-y-2">
+                <span class="inline-block bg-emerald-100 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full">Administración</span>
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">Ventas</h3>
+                  <p class="text-sm text-gray-600 mt-2">
+                    Prepara a los estudiantes para comercializar productos y servicios, asistir en la administración del área de ventas, realizar estudios de mercado y asesorar clientes. Los egresados obtienen las habilidades necesarias para trabajar en el área comercial de diversas empresas o iniciar sus propios proyectos. 
+                  </p>
+                </div>
+              </div>
+              <div class="grid grid-cols-3 gap-4 text-center text-xs text-gray-600">
+                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
+                  Auxilia en el proceso de administración del área de ventas
+                </div>
+                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
+                  Auxilia en la elaboración del estudio de mercado
+                </div>
+                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
+                  Posiciona el producto y/o servicio en el mercado
+                </div>
+              </div>
+            </div>
+            <div class="w-full bg-[#4C0000] text-white font-semibold py-2 rounded-md text-center mt-6">
+              CBTIS 272
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col">
+          <div class="h-48 bg-gray-200"></div>
+          <div class="p-6 flex flex-col flex-grow">
+            <div class="space-y-6 flex-grow">
+              <div class="space-y-2">
+                <span class="inline-block bg-emerald-100 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full">Tecnologia</span>
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">Programación</h3>
+                  <p class="text-sm text-gray-600 mt-2">
+                    Forma al estudiante para el desarrollo de software de sistemas informáticos, desarrollo de software con herramientas orientadas a la productividad, la administración de bases de datos en un sistema de información, el desarrollo de aplicaciones web y el desarrollo de aplicaciones móviles multiplataforma. Todas estas competencias posibilitan al egresado su incorporación al mundo laboral
+                  </p>
+                </div>
+              </div>
+              <div class="grid grid-cols-3 gap-4 text-center text-xs text-gray-600">
+                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
+                  Desarrollo de software de sistemas informáticos
+                </div>
+                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
+                  Desarrollo de aplicaciones web en un sistema de información
+                </div>
+                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
+                  Repostería y Panadería
+                </div>
+              </div>
+            </div>
+            <div class="w-full bg-[#4C0000] text-white font-semibold py-2 rounded-md text-center mt-6">
+              CBTIS 272
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col">
+          <div class="h-48 bg-gray-200"></div>
+          <div class="p-6 flex flex-col flex-grow">
+            <div class="space-y-6 flex-grow">
+              <div class="space-y-2">
+                <span class="inline-block bg-emerald-100 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full">Innovación</span>
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">Gestión e Innovación Turística </h3>
+                  <p class="text-sm text-gray-600 mt-2">
+                    Colabora en la gestión de proyectos, productos y servicios en organizaciones y empresas turísticas públicas o privadas que promuevan el desarrollo local y regional, integrando tecnología, las tendencias del mercado y prácticas sostenibles con actitud de servicio ético y habilidades comunicativas en una segunda lengua.
+                  </p>
+                </div>
+              </div>
+              <div class="grid grid-cols-3 gap-4 text-center text-xs text-gray-600">
+                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
+                  Atiende al cliente en el entorno turístico
+                </div>
+                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
+                  Auxilia en la gestión operativa de productos y servicios turísticos
+                </div>
+                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
+                  Elabora productos y servicios turísticos innovadores
+                </div>
+              </div>
+            </div>
+            <div class="w-full bg-[#4C0000] text-white font-semibold py-2 rounded-md text-center mt-6">
+              CBTIS 272
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Imagen Destacada -->
+  <div class="w-full h-[17.125rem]">
+    <img src="/backgroundoriginal.jpg" alt="CBTis 272" class="w-full h-full object-cover">
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-[#4C0000] text-white py-10 px-6 md:px-12">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid gap-8 md:grid-cols-3 text-sm md:text-base">
+        <div class="space-y-3">
+          <h3 class="text-lg font-semibold uppercase tracking-wide">SIIR 272</h3>
+          <p class="text-gray-200">
+            Portal oficial de inscripción y reinscripción a nuestro plantel.
+          </p>
+        </div>
+        <div class="space-y-3">
+          <h3 class="text-lg font-semibold uppercase tracking-wide">Especialidades</h3>
+          <ul class="space-y-1 text-gray-200">
+            <li>Ventas</li>
+            <li>Programación</li>
+            <li>Preparación de alimentos y bebidas</li>
+            <li>Gestión e Innovación</li>
+          </ul>
+        </div>
+        <div class="space-y-3">
+          <h3 class="text-lg font-semibold uppercase tracking-wide">Contacto</h3>
+          <div class="space-y-1 text-gray-200">
+            <p>Avenida arco norte entre avenida isla saona y calle isla magdalena</p>
+            <p>Tel: 9983213282</p>
+            <p>Correo: cbtis272.dir@dgeti.sems.gob.mx</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-500 mt-10 pt-4 text-center text-xs md:text-sm text-gray-200 uppercase tracking-wide">
+        © 2025 SIIR 272. Todos los derechos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Cargar logros dinámicamente
+    async function cargarLogros() {
+      try {
+        const BASE_URL = window.location.origin.includes('localhost')
+          ? 'http://localhost:3001'
+          : 'https://registro272.onrender.com';
+        
+        const response = await fetch(`${BASE_URL}/api/logros`);
+        if (!response.ok) {
+          throw new Error('Error al cargar logros');
+        }
+        
+        const logros = await response.json();
+        const container = document.getElementById('logrosSection');
+        
+        if (logros.length === 0) {
+          container.innerHTML = `
+            <div class="col-span-2 text-center text-gray-500 py-8">
+              <p>No hay logros disponibles en este momento.</p>
+            </div>
+          `;
+          return;
+        }
+        
+        container.innerHTML = logros.map(logro => `
+          <div class="flex items-start space-x-4">
+            <img src="/images/Icon-Logros.svg" alt="Icono logro" class="w-9 h-9 md:w-10 md:h-10">
+            <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex-1">
+              <h3 class="text-sm md:text-base font-semibold text-gray-900">${logro.titulo}</h3>
+              <p class="text-xs md:text-sm text-gray-600 mt-2">
+                ${logro.descripcion}
+              </p>
+            </div>
+          </div>
+        `).join('');
+      } catch (error) {
+        console.error('Error cargando logros:', error);
+        const container = document.getElementById('logrosSection');
+        container.innerHTML = `
+          <div class="col-span-2 text-center text-gray-500 py-8">
+            <p>Error al cargar los logros. Por favor, recarga la página.</p>
+          </div>
+        `;
+      }
+    }
+
+    // Cargar logros cuando se carga la página
+    document.addEventListener('DOMContentLoaded', cargarLogros);
+  </script>
+  <script>
+    // Intercepta clicks en enlaces a login y redirige al dashboard si existe sesión válida
+    function parseJwt(token) {
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function tokenValido(token) {
+      const p = parseJwt(token);
+      if (!p || !p.exp) return false;
+      return Date.now() / 1000 < p.exp;
+    }
+
+    function attachLoginInterceptor() {
+      // Selecciona enlaces que apunten a login (rutas relativas o absolutas)
+      const selectors = 'a[href$="login.html"], a[href$="/login.html"]';
+      document.querySelectorAll(selectors).forEach(a => {
+        // Evitar múltiples listeners
+        if (a.dataset.loginIntercept === 'true') return;
+        a.dataset.loginIntercept = 'true';
+        a.addEventListener('click', (ev) => {
+          try {
+            const token = localStorage.getItem('token');
+            if (token && tokenValido(token)) {
+              ev.preventDefault();
+              // Redirige al dashboard si hay sesión válida
+              window.location.href = '/dashboard-admin';
+            }
+            // Si no hay token válido, se comporta como enlace normal
+          } catch (err) {
+            console.error('Error comprobando token al hacer click en login:', err);
+          }
+        });
+      });
+    }
+
+    // Adjuntar al cargar la página (y también después de cambios dinámicos si aplica)
+    document.addEventListener('DOMContentLoaded', attachLoginInterceptor);
+  </script>
+</body>
+</html>

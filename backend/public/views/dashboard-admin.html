@@ -1,0 +1,776 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard | Gestión de Alumnos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body class="bg-gray-50 min-h-screen font-['Montserrat']">
+  <!-- Navbar -->
+  <nav class="relative z-10 bg-[#4C0000] w-full py-3">
+    <div class="flex items-center justify-between px-4 md:px-6">
+      <!-- Logo Section (Left) -->
+      <div class="flex items-center space-x-4">
+        <div class="bg-white px-4 py-2 rounded-lg shadow-sm">
+          <img src="/images/logo-cbtis.png" alt="Logo CBTIS 272" class="h-12 w-auto" />
+        </div>
+      </div>
+      
+      <!-- Navigation Links (Right) -->
+      <div class="flex items-center space-x-8">
+        <!-- Navigation Links -->
+        <div class="hidden md:flex items-center space-x-6">
+          <a href="/index.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Inicio</a>
+          <a href="/inscripcion.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Inscripción</a>
+          <a href="/reinscripcion.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Reinscripción</a>
+        </div>
+        
+        <!-- Logout Button -->
+        <button id="logoutBtn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 font-medium">
+          Cerrar Sesión
+        </button>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Contenido -->
+  <div class="container mx-auto px-4 py-8 max-w-7xl">
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-0">Gestión de Alumnos</h2>
+        <button id="btnAgregarNuevo" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors duration-200 font-semibold">
+          Agregar Nuevo Alumno
+        </button>
+      </div>
+
+      <!-- Búsqueda -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <input 
+          id="searchFolio" 
+          type="text" 
+          class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" 
+          placeholder="Buscar por folio"
+        >
+        <input 
+          id="searchApellidos" 
+          type="text" 
+          class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" 
+          placeholder="Buscar por apellidos"
+        >
+        <button 
+          id="btnBuscar" 
+          class="bg-[#4C0000] hover:bg-[#6a0000] text-white px-6 py-2 rounded-lg transition-colors duration-200 font-semibold"
+        >
+          Buscar
+        </button>
+      </div>
+
+      <!-- Tabla -->
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider border-b">Folio</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider border-b">Nombre</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider border-b">CURP</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider border-b">Semestre</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider border-b">Grupo</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider border-b">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="resultadosTable" class="bg-white divide-y divide-gray-200">
+            <!-- Los resultados se cargarán aquí dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- Sección de Carga de Archivos -->
+  <div class="container mx-auto px-4 max-w-7xl">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <!-- Bloque para cargar Excel de alumnos -->
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-xl font-bold text-gray-800 mb-4">Cargar Excel de Alumnos</h3>
+        <form id="excelForm" enctype="multipart/form-data" class="space-y-4">
+          <div>
+            <input 
+              type="file" 
+              name="archivo" 
+              accept=".xlsx" 
+              required
+              class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#4C0000] file:text-white hover:file:bg-[#6a0000] file:cursor-pointer"
+            >
+          </div>
+          <button 
+            type="submit" 
+            class="w-full bg-[#4C0000] hover:bg-[#6a0000] text-white px-6 py-2 rounded-lg transition-colors duration-200 font-semibold"
+          >
+            Cargar
+          </button>
+        </form>
+      </div>
+
+      <!-- Bloque para cargar grupos -->
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-xl font-bold text-gray-800 mb-4">Cargar Excel de Grupos</h3>
+        <form id="formGrupos" class="space-y-4">
+          <div>
+            <input 
+              type="file" 
+              id="archivoGrupos" 
+              accept=".xlsx, .xls" 
+              required
+              class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#4C0000] file:text-white hover:file:bg-[#6a0000] file:cursor-pointer"
+            />
+          </div>
+          <button 
+            type="submit" 
+            class="w-full bg-[#4C0000] hover:bg-[#6a0000] text-white px-6 py-2 rounded-lg transition-colors duration-200 font-semibold"
+          >
+            Subir archivo
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Exportar y Mensaje de carga -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+      <div class="flex flex-col items-center space-y-4">
+        <h3 class="text-xl font-bold text-gray-800">Exportar Alumnos Registrados</h3>
+        <button 
+          id="btnExportar" 
+          class="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-lg transition-colors duration-200 font-semibold"
+        >
+          Exportar a Excel
+        </button>
+      </div>
+      <p 
+        id="cargando" 
+        class="hidden text-center font-bold text-blue-600 mt-4"
+      >
+        ⏳ Cargando archivo, por favor espera...
+      </p>
+    </div>
+
+    <!-- Sección de Gestión de Logros -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-0">Gestión de Logros</h2>
+      </div>
+      
+      <div class="grid gap-6 md:grid-cols-2" id="logrosContainer">
+        <!-- Los logros se cargarán aquí dinámicamente -->
+        <div class="col-span-2 text-center text-gray-500 py-4">
+          <p>Cargando logros...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal edición -->
+  <div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header bg-[#4C0000] text-white">
+          <h5 class="modal-title text-xl font-bold">Editar Alumno</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body bg-gray-50">
+          <form id="editForm" class="form">
+            <input type="hidden" id="editId">
+            <!--  DATOS ALUMNO -->
+            <h5 class="text-lg font-semibold text-gray-800 mb-4 mt-2">Datos del Alumno</h5>
+            <div class="row">
+
+            <div class="col-md-4 mb-3">
+              <label for="folio" class="block text-red-600 font-bold text-base mb-1">
+                ⚠️ Folio (NO se te olvide capturarlo de nuevo)
+              </label>
+              <input type="text" id="folio" class="w-full px-3 py-2 border-2 border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+            </div>
+              
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Primer Apellido</label>
+                <input type="text" id="primer_apellido" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Segundo Apellido</label>
+                <input type="text" id="segundo_apellido" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Nombres</label>
+                <input type="text" id="nombres" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Periodo Semestral</label>
+                <input type="text" id="periodo_semestral" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-2 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Semestre</label>
+                <input type="number" id="semestre" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-2 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Grupo</label>
+                <input type="text" id="grupo" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-2 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Turno</label>
+                <input type="text" id="turno" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-2 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Carrera</label>
+                <input type="text" id="carrera" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">CURP</label>
+                <input type="text" id="curp" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Fecha de Nacimiento</label>
+                <input type="date" id="fecha_nacimiento" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-2 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Edad</label>
+                <input type="number" id="edad" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-2 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Sexo</label>
+                <input type="text" id="sexo" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Estado Nacimiento</label>
+                <input type="text" id="estado_nacimiento" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Municipio Nacimiento</label>
+                <input type="text" id="municipio_nacimiento" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Ciudad Nacimiento</label>
+                <input type="text" id="ciudad_nacimiento" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-2 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Estado Civil</label>
+                <input type="number" id="estado_civil" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Nacionalidad</label>
+                <input type="text" id="nacionalidad" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">País Extranjero</label>
+                <input type="text" id="pais_extranjero" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+            </div>
+
+            <!--  DATOS GENERALES -->
+            <h5 class="text-lg font-semibold text-gray-800 mb-4 mt-4">Datos Generales</h5>
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Colonia</label>
+                <input type="text" id="colonia" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Domicilio</label>
+                <input type="text" id="domicilio" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-2 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">CP</label>
+                <input type="text" id="codigo_postal" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Teléfono Alumno</label>
+                <input type="text" id="telefono_alumno" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Correo Alumno</label>
+                <input type="email" id="correo_alumno" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Paraescolar</label>
+                <input type="text" id="paraescolar" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Entrega Diagnóstico</label>
+                <input type="text" id="entrega_diagnostico" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Detalle Enfermedad</label>
+                <input type="text" id="detalle_enfermedad" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+
+              <div class="col-md-12 mb-3">
+                <h6 class="text-base font-semibold text-gray-800 mt-2">Responsable Emergencia</h6>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Nombre</label>
+                <input type="text" id="responsable_emergencia_nombre" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Teléfono</label>
+                <input type="text" id="responsable_emergencia_telefono" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Parentesco</label>
+                <input type="text" id="responsable_emergencia_parentesco" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Carta Poder</label>
+                <input type="text" id="carta_poder" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Tipo Sangre</label>
+                <input type="text" id="tipo_sangre" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Contacto Emergencia Nombre</label>
+                <input type="text" id="contacto_emergencia_nombre" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Contacto Emergencia Teléfono</label>
+                <input type="text" id="contacto_emergencia_telefono" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Habla Lengua Indígena Respuesta</label>
+                <input type="text" id="habla_lengua_indigena_respuesta" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Habla Lengua Indígena Cuál</label>
+                <input type="text" id="habla_lengua_indigena_cual" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-3 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Primera Opción</label>
+                <input type="text" id="primera_opcion" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-3 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Segunda Opción</label>
+                <input type="text" id="segunda_opcion" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-3 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Tercera Opción</label>
+                <input type="text" id="tercera_opcion" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-3 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Cuarta Opción</label>
+                <input type="text" id="cuarta_opcion" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Estado Nacimiento General</label>
+                <input type="text" id="estado_nacimiento_general" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Municipio Nacimiento General</label>
+                <input type="text" id="municipio_nacimiento_general" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Ciudad Nacimiento General</label>
+                <input type="text" id="ciudad_nacimiento_general" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+            </div>
+
+            <!--  DATOS MÉDICOS -->
+            <h5 class="text-lg font-semibold text-gray-800 mb-4 mt-4">Datos Médicos</h5>
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Número Seguro Social</label>
+                <input type="text" id="numero_seguro_social" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Unidad Médica Familiar</label>
+                <input type="text" id="unidad_medica_familiar" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Enfermedad Crónica Respuesta</label>
+                <input type="text" id="enfermedad_cronica_respuesta" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Enfermedad Crónica Detalle</label>
+                <input type="text" id="enfermedad_cronica_detalle" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Discapacidad</label>
+                <input type="text" id="discapacidad" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+            </div>
+
+            <!--  SECUNDARIA ORIGEN -->
+            <h5 class="text-lg font-semibold text-gray-800 mb-4 mt-4">Secundaria de Origen</h5>
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Nombre Secundaria</label>
+                <input type="text" id="nombre_secundaria" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Regimen</label>
+                <input type="text" id="regimen" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-2 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Promedio</label>
+                <input type="number" id="promedio_general" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-2 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Modalidad</label>
+                <input type="text" id="modalidad" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+            </div>
+
+            <!--  TUTOR RESPONSABLE -->
+            <h5 class="text-lg font-semibold text-gray-800 mb-4 mt-4">Tutor Responsable</h5>
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Nombre Padre</label>
+                <input type="text" id="nombre_padre" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Teléfono Padre</label>
+                <input type="text" id="telefono_padre" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Nombre Madre</label>
+                <input type="text" id="nombre_madre" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Teléfono Madre</label>
+                <input type="text" id="telefono_madre" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Vive Con</label>
+                <input type="text" id="vive_con" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+            </div>
+
+            <!--  PERSONA EMERGENCIA -->
+            <h5 class="text-lg font-semibold text-gray-800 mb-4 mt-4">Persona Emergencia</h5>
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Nombre</label>
+                <input type="text" id="persona_emergencia_nombre" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Parentesco</label>
+                <input type="text" id="persona_emergencia_parentesco" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="block text-gray-700 font-medium mb-1">Teléfono</label>
+                <input type="text" id="persona_emergencia_telefono" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+              </div>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer bg-gray-100">
+          <button id="btnGuardar" type="button" class="bg-[#4C0000] hover:bg-[#6a0000] text-white px-6 py-2 rounded-lg transition-colors duration-200 font-semibold">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap & dashboard.js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/dashboard.js"></script>
+
+
+  
+
+ <script>
+  document.getElementById('excelForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const cargando = document.getElementById('cargando');
+    cargando.classList.remove('hidden');
+
+    try {
+      const res = await fetch(`${BASE_URL}/api/cargar-excel`, {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(`Error ${res.status}: ${errorText}`);
+      }
+
+      const result = await res.json();
+      alert("✅ " + result.message);
+    } catch (error) {
+      alert("❌ Error al cargar el archivo: " + error.message);
+      console.error("Detalles del error:", error);
+    } finally {
+      cargando.classList.add('hidden');
+    }
+  });
+
+  document.getElementById('btnExportar').addEventListener('click', () => {
+    window.location.href = `${BASE_URL}/api/exportar-excel`;
+  });
+</script>
+
+<!-- Modal para editar logros -->
+<div class="modal fade" id="editLogroModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-[#4C0000] text-white">
+        <h5 class="modal-title text-xl font-bold">Editar Logro</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body bg-gray-50">
+        <form id="editLogroForm">
+          <input type="hidden" id="editLogroId">
+          <div class="mb-3">
+            <label class="block text-gray-700 font-medium mb-1">Título</label>
+            <input type="text" id="editLogroTitulo" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" required>
+          </div>
+          <div class="mb-3">
+            <label class="block text-gray-700 font-medium mb-1">Descripción</label>
+            <textarea id="editLogroDescripcion" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="block text-gray-700 font-medium mb-1">Orden (1 o 2)</label>
+            <input type="number" id="editLogroOrden" min="1" max="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" required>
+          </div>
+          <div class="flex justify-end space-x-3 mt-4">
+            <button type="button" class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="px-4 py-2 bg-[#4C0000] hover:bg-[#6a0000] text-white rounded-lg transition-colors duration-200">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/dashboard.js"></script>
+<script>
+  // Funcionalidad de logros
+  (function() {
+    const BASE_URL = window.location.origin.includes('localhost')
+      ? 'http://localhost:3001'
+      : 'https://registro272.onrender.com';
+
+    let logrosData = [];
+
+    // Función para hacer peticiones autenticadas (reutilizando la del dashboard.js)
+    async function authenticatedFetch(url, options = {}) {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = '/login.html';
+        return;
+      }
+
+      const isFormData = options.body instanceof FormData;
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
+        ...options.headers
+      };
+
+      const response = await fetch(url, {
+        ...options,
+        headers
+      });
+
+      if (response.status === 401 || response.status === 403) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('login');
+        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+        window.location.href = '/login.html';
+        return;
+      }
+
+      return response;
+    }
+
+    // Cargar logros al iniciar
+    async function cargarLogros() {
+      const container = document.getElementById('logrosContainer');
+      if (!container) return;
+
+      try {
+        container.innerHTML = '<div class="col-span-2 text-center text-gray-500 py-4"><p>Cargando logros...</p></div>';
+        
+        const res = await authenticatedFetch(`${BASE_URL}/api/dashboard/logros`);
+        
+        if (res && res.ok) {
+          const data = await res.json();
+          logrosData = data || [];
+          mostrarLogros(logrosData);
+        } else {
+          // Si hay error, mostrar cards vacías para poder crear logros
+          console.warn('No se pudieron cargar logros, mostrando cards vacías');
+          logrosData = [];
+          mostrarLogros([]);
+        }
+      } catch (error) {
+        // Si hay error, mostrar cards vacías para poder crear logros
+        console.error('Error cargando logros:', error);
+        logrosData = [];
+        mostrarLogros([]);
+      }
+    }
+
+    // Mostrar logros en el contenedor
+    function mostrarLogros(logros) {
+      const container = document.getElementById('logrosContainer');
+      if (!container) return;
+      
+      container.innerHTML = '';
+
+      // Asegurar que siempre haya 2 logros (crear vacíos si no existen)
+      for (let i = 1; i <= 2; i++) {
+        const logro = logros.find(l => l.orden === i);
+        const card = document.createElement('div');
+        card.className = 'bg-white border border-gray-200 rounded-xl shadow-sm p-6';
+        card.innerHTML = `
+          <div class="flex items-start space-x-4 mb-4">
+            <img src="/images/Icon-Logros.svg" alt="Icono logro" class="w-9 h-9 md:w-10 md:h-10 flex-shrink-0">
+            <div class="flex-1">
+              <h3 class="text-sm md:text-base font-semibold text-gray-900 mb-2">${logro ? logro.titulo : 'Logro ' + i}</h3>
+              <p class="text-xs md:text-sm text-gray-600">${logro ? logro.descripcion : 'No hay logro configurado para esta posición.'}</p>
+            </div>
+          </div>
+          <button 
+            class="w-full bg-[#4C0000] hover:bg-[#6a0000] text-white font-semibold py-2 rounded-md transition-colors duration-200 btnEditarLogro" 
+            data-orden="${i}"
+            ${logro ? `data-id="${logro._id}"` : ''}
+          >
+            ${logro ? 'Editar Logro' : 'Crear Logro'}
+          </button>
+        `;
+        container.appendChild(card);
+      }
+
+      // Agregar event listeners a los botones
+      container.querySelectorAll('.btnEditarLogro').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const orden = parseInt(btn.getAttribute('data-orden'));
+          const logroId = btn.getAttribute('data-id');
+          abrirModalLogro(orden, logroId ? logrosData.find(l => l._id === logroId) : null);
+        });
+      });
+    }
+
+    // Abrir modal para editar/crear logro
+    function abrirModalLogro(orden, logro = null) {
+      const modalElement = document.getElementById('editLogroModal');
+      if (!modalElement) {
+        alert('Error: No se encontró el modal de edición');
+        return;
+      }
+
+      document.getElementById('editLogroId').value = logro ? logro._id : '';
+      document.getElementById('editLogroTitulo').value = logro ? logro.titulo : '';
+      document.getElementById('editLogroDescripcion').value = logro ? logro.descripcion : '';
+      document.getElementById('editLogroOrden').value = orden;
+      
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+
+    // Guardar logro
+    const editLogroForm = document.getElementById('editLogroForm');
+    if (editLogroForm) {
+      editLogroForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const id = document.getElementById('editLogroId').value;
+        const titulo = document.getElementById('editLogroTitulo').value;
+        const descripcion = document.getElementById('editLogroDescripcion').value;
+        const orden = parseInt(document.getElementById('editLogroOrden').value);
+
+        if (!titulo || !descripcion) {
+          alert('Por favor, completa todos los campos');
+          return;
+        }
+
+        try {
+          let res;
+          if (id) {
+            // Actualizar logro existente
+            res = await authenticatedFetch(`${BASE_URL}/api/dashboard/logro/${id}`, {
+              method: 'PUT',
+              body: JSON.stringify({ titulo, descripcion, orden })
+            });
+          } else {
+            // Crear nuevo logro
+            res = await authenticatedFetch(`${BASE_URL}/api/dashboard/logro`, {
+              method: 'POST',
+              body: JSON.stringify({ titulo, descripcion, orden })
+            });
+          }
+
+          if (!res) return;
+          
+          // Verificar el tipo de contenido de la respuesta
+          const contentType = res.headers.get('content-type');
+          let errorMessage = 'Error al guardar el logro';
+          
+          if (!res.ok) {
+            if (contentType && contentType.includes('application/json')) {
+              try {
+                const error = await res.json();
+                errorMessage = error.message || errorMessage;
+              } catch (e) {
+                // Si no se puede parsear JSON, usar el mensaje por defecto
+                const text = await res.text();
+                console.error('Respuesta del servidor:', text);
+                errorMessage = `Error ${res.status}: ${res.statusText}`;
+              }
+            } else {
+              // Si la respuesta es HTML u otro formato
+              const text = await res.text();
+              console.error('El servidor devolvió HTML en lugar de JSON:', text.substring(0, 200));
+              errorMessage = `Error ${res.status}: El servidor devolvió una respuesta inesperada. Verifica la consola para más detalles.`;
+            }
+            throw new Error(errorMessage);
+          }
+
+          // Si la respuesta es exitosa, intentar parsear JSON
+          let result;
+          if (contentType && contentType.includes('application/json')) {
+            result = await res.json();
+          } else {
+            // Si no es JSON, asumir que fue exitoso
+            result = { message: 'Logro guardado correctamente' };
+          }
+
+          const modalElement = document.getElementById('editLogroModal');
+          if (modalElement) {
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            if (modal) modal.hide();
+          }
+          
+          alert('✅ Logro guardado correctamente');
+          await cargarLogros();
+        } catch (error) {
+          alert('❌ Error: ' + error.message);
+          console.error('Error guardando logro:', error);
+        }
+      });
+    }
+
+    // Cargar logros cuando se carga la página
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(cargarLogros, 1000);
+      });
+    } else {
+      setTimeout(cargarLogros, 1000);
+    }
+  })();
+</script>
+
+    
+
+
+</body>
+</html>
