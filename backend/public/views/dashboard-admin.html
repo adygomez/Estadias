@@ -12,6 +12,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/css/chatbot.css">
 </head>
 
 <body class="bg-gray-50 min-h-screen font-['Montserrat']">
@@ -244,7 +245,11 @@
               </div>
               <div class="col-md-2 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Sexo</label>
-                <input type="text" id="sexo" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <select id="sexo" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                  <option value="">Selecciona sexo</option>
+                  <option value="femenino">Femenino</option>
+                  <option value="masculino">Masculino</option>
+                </select>
               </div>
               <div class="col-md-4 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Estado Nacimiento</label>
@@ -260,11 +265,22 @@
               </div>
               <div class="col-md-2 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Estado Civil</label>
-                <input type="number" id="estado_civil" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <select id="estado_civil" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                  <option value="">Selecciona Estado Civil</option>
+                  <option value="1">Soltero</option>
+                  <option value="2">Casado</option>
+                  <option value="3">Unión Libre</option>
+                  <option value="4">Divorciado</option>
+                  <option value="5">Viudo</option>
+                </select>
               </div>
               <div class="col-md-4 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Nacionalidad</label>
-                <input type="text" id="nacionalidad" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <select id="nacionalidad" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                  <option value="">Selecciona Nacionalidad</option>
+                  <option value="Mexicano">Mexicano</option>
+                  <option value="Extranjero">Extranjero</option>
+                </select>
               </div>
               <div class="col-md-4 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">País Extranjero</label>
@@ -297,11 +313,31 @@
               </div>
               <div class="col-md-4 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Paraescolar</label>
-                <input type="text" id="paraescolar" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <select id="paraescolar" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                  <option value="">--Selecciona--</option>
+                  <option value="AJEDREZ">AJEDREZ</option>
+                  <option value="ATLETISMO">ATLETISMO</option>
+                  <option value="BANDA DE GUERRA">BANDA DE GUERRA</option>
+                  <option value="BASQUETBOL">BASQUETBOL</option>
+                  <option value="DANZA">DANZA</option>
+                  <option value="ESCOLTA DE BANDERA">ESCOLTA DE BANDERA</option>
+                  <option value="FOTOGRAFÍA">FOTOGRAFÍA</option>
+                  <option value="FUTBOL">FUTBOL</option>
+                  <option value="PINTURA">PINTURA</option>
+                  <option value="TEATRO-CANTO">TEATRO-CANTO</option>
+                  <option value="TOCHO BANDERA">TOCHO BANDERA</option>
+                  <option value="VOLEIBOL">VOLEIBOL</option>
+                  <option value="ORATORIADECLAMACION">ORATORIA Y  DECLAMACION</option>
+                  <option value="MÚSICA">MÚSICA</option>
+                </select>
               </div>
               <div class="col-md-4 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Entrega Diagnóstico</label>
-                <input type="text" id="entrega_diagnostico" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <select id="entrega_diagnostico" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                  <option value="">¿Entrega diagnóstico?</option>
+                  <option value="Sí">Sí</option>
+                  <option value="No">No</option>
+                </select>
               </div>
               <div class="col-md-4 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Detalle Enfermedad</label>
@@ -326,7 +362,11 @@
 
               <div class="col-md-4 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Carta Poder</label>
-                <input type="text" id="carta_poder" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <select id="carta_poder" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                  <option value="">¿Entregó carta poder?</option>
+                  <option value="Sí">Sí</option>
+                  <option value="No">No</option>
+                </select>
               </div>
               <div class="col-md-4 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Tipo Sangre</label>
@@ -342,7 +382,11 @@
               </div>
               <div class="col-md-4 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Habla Lengua Indígena Respuesta</label>
-                <input type="text" id="habla_lengua_indigena_respuesta" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <select id="habla_lengua_indigena_respuesta" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                  <option value="">¿Habla lengua indígena? (Sí/No)</option>
+                  <option value="si">Sí</option>
+                  <option value="no">No</option>
+                </select>
               </div>
               <div class="col-md-4 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Habla Lengua Indígena Cuál</label>
@@ -350,19 +394,43 @@
               </div>
               <div class="col-md-3 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Primera Opción</label>
-                <input type="text" id="primera_opcion" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <select id="primera_opcion" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                  <option value="">Cuál fue tu 1era opción</option>
+                  <option value="A Y B">A Y B</option>
+                  <option value="PROGRAMACIÓN">PROGRAMACIÓN</option>
+                  <option value="GESTIÓN E INNOVACIÓN TURÍSTICA">GESTIÓN E INNOVACIÓN TURÍSTICA</option>
+                  <option value="VENTAS">VENTAS</option>
+                </select>
               </div>
               <div class="col-md-3 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Segunda Opción</label>
-                <input type="text" id="segunda_opcion" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <select id="segunda_opcion" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                  <option value="">Cuál fue tu 2da opción</option>
+                  <option value="A Y B">A Y B</option>
+                  <option value="PROGRAMACIÓN">PROGRAMACIÓN</option>
+                  <option value="GESTIÓN E INNOVACIÓN TURÍSTICA">GESTIÓN E INNOVACIÓN TURÍSTICA</option>
+                  <option value="VENTAS">VENTAS</option>
+                </select>
               </div>
               <div class="col-md-3 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Tercera Opción</label>
-                <input type="text" id="tercera_opcion" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <select id="tercera_opcion" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                  <option value="">Cuál fue tu 3era opción</option>
+                  <option value="A Y B">A Y B</option>
+                  <option value="PROGRAMACIÓN">PROGRAMACIÓN</option>
+                  <option value="GESTIÓN E INNOVACIÓN TURÍSTICA">GESTIÓN E INNOVACIÓN TURÍSTICA</option>
+                  <option value="VENTAS">VENTAS</option>
+                </select>
               </div>
               <div class="col-md-3 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Cuarta Opción</label>
-                <input type="text" id="cuarta_opcion" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <select id="cuarta_opcion" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                  <option value="">Cuál fue tu 4ta opción</option>
+                  <option value="A Y B">A Y B</option>
+                  <option value="PROGRAMACIÓN">PROGRAMACIÓN</option>
+                  <option value="GESTIÓN E INNOVACIÓN TURÍSTICA">GESTIÓN E INNOVACIÓN TURÍSTICA</option>
+                  <option value="VENTAS">VENTAS</option>
+                </select>
               </div>
               <div class="col-md-4 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Estado Nacimiento General</label>
@@ -387,19 +455,34 @@
               </div>
               <div class="col-md-4 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Unidad Médica Familiar</label>
-                <input type="text" id="unidad_medica_familiar" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <select id="unidad_medica_familiar" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                  <option value="">Selecciona Unidad Medica</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="19">19</option>
+                </select>
               </div>
               <div class="col-md-4 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Enfermedad Crónica Respuesta</label>
-                <input type="text" id="enfermedad_cronica_respuesta" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <input type="text" id="enfermedad_cronica_respuesta" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="¿Tiene enfermedad o alergia? (Sí/No)">
               </div>
               <div class="col-md-4 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Enfermedad Crónica Detalle</label>
-                <input type="text" id="enfermedad_cronica_detalle" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <input type="text" id="enfermedad_cronica_detalle" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Detalle enfermedad o alergia">
               </div>
               <div class="col-md-4 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Discapacidad</label>
-                <input type="text" id="discapacidad" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <select id="discapacidad" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                  <option value="">Selecciona discapacidad</option>
+                  <option value="Ninguna">Ninguna</option>
+                  <option value="Visual">Visual</option>
+                  <option value="Motriz">Motriz</option>
+                  <option value="Auditiva">Auditiva</option>
+                  <option value="Habla">Habla</option>
+                  <option value="Otro">Otro</option>
+                </select>
               </div>
             </div>
 
@@ -412,15 +495,29 @@
               </div>
               <div class="col-md-4 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Regimen</label>
-                <input type="text" id="regimen" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <select id="regimen" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                  <option value="">Selecciona régimen</option>
+                  <option value="publica">Pública</option>
+                  <option value="privada">Privada</option>
+                </select>
               </div>
               <div class="col-md-2 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Promedio</label>
-                <input type="number" id="promedio_general" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <input type="number" id="promedio_general" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
               </div>
               <div class="col-md-2 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Modalidad</label>
-                <input type="text" id="modalidad" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <select id="modalidad" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                  <option value="">Selecciona modalidad</option>
+                  <option value="general">General</option>
+                  <option value="tecnica">Técnica</option>
+                  <option value="abierta">Abierta</option>
+                  <option value="telesecundaria">Telesecundaria</option>
+                  <option value="ceneval">CENEVAL</option>
+                  <option value="inea">INEA</option>
+                  <option value="modular">Modular</option>
+                  <option value="otro">Otro</option>
+                </select>
               </div>
             </div>
 
@@ -445,7 +542,14 @@
               </div>
               <div class="col-md-4 mb-3">
                 <label class="block text-gray-700 font-medium mb-1">Vive Con</label>
-                <input type="text" id="vive_con" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                <select id="vive_con" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                  <option value="">¿Con quién vive?</option>
+                  <option value="padres">Padres</option>
+                  <option value="mama">Mamá</option>
+                  <option value="papa">Papá</option>
+                  <option value="abuelos">Abuelos</option>
+                  <option value="tios">Tíos</option>
+                </select>
               </div>
             </div>
 
@@ -770,7 +874,6 @@
 </script>
 
     
-
-
+  <script src="/js/chatbot.js"></script>
 </body>
 </html>

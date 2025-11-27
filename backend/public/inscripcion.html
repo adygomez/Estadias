@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>INSCRIPCIÓN</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/css/chatbot.css">
 </head>
 <body class="relative min-h-screen flex flex-col" style="background: url('/images/Fondo-Login.png') no-repeat center center fixed; background-size: cover;">
   
@@ -47,12 +49,13 @@
             </label>
             <div class="flex-1 w-full flex flex-col md:flex-row gap-4">
               <input 
+                id="folioRegistro"
                 type="text" 
                 placeholder="Coloca tu folio para registrarte"
                 class="bg-[#4C0000] text-white px-6 md:px-8 py-3 md:py-4 rounded-3xl text-base md:text-lg font-normal placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#6a0000] transition-all duration-200 flex-1 w-full"
               />
-              <button class="bg-orange-500 hover:bg-orange-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-3xl text-base md:text-lg font-bold transition-colors duration-200 w-full md:w-auto md:flex-shrink-0">
-                Buscar
+              <button id="btnRegistrar" class="bg-orange-500 hover:bg-orange-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-3xl text-base md:text-lg font-bold transition-colors duration-200 w-full md:w-auto md:flex-shrink-0">
+                Registrar
               </button>
             </div>
           </div>
@@ -66,12 +69,13 @@
             </label>
             <div class="flex-1 w-full flex flex-col md:flex-row gap-4">
               <input 
+                id="folioReimpresion"
                 type="text" 
                 placeholder="Coloca tu folio para reimprimir tu constancia de inscripción"
                 class="bg-[#4C0000] text-white px-6 md:px-8 py-3 md:py-4 rounded-3xl text-base md:text-lg font-normal placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#6a0000] transition-all duration-200 flex-1 w-full"
               />
-              <button class="bg-orange-500 hover:bg-orange-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-3xl text-base md:text-lg font-bold transition-colors duration-200 w-full md:w-auto md:flex-shrink-0">
-                Buscar
+              <button id="btnReimprimir" class="bg-orange-500 hover:bg-orange-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-3xl text-base md:text-lg font-bold transition-colors duration-200 w-full md:w-auto md:flex-shrink-0">
+                Reimprimir
               </button>
             </div>
           </div>
@@ -92,6 +96,639 @@
     <p class="text-white text-sm">© 2024 SIIR 272. Todos los derechos reservados.</p>
   </div>
 
+  <!-- Modal del Formulario de Registro -->
+  <div class="modal fade" id="formularioModal" tabindex="-1" aria-labelledby="formularioModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-lg-down modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header bg-[#4C0000] text-white">
+          <h5 class="modal-title text-xl font-bold" id="formularioModalLabel">Formulario de Registro</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body bg-gray-50 p-4 md:p-6">
+          <form id="registroForm" class="space-y-6">
+            <!-- Datos del Alumno -->
+            <fieldset class="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-200">
+              <legend class="text-lg font-bold text-[#4C0000] mb-4 px-2">Datos del Alumno</legend>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Nombres *</label>
+                  <input name="nombres" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Nombres"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Primer Apellido *</label>
+                  <input name="primer_apellido" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Primer Apellido"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Segundo Apellido *</label>
+                  <input name="segundo_apellido" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Segundo Apellido"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">CURP *</label>
+                  <input name="curp" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="CURP"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Carrera</label>
+                  <input name="carrera" type="text" readonly class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100" placeholder="Carrera"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Periodo Semestral</label>
+                  <input name="periodo_semestral" type="text" readonly value="2025-2026" class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Semestre</label>
+                  <input name="semestre" type="text" readonly value="Primer Semestre" class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Grupo</label>
+                  <input name="grupo" type="text" readonly class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100" placeholder="Grupo"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Turno</label>
+                  <input name="turno" type="text" readonly class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100" placeholder="Turno"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">1ERA OPCIÓN *</label>
+                  <select id="primera_opcion" name="primera_opcion" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">Cuál fue tu 1era opción</option>
+                    <option value="A Y B">A Y B</option>
+                    <option value="PROGRAMACIÓN">PROGRAMACIÓN</option>
+                    <option value="GESTIÓN E INNOVACIÓN TURÍSTICA">GESTIÓN E INNOVACIÓN TURÍSTICA</option>
+                    <option value="VENTAS">VENTAS</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">2DA OPCIÓN *</label>
+                  <select id="segunda_opcion" name="segunda_opcion" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">Cuál fue tu 2da opción</option>
+                    <option value="A Y B">A Y B</option>
+                    <option value="PROGRAMACIÓN">PROGRAMACIÓN</option>
+                    <option value="GESTIÓN E INNOVACIÓN TURÍSTICA">GESTIÓN E INNOVACIÓN TURÍSTICA</option>
+                    <option value="VENTAS">VENTAS</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">3ERA OPCIÓN *</label>
+                  <select id="tercera_opcion" name="tercera_opcion" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">Cuál fue tu 3era opción</option>
+                    <option value="A Y B">A Y B</option>
+                    <option value="PROGRAMACIÓN">PROGRAMACIÓN</option>
+                    <option value="GESTIÓN E INNOVACIÓN TURÍSTICA">GESTIÓN E INNOVACIÓN TURÍSTICA</option>
+                    <option value="VENTAS">VENTAS</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">4TA OPCIÓN *</label>
+                  <select id="cuarta_opcion" name="cuarta_opcion" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">Cuál fue tu 4ta opción</option>
+                    <option value="A Y B">A Y B</option>
+                    <option value="PROGRAMACIÓN">PROGRAMACIÓN</option>
+                    <option value="GESTIÓN E INNOVACIÓN TURÍSTICA">GESTIÓN E INNOVACIÓN TURÍSTICA</option>
+                    <option value="VENTAS">VENTAS</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Nacionalidad *</label>
+                  <select id="nacionalidad" name="nacionalidad" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">Selecciona Nacionalidad</option>
+                    <option value="Mexicano">Mexicano</option>
+                    <option value="Extranjero">Extranjero</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">País (si es extranjero)</label>
+                  <input id="pais_extranjero" name="pais_extranjero" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="País (si es extranjero)"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Estado Civil *</label>
+                  <select id="estado_civil" name="estado_civil" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">Selecciona Estado Civil</option>
+                    <option value="Soltero">Soltero</option>
+                    <option value="Casado">Casado</option>
+                    <option value="Unión libre">Unión libre</option>
+                    <option value="Otro">Otro</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Fecha de Nacimiento *</label>
+                  <input id="fecha_nacimiento" name="fecha_nacimiento" type="date" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Edad *</label>
+                  <input id="edad" name="edad" type="number" min="13" max="25" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Ej. 14"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Sexo *</label>
+                  <select id="sexo" name="sexo" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">Selecciona sexo</option>
+                    <option value="femenino">Femenino</option>
+                    <option value="masculino">Masculino</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Estado de nacimiento *</label>
+                  <select id="estado_nacimiento" name="estado_nacimiento" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">-- Selecciona Estado --</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Municipio de nacimiento *</label>
+                  <select id="municipio_nacimiento" name="municipio_nacimiento" required disabled class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">-- Selecciona Municipio --</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Ciudad de nacimiento *</label>
+                  <select id="ciudad_nacimiento" name="ciudad_nacimiento" required disabled class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">-- Selecciona Ciudad --</option>
+                  </select>
+                </div>
+              </div>
+              <input name="estado_codigo" type="hidden"/>
+              <input name="municipio_codigo" type="hidden"/>
+              <input name="ciudad_codigo" type="hidden"/>
+            </fieldset>
 
+            <!-- Datos Generales -->
+            <fieldset class="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-200">
+              <legend class="text-lg font-bold text-[#4C0000] mb-4 px-2">DATOS GENERALES DEL ALUMNO</legend>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Colonia</label>
+                  <input name="colonia" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="SMZ, COLONIA, FRACCIONAMIENTO"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Domicilio</label>
+                  <input name="domicilio" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="CALLE MZ LT EDIFICIO DEPTO"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Código Postal</label>
+                  <input name="codigo_postal" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="CÓDIGO POSTAL"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono del Alumno</label>
+                  <input name="telefono_alumno" type="number" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="TÉLEFONO DEL ALUMNO"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico *</label>
+                  <input name="correo_alumno" type="email" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="CORREO"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de Sangre</label>
+                  <input name="tipo_sangre" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="TIPO DE SANGRE"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Contacto de Emergencia - Nombre</label>
+                  <input name="contacto_emergencia_nombre" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="CONTACTO DE EMERGENCIA-NOMBRE"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Contacto de Emergencia - Teléfono</label>
+                  <input name="contacto_emergencia_telefono" type="number" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="CONTACTO DE EMERGENCIA- TELÉFONO"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">¿Habla lengua indígena? *</label>
+                  <select id="habla_lengua_indigena_respuesta" name="habla_lengua_indigena_respuesta" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">¿Habla lengua indígena? (Sí/No)</option>
+                    <option value="si">Sí</option>
+                    <option value="no">No</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">¿Cuál lengua?</label>
+                  <input id="habla_lengua_indigena_cual" name="habla_lengua_indigena_cual" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="¿Cuál lengua?"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Estado de Residencia *</label>
+                  <select id="estado_nacimiento_general" name="estado_nacimiento_general" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">-- Selecciona Estado --</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Municipio de Residencia *</label>
+                  <select id="municipio_nacimiento_general" name="municipio_nacimiento_general" required disabled class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">-- Selecciona Municipio --</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Ciudad de Residencia *</label>
+                  <select id="ciudad_nacimiento_general" name="ciudad_nacimiento_general" required disabled class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">-- Selecciona Ciudad --</option>
+                  </select>
+                </div>
+              </div>
+              <input type="hidden" name="estado_codigo_general"/>
+              <input type="hidden" name="municipio_codigo_general"/>
+              <input type="hidden" name="ciudad_codigo_general"/>
+            </fieldset>
+
+            <!-- Datos Médicos -->
+            <fieldset class="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-200">
+              <legend class="text-lg font-bold text-[#4C0000] mb-4 px-2">Datos Médicos</legend>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1"># DE SEGURO SOCIAL DEL ALUMNO</label>
+                  <input name="numero_seguro_social" type="number" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="# DE SEGURO SOCIAL"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Unidad Médica Familiar *</label>
+                  <select name="unidad_medica_familiar" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">Selecciona Unidad Medica</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="19">19</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">¿Tiene enfermedad o alergia?</label>
+                  <input name="enfermedad_cronica_o_alergia_respuesta" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="¿Tiene enfermedad o alergia? (Sí/No)"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Detalle enfermedad o alergia</label>
+                  <input name="enfermedad_cronica_o_alergia_detalle" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Detalle enfermedad o alergia"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Discapacidad *</label>
+                  <select name="discapacidad" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">Selecciona discapacidad</option>
+                    <option value="Ninguna">Ninguna</option>
+                    <option value="Visual">Visual</option>
+                    <option value="Motriz">Motriz</option>
+                    <option value="Auditiva">Auditiva</option>
+                    <option value="Habla">Habla</option>
+                    <option value="Otro">Otro</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">¿Entrega diagnóstico? *</label>
+                  <select name="entrega_diagnostico" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">¿Entrega diagnóstico?</option>
+                    <option value="Sí">Sí</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
+                <div class="md:col-span-2 lg:col-span-3">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Detalle de enfermedad</label>
+                  <textarea name="detalle_enfermedad" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Detalle de enfermedad"></textarea>
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- Secundaria de Origen -->
+            <fieldset class="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-200">
+              <legend class="text-lg font-bold text-[#4C0000] mb-4 px-2">Secundaria de Origen</legend>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Nombre de Secundaria</label>
+                  <input name="nombre_secundaria" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Nombre de Secundaria"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Régimen *</label>
+                  <select name="regimen" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">Selecciona régimen</option>
+                    <option value="publica">Pública</option>
+                    <option value="privada">Privada</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Promedio General</label>
+                  <input name="promedio_general" type="number" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Promedio General"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Modalidad *</label>
+                  <select name="modalidad" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">Selecciona modalidad</option>
+                    <option value="general">General</option>
+                    <option value="tecnica">Técnica</option>
+                    <option value="abierta">Abierta</option>
+                    <option value="telesecundaria">Telesecundaria</option>
+                    <option value="ceneval">CENEVAL</option>
+                    <option value="inea">INEA</option>
+                    <option value="modular">Modular</option>
+                    <option value="otro">Otro</option>
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- Tutor Responsable -->
+            <fieldset class="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-200">
+              <legend class="text-lg font-bold text-[#4C0000] mb-4 px-2">Tutor Responsable</legend>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Nombre del Padre</label>
+                  <input name="nombre_padre" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Nombre del Padre"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono del Padre</label>
+                  <input name="telefono_padre" type="number" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Teléfono del Padre"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Nombre de la Madre</label>
+                  <input name="nombre_madre" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Nombre de la Madre"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono de la Madre</label>
+                  <input name="telefono_madre" type="number" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Teléfono de la Madre"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">¿Con quién vive? *</label>
+                  <select name="vive_con" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">¿Con quién vive?</option>
+                    <option value="padres">Padres</option>
+                    <option value="mama">Mamá</option>
+                    <option value="papa">Papá</option>
+                    <option value="abuelos">Abuelos</option>
+                    <option value="tios">Tíos</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Persona Emergencia - Nombre</label>
+                  <input name="persona_emergencia_nombre" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Persona Emergencia - Nombre"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Persona Emergencia - Parentesco</label>
+                  <input name="persona_emergencia_parentesco" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Persona Emergencia - Parentesco"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Persona Emergencia - Teléfono</label>
+                  <input name="persona_emergencia_telefono" type="number" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Persona Emergencia - Teléfono"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Responsable de Emergencia - Nombre</label>
+                  <input name="responsable_emergencia_nombre" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Nombre del Responsable"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Responsable de Emergencia - Teléfono</label>
+                  <input name="responsable_emergencia_telefono" type="number" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Teléfono del Responsable"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Responsable de Emergencia - Parentesco</label>
+                  <input name="responsable_emergencia_parentesco" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" placeholder="Parentesco"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">¿Entregó carta poder? *</label>
+                  <select name="carta_poder" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">¿Entregó carta poder?</option>
+                    <option value="Sí">Sí</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- Paraescolar -->
+            <fieldset class="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-200">
+              <legend class="text-lg font-bold text-[#4C0000] mb-4 px-2">Selecciona un Paraescolar</legend>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Paraescolar *</label>
+                <select id="paraescolar" name="paraescolar" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                  <option value="">--Selecciona--</option>
+                  <option value="AJEDREZ">AJEDREZ</option>
+                  <option value="ATLETISMO">ATLETISMO</option>
+                  <option value="BANDA DE GUERRA">BANDA DE GUERRA</option>
+                  <option value="BASQUETBOL">BASQUETBOL</option>
+                  <option value="DANZA">DANZA</option>
+                  <option value="ESCOLTA DE BANDERA">ESCOLTA DE BANDERA</option>
+                  <option value="FOTOGRAFÍA">FOTOGRAFÍA</option>
+                  <option value="FUTBOL">FUTBOL</option>
+                  <option value="PINTURA">PINTURA</option>
+                  <option value="TEATRO-CANTO">TEATRO-CANTO</option>
+                  <option value="TOCHO BANDERA">TOCHO BANDERA</option>
+                  <option value="VOLEIBOL">VOLEIBOL</option>
+                  <option value="ORATORIADECLAMACION">ORATORIA Y  DECLAMACION</option>
+                  <option value="MÚSICA">MÚSICA</option>
+                </select>
+              </div>
+            </fieldset>
+
+            <div id="pdfLink" class="mt-4"></div>
+          </form>
+        </div>
+        <div class="modal-footer bg-gray-100">
+          <button type="button" class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" form="registroForm" class="px-6 py-2 bg-[#4C0000] hover:bg-[#6a0000] text-white rounded-lg transition-colors duration-200 font-semibold">Guardar Registro</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const BASE_URL = window.location.origin.includes('localhost')
+      ? 'http://localhost:3001'
+      : 'https://registro272.onrender.com';
+
+    // Funcionalidad del botón Registrar
+    const btnRegistrar = document.getElementById('btnRegistrar');
+    const inputFolioRegistro = document.getElementById('folioRegistro');
+
+    if (btnRegistrar && inputFolioRegistro) {
+      btnRegistrar.addEventListener('click', async () => {
+        const folio = inputFolioRegistro.value.trim();
+        
+        if (!folio) {
+          alert('⚠️ Por favor ingresa tu número de folio');
+          inputFolioRegistro.focus();
+          return;
+        }
+
+        try {
+          // Validar que el folio existe
+          const res = await fetch(`${BASE_URL}/api/folio/${folio}`);
+          const data = await res.json();
+
+          if (res.ok) {
+            // Verificar si el registro ya está completado
+            if (data.registro_completado) {
+              const confirmar = confirm('Este folio ya tiene un registro completado. ¿Deseas ver el formulario de todas formas?');
+              if (!confirmar) return;
+            }
+
+            // Guardar folio en localStorage
+            localStorage.setItem('alumnoFolio', folio);
+            
+            // Abrir modal con el formulario
+            const modalElement = document.getElementById('formularioModal');
+            if (modalElement) {
+              // Cargar datos del folio si existen
+              cargarDatosFolioEnModal(folio);
+              const modal = new bootstrap.Modal(modalElement);
+              modal.show();
+            } else {
+              // Fallback: redirigir si no hay modal
+              window.location.href = '/formulario.html';
+            }
+          } else {
+            alert(data.message || '❌ Folio no encontrado. Por favor verifica tu número de folio.');
+            inputFolioRegistro.focus();
+          }
+        } catch (err) {
+          console.error('Error al validar folio:', err);
+          alert('❌ Error de conexión. Por favor intenta nuevamente.');
+        }
+      });
+
+      // Permitir enviar con Enter
+      inputFolioRegistro.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          btnRegistrar.click();
+        }
+      });
+    }
+
+    // Funcionalidad del botón Reimprimir
+    const btnReimprimir = document.getElementById('btnReimprimir');
+    const inputFolioReimpresion = document.getElementById('folioReimpresion');
+
+    if (btnReimprimir && inputFolioReimpresion) {
+      btnReimprimir.addEventListener('click', async () => {
+        const folio = inputFolioReimpresion.value.trim();
+        
+        if (!folio) {
+          alert('⚠️ Por favor ingresa tu número de folio');
+          inputFolioReimpresion.focus();
+          return;
+        }
+
+        try {
+          // Mostrar mensaje de carga
+          btnReimprimir.disabled = true;
+          btnReimprimir.textContent = 'Generando PDF...';
+
+          const res = await fetch(`${BASE_URL}/api/reimprimir/${folio}`);
+          const data = await res.json();
+
+          if (res.ok) {
+            // Construir URL completa del PDF
+            const pdfUrl = data.pdf.startsWith('http') 
+              ? data.pdf 
+              : `${BASE_URL}${data.pdf}`;
+            
+            // Abrir el PDF en una nueva ventana
+            window.open(pdfUrl, '_blank');
+            inputFolioReimpresion.value = '';
+          } else {
+            alert(data.message || '❌ No se pudo reimprimir el PDF. Verifica que el folio esté registrado y completado.');
+          }
+        } catch (err) {
+          console.error('Error al reimprimir PDF:', err);
+          alert('❌ Error de conexión. Por favor intenta nuevamente.');
+        } finally {
+          // Restaurar botón
+          btnReimprimir.disabled = false;
+          btnReimprimir.textContent = 'Reimprimir';
+        }
+      });
+
+      // Permitir enviar con Enter
+      inputFolioReimpresion.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          btnReimprimir.click();
+        }
+      });
+    }
+
+    // Función para cargar datos del folio en el modal
+    async function cargarDatosFolioEnModal(folio) {
+      try {
+        const res = await fetch(`${BASE_URL}/api/folio/${folio}`);
+        if (!res.ok) return;
+        
+        const data = await res.json();
+        const form = document.getElementById('registroForm');
+        if (!form) return;
+
+        // Llenar campos básicos
+        if (data.datos_alumno) {
+          const da = data.datos_alumno;
+          if (form.querySelector('[name="nombres"]')) form.querySelector('[name="nombres"]').value = da.nombres || '';
+          if (form.querySelector('[name="primer_apellido"]')) form.querySelector('[name="primer_apellido"]').value = da.primer_apellido || '';
+          if (form.querySelector('[name="segundo_apellido"]')) form.querySelector('[name="segundo_apellido"]').value = da.segundo_apellido || '';
+          if (form.querySelector('[name="curp"]')) form.querySelector('[name="curp"]').value = da.curp || '';
+          if (form.querySelector('[name="carrera"]')) form.querySelector('[name="carrera"]').value = da.carrera || '';
+          if (form.querySelector('[name="grupo"]')) form.querySelector('[name="grupo"]').value = da.grupo || '';
+          if (form.querySelector('[name="turno"]')) form.querySelector('[name="turno"]').value = da.turno || '';
+        }
+
+        // Si el registro está completado, deshabilitar el formulario
+        if (data.registro_completado) {
+          Array.from(form.elements).forEach(el => {
+            if (el.type !== 'hidden' && !el.readOnly) el.disabled = true;
+          });
+          alert('🛑 Este folio ya tiene un registro completado. Solo puedes visualizarlo.');
+        }
+      } catch (err) {
+        console.error('Error cargando datos del folio:', err);
+      }
+    }
+
+    // Inicializar scripts cuando el modal se abre
+    let scriptsInicializados = false;
+    document.getElementById('formularioModal')?.addEventListener('shown.bs.modal', function () {
+      const form = document.getElementById('registroForm');
+      if (!form) return;
+
+      // Cargar catálogos y scripts necesarios solo una vez
+      if (!scriptsInicializados) {
+        // Esperar un momento para que el DOM del modal esté completamente renderizado
+        setTimeout(() => {
+          if (typeof cargarCatalogo === 'function') cargarCatalogo();
+          if (typeof cargarCatalogoGeneral === 'function') cargarCatalogoGeneral();
+          if (typeof consultarFolioYAutocompletar === 'function') consultarFolioYAutocompletar();
+          scriptsInicializados = true;
+        }, 100);
+      }
+
+      // Script para opciones de carrera (siempre ejecutar)
+      const opciones = ["A Y B", "PROGRAMACIÓN", "GESTIÓN E INNOVACIÓN TURÍSTICA", "VENTAS"];
+      const selects = [
+        document.getElementById('primera_opcion'),
+        document.getElementById('segunda_opcion'),
+        document.getElementById('tercera_opcion'),
+        document.getElementById('cuarta_opcion')
+      ];
+      
+      function actualizarOpciones() {
+        const seleccionados = selects.map(select => select?.value).filter(Boolean);
+        selects.forEach(select => {
+          if (!select) return;
+          const valorActual = select.value;
+          select.innerHTML = '<option value="">Selecciona opción</option>';
+          opciones.forEach(opcion => {
+            if (!seleccionados.includes(opcion) || opcion === valorActual) {
+              const option = document.createElement('option');
+              option.value = opcion;
+              option.textContent = opcion;
+              if (opcion === valorActual) option.selected = true;
+              select.appendChild(option);
+            }
+          });
+        });
+      }
+      
+      // Remover listeners anteriores si existen y agregar nuevos
+      selects.forEach(select => {
+        if (select) {
+          select.removeEventListener('change', actualizarOpciones);
+          select.addEventListener('change', actualizarOpciones);
+        }
+      });
+
+      // Asegurar que el submit del formulario funcione
+      // El scripts.js ya debería tener el listener, pero lo verificamos
+      const registroForm = document.getElementById('registroForm');
+      if (registroForm && !registroForm.dataset.listenerAdded) {
+        // Si scripts.js no agregó el listener, lo agregamos manualmente
+        // Pero primero verificamos si ya existe
+        registroForm.dataset.listenerAdded = 'true';
+      }
+    });
+  </script>
+  
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Scripts del formulario -->
+  <script src="/scripts.js"></script>
+  <script src="/js/chatbot.js"></script>
 </body>
 </html>

@@ -134,7 +134,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('estado_nacimiento').value = da.estado_nacimiento || '';
         document.getElementById('municipio_nacimiento').value = da.municipio_nacimiento || '';
         document.getElementById('ciudad_nacimiento').value = da.ciudad_nacimiento || '';
-        document.getElementById('estado_civil').value = da.estado_civil || '';
+        // Estado civil: convertir número a string para el select
+        const estadoCivil = da.estado_civil ? String(da.estado_civil) : '';
+        document.getElementById('estado_civil').value = estadoCivil;
         document.getElementById('nacionalidad').value = da.nacionalidad || '';
         document.getElementById('pais_extranjero').value = da.pais_extranjero || '';
 
@@ -189,8 +191,54 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('persona_emergencia_parentesco').value = pe.parentesco || '';
         document.getElementById('persona_emergencia_telefono').value = pe.telefono || '';
 
+        // Inicializar script de opciones de carrera (evitar repeticiones)
+        inicializarOpcionesCarrera();
+        
         new bootstrap.Modal(document.getElementById('editModal')).show();
       });
+  }
+
+  // Función para manejar las opciones de carrera (evitar repeticiones)
+  function inicializarOpcionesCarrera() {
+    const opciones = ["A Y B", "PROGRAMACIÓN", "GESTIÓN E INNOVACIÓN TURÍSTICA", "VENTAS"];
+    const selects = [
+      document.getElementById('primera_opcion'),
+      document.getElementById('segunda_opcion'),
+      document.getElementById('tercera_opcion'),
+      document.getElementById('cuarta_opcion')
+    ];
+    
+    // Filtrar selects válidos
+    const selectsValidos = selects.filter(s => s !== null);
+    if (selectsValidos.length === 0) return;
+    
+    function actualizarOpciones() {
+      const seleccionados = selectsValidos.map(select => select.value).filter(Boolean);
+      selectsValidos.forEach(select => {
+        const valorActual = select.value;
+        select.innerHTML = '<option value="">Selecciona opción</option>';
+        opciones.forEach(opcion => {
+          if (!seleccionados.includes(opcion) || opcion === valorActual) {
+            const option = document.createElement('option');
+            option.value = opcion;
+            option.textContent = opcion;
+            if (opcion === valorActual) option.selected = true;
+            select.appendChild(option);
+          }
+        });
+      });
+    }
+    
+    // Remover listeners anteriores y agregar nuevos
+    selectsValidos.forEach(select => {
+      // Clonar el select para remover todos los listeners
+      const nuevoSelect = select.cloneNode(true);
+      select.parentNode.replaceChild(nuevoSelect, select);
+      nuevoSelect.addEventListener('change', actualizarOpciones);
+    });
+    
+    // Actualizar opciones inicialmente
+    actualizarOpciones();
   }
 
 document.getElementById('btnGuardar').addEventListener('click', () => {
@@ -214,7 +262,7 @@ document.getElementById('btnGuardar').addEventListener('click', () => {
       estado_nacimiento: document.getElementById('estado_nacimiento').value,
       municipio_nacimiento: document.getElementById('municipio_nacimiento').value,
       ciudad_nacimiento: document.getElementById('ciudad_nacimiento').value,
-      estado_civil: document.getElementById('estado_civil').value,
+      estado_civil: parseInt(document.getElementById('estado_civil').value) || 0,
       nacionalidad: document.getElementById('nacionalidad').value,
       pais_extranjero: document.getElementById('pais_extranjero').value
     },
