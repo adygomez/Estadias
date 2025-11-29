@@ -32,8 +32,36 @@ const requireAdmin = (req, res, next) => {
   next();
 };
 
+// Middleware para verificar que el usuario sea subdirección o admin
+const requireSubdireccion = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({ message: 'Usuario no autenticado' });
+  }
+
+  if (req.user.role !== 'subdireccion' && req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Acceso denegado. Se requiere rol de subdirección o administrador' });
+  }
+
+  next();
+};
+
+// Middleware para verificar que el usuario sea control escolar o admin
+const requireControlEscolar = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({ message: 'Usuario no autenticado' });
+  }
+
+  if (req.user.role !== 'control_escolar' && req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Acceso denegado. Se requiere rol de control escolar o administrador' });
+  }
+
+  next();
+};
+
 module.exports = {
   authenticateToken,
-  requireAdmin
+  requireAdmin,
+  requireSubdireccion,
+  requireControlEscolar
 };
 

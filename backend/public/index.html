@@ -361,8 +361,36 @@
             const token = localStorage.getItem('token');
             if (token && tokenValido(token)) {
               ev.preventDefault();
-              // Redirige al dashboard si hay sesión válida
-              window.location.href = '/dashboard-admin';
+              // Obtener el rol del usuario desde localStorage o del token
+              const userStr = localStorage.getItem('user');
+              let role = null;
+              
+              if (userStr) {
+                try {
+                  const user = JSON.parse(userStr);
+                  role = user.role;
+                } catch (e) {
+                  // Si no se puede parsear, intentar extraer del token
+                  const payload = parseJwt(token);
+                  role = payload?.role;
+                }
+              } else {
+                // Si no hay user en localStorage, extraer del token
+                const payload = parseJwt(token);
+                role = payload?.role;
+              }
+              
+              // Redirigir según el rol
+              if (role === 'admin') {
+                window.location.href = '/admin-panel';
+              } else if (role === 'subdireccion') {
+                window.location.href = '/dashboard-subdireccion';
+              } else if (role === 'control_escolar') {
+                window.location.href = '/dashboard-controlEscolar';
+              } else {
+                // Si no se puede determinar el rol, redirigir al login
+                window.location.href = '/login.html';
+              }
             }
             // Si no hay token válido, se comporta como enlace normal
           } catch (err) {

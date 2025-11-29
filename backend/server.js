@@ -44,10 +44,19 @@ app.get('/api/logros', async (req, res) => {
 app.use('/api/dashboard', require('./routers/dashboard'));
 
 // Middleware de autenticación para dashboards
-const { authenticateToken, requireAdmin } = require('./middleware/auth');
+const { authenticateToken, requireAdmin, requireSubdireccion, requireControlEscolar } = require('./middleware/auth');
 
 // Ruta para verificar autenticación (usada por el frontend)
-app.get('/api/auth/verify', authenticateToken, requireAdmin, (req, res) => {
+app.get('/api/auth/verify', authenticateToken, (req, res) => {
+  res.json({ 
+    authenticated: true, 
+    user: req.user,
+    message: 'Usuario autenticado' 
+  });
+});
+
+// Ruta para verificar si es admin (usada por el frontend)
+app.get('/api/auth/verify-admin', authenticateToken, requireAdmin, (req, res) => {
   res.json({ 
     authenticated: true, 
     user: req.user,
@@ -55,19 +64,47 @@ app.get('/api/auth/verify', authenticateToken, requireAdmin, (req, res) => {
   });
 });
 
+// Ruta para verificar si puede acceder a dashboard-subdireccion (admin o subdireccion)
+app.get('/api/auth/verify-dashboard-admin', authenticateToken, requireSubdireccion, (req, res) => {
+  res.json({ 
+    authenticated: true, 
+    user: req.user,
+    message: 'Usuario autorizado para dashboard-subdireccion' 
+  });
+});
+
+// Ruta para verificar si puede acceder a dashboard-controlEscolar (control_escolar o admin)
+app.get('/api/auth/verify-control-escolar', authenticateToken, requireControlEscolar, (req, res) => {
+  res.json({ 
+    authenticated: true, 
+    user: req.user,
+    message: 'Usuario autorizado para dashboard-controlEscolar' 
+  });
+});
+
 // Proteger rutas HTML del dashboard
 // Nota: Las rutas HTML se sirven directamente, pero el frontend debe verificar el token
+// dashboard-admin ahora redirige a dashboard-subdireccion (ambos admin y subdireccion usan la misma vista)
 app.get('/dashboard-admin', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'views', 'dashboard-admin.html'));
+  res.redirect(302, '/dashboard-subdireccion');
 });
 
 app.get('/dashboard-controlEscolar', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'dashboard-controlEscolar.html'));
 });
 
+app.get('/dashboard-subdireccion', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'dashboard-subdireccion.html'));
+});
+
+// Panel administrativo (solo admin)
+app.get('/admin-panel', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'views', 'admin-panel.html'));
+});
+
 // Redirecciones para compatibilidad con rutas antiguas
 app.get('/dashboard', (req, res) => {
-  res.redirect(302, '/dashboard-admin');
+  res.redirect(302, '/dashboard-subdireccion');
 });
 
 app.get('/dashboard-carga', (req, res) => {

@@ -21,9 +21,11 @@
     <div class="flex items-center justify-between px-4 md:px-6">
       <!-- Logo Section (Left) -->
       <div class="flex items-center space-x-4">
-        <div class="bg-white px-4 py-2 rounded-lg shadow-sm">
-          <img src="/images/logo-cbtis.png" alt="Logo CBTIS 272" class="h-12 w-auto" />
-        </div>
+        <a href="/index.html" class="cursor-pointer">
+          <div class="bg-white px-4 py-2 rounded-lg shadow-sm hover:bg-gray-100 transition-colors duration-200">
+            <img src="/images/logo-cbtis.png" alt="Logo CBTIS 272" class="h-12 w-auto" />
+          </div>
+        </a>
       </div>
       
       <!-- Navigation Links (Right) -->
@@ -31,8 +33,6 @@
         <!-- Navigation Links -->
         <div class="hidden md:flex items-center space-x-6">
           <a href="/index.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Inicio</a>
-          <a href="/inscripcion.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Inscripción</a>
-          <a href="/reinscripcion.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Reinscripción</a>
         </div>
         
         <!-- Logout Button -->
@@ -194,9 +194,9 @@
 
             <div class="col-md-4 mb-3">
               <label for="folio" class="block text-red-600 font-bold text-base mb-1">
-                ⚠️ Folio (NO se te olvide capturarlo de nuevo)
+                ⚠️ Folio <span class="text-red-500">*</span>
               </label>
-              <input type="text" id="folio" class="w-full px-3 py-2 border-2 border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+              <input type="text" id="folio" required class="w-full px-3 py-2 border-2 border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="Folio del alumno">
             </div>
               
               <div class="col-md-4 mb-3">
@@ -582,6 +582,81 @@
   <!-- Bootstrap & dashboard.js -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/js/dashboard.js"></script>
+  
+  <script>
+    // Verificación de autenticación y rol al cargar la página
+    (function() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = '/login.html';
+        return;
+      }
+
+      // Verificar que el usuario tenga rol de subdireccion o admin
+      fetch('/api/auth/verify-dashboard-admin', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        if (!res.ok) {
+          // Si es 401, la sesión expiró
+          if (res.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            localStorage.removeItem('login');
+            alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+            window.location.href = '/login.html';
+            return;
+          }
+          
+          // Si es 403, el usuario no tiene el rol correcto
+          if (res.status === 403) {
+            return res.json().then(data => {
+              localStorage.removeItem('token');
+              localStorage.removeItem('user');
+              localStorage.removeItem('login');
+              alert(data.message || 'Acceso denegado. Solo usuarios con rol de subdirección pueden acceder a esta sección.');
+              window.location.href = '/login.html';
+            });
+          }
+        }
+      })
+      .catch(err => {
+        console.error('Error verificando autenticación:', err);
+        window.location.href = '/login.html';
+      });
+
+    })();
+    
+    // Agregar event listener para el botón de logout (después de que el DOM esté listo)
+    function setupLogout() {
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        // Remover listeners anteriores si existen
+        const newLogoutBtn = logoutBtn.cloneNode(true);
+        logoutBtn.parentNode.replaceChild(newLogoutBtn, logoutBtn);
+        
+        newLogoutBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          localStorage.removeItem('login');
+          window.location.href = '/login.html';
+        });
+      }
+    }
+    
+    // Intentar configurar el logout cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupLogout);
+    } else {
+      setupLogout();
+    }
+    
+    // También intentar después de un pequeño delay para asegurar que dashboard.js no interfiera
+    setTimeout(setupLogout, 100);
+  </script>
 
 
   
@@ -682,7 +757,8 @@
         headers
       });
 
-      if (response.status === 401 || response.status === 403) {
+      // Solo tratar 401 como sesión expirada, 403 puede ser falta de permisos específicos
+      if (response.status === 401) {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         localStorage.removeItem('login');
@@ -690,6 +766,9 @@
         window.location.href = '/login.html';
         return;
       }
+      
+      // Para 403, solo retornar la respuesta sin cerrar sesión
+      // El código que llama a esta función debe manejar el 403 apropiadamente
 
       return response;
     }
@@ -708,8 +787,13 @@
           const data = await res.json();
           logrosData = data || [];
           mostrarLogros(logrosData);
+        } else if (res && res.status === 403) {
+          // Si es 403, el usuario no tiene permisos para logros (aunque debería tenerlos)
+          console.warn('No se tienen permisos para cargar logros');
+          container.innerHTML = '<div class="col-span-2 text-center text-gray-500 py-4"><p>No se tienen permisos para gestionar logros.</p></div>';
+          logrosData = [];
         } else {
-          // Si hay error, mostrar cards vacías para poder crear logros
+          // Si hay otro error, mostrar cards vacías para poder crear logros
           console.warn('No se pudieron cargar logros, mostrando cards vacías');
           logrosData = [];
           mostrarLogros([]);

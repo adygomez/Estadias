@@ -231,6 +231,19 @@ router.put('/dashboard/alumnos/:id', async (req, res) => {
 
 router.post('/dashboard/alumnos', async (req, res) => {
   try {
+    const { folio } = req.body;
+
+    // Validar que el folio sea obligatorio
+    if (!folio || !folio.trim()) {
+      return res.status(400).json({ message: 'El folio es obligatorio' });
+    }
+
+    // Verificar si el folio ya existe
+    const alumnoExistente = await Alumno.findOne({ folio: folio.trim() });
+    if (alumnoExistente) {
+      return res.status(400).json({ message: 'Este folio ya está en uso por otro alumno' });
+    }
+
     const bodyUpper = toUpperData(req.body);
     const nuevoPara = bodyUpper?.datos_generales?.paraescolar;
 
@@ -245,7 +258,11 @@ router.post('/dashboard/alumnos', async (req, res) => {
     await nuevoAlumno.save();
     res.status(201).json(nuevoAlumno);
   } catch (error) {
-    res.status(500).json({ message: 'Error al crear alumno', error });
+    // Manejar error de folio duplicado de MongoDB
+    if (error.code === 11000 || error.message.includes('duplicate')) {
+      return res.status(400).json({ message: 'Este folio ya está en uso por otro alumno' });
+    }
+    res.status(500).json({ message: 'Error al crear alumno', error: error.message });
   }
 });
 

@@ -2,22 +2,23 @@
 const express = require('express');
 const router = express.Router();
 const dashboardController = require('../controllers/dashboardController');
-const { authenticateToken, requireAdmin } = require('../middleware/auth');
+const { authenticateToken, requireAdmin, requireSubdireccion } = require('../middleware/auth');
 
-// Todas las rutas del dashboard requieren autenticación y ser admin
+// Todas las rutas requieren autenticación
 router.use(authenticateToken);
-router.use(requireAdmin);
 
+// Rutas de alumnos: accesibles para admin, subdireccion y control_escolar
 router.get('/alumnos', dashboardController.getAllAlumnos);
 router.get('/alumno/:id', dashboardController.getAlumno);
+router.post('/alumnos', dashboardController.createAlumno);
 router.put('/alumno/:id', dashboardController.updateAlumno);
 router.delete('/alumno/:id', dashboardController.deleteAlumno);
 
-// Rutas de logros (requieren autenticación y ser admin)
-router.get('/logros', dashboardController.getAllLogros);
-router.get('/logro/:id', dashboardController.getLogro);
-router.post('/logro', dashboardController.createLogro);
-router.put('/logro/:id', dashboardController.updateLogro);
-router.delete('/logro/:id', dashboardController.deleteLogro);
+// Rutas de logros: para admin y subdireccion
+router.get('/logros', requireSubdireccion, dashboardController.getAllLogros);
+router.get('/logro/:id', requireSubdireccion, dashboardController.getLogro);
+router.post('/logro', requireSubdireccion, dashboardController.createLogro);
+router.put('/logro/:id', requireSubdireccion, dashboardController.updateLogro);
+router.delete('/logro/:id', requireSubdireccion, dashboardController.deleteLogro);
 
 module.exports = router;

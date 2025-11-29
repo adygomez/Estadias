@@ -17,16 +17,19 @@
     <div class="flex items-center justify-between px-4 md:px-6">
       <!-- Logo Section (Left) -->
       <div class="flex items-center space-x-4">
-        <div class="bg-white px-4 py-2 rounded-lg shadow-sm">
-          <img src="/images/logo-cbtis.png" alt="Logo CBTIS 272" class="h-12 w-auto" />
-        </div>
+        <a href="/index.html" class="cursor-pointer">
+          <div class="bg-white px-4 py-2 rounded-lg shadow-sm hover:bg-gray-100 transition-colors duration-200">
+            <img src="/images/logo-cbtis.png" alt="Logo CBTIS 272" class="h-12 w-auto" />
+          </div>
+        </a>
       </div>
       
       <!-- Navigation Links (Right) -->
       <div class="flex items-center space-x-4 md:space-x-6">
         <a href="/index.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium text-sm md:text-base">Inicio</a>
-        <a href="/dashboard-admin" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium text-sm md:text-base">Dashboard</a>
-        <a href="/login.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium text-sm md:text-base">Iniciar sesión</a>
+        <button id="logoutBtn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 font-medium text-sm md:text-base">
+          Cerrar Sesión
+        </button>
       </div>
     </div>
   </nav>
@@ -36,10 +39,7 @@
     <!-- Sección: Gestión de Alumnos (copiada desde dashboard admin) -->
     <div class="bg-white rounded-lg shadow-md p-6 md:p-8 mb-6">
       <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-        <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-0">Gestión de Alumnos</h2>
-        <button id="btnAgregarNuevo" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors duration-200 font-semibold">
-          Agregar Nuevo Alumno
-        </button>
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-0">Consulta de Alumnos</h2>
       </div>
 
       <!-- Búsqueda -->
@@ -74,7 +74,6 @@
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider border-b">CURP</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider border-b">Semestre</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider border-b">Grupo</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider border-b">Acciones</th>
             </tr>
           </thead>
           <tbody id="resultadosTable" class="bg-white divide-y divide-gray-200">
@@ -95,7 +94,6 @@
           Exportar a Excel
         </button>
       </div>
-      <p id="cargandoExport" class="hidden text-center font-bold text-blue-600 mt-4">⏳ Preparando archivo, por favor espera...</p>
     </div>
     <!-- Las secciones de carga de archivos se han removido en esta vista -->
   </div>
@@ -106,19 +104,34 @@
     if (!token) {
       window.location.href = '/login.html';
     } else {
-      // Verificar que el token sea válido y el usuario sea admin
-      fetch('/api/auth/verify', {
+      // Verificar que el token sea válido y el usuario tenga rol de control_escolar o admin
+      fetch('/api/auth/verify-control-escolar', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       })
       .then(res => {
         if (!res.ok) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          localStorage.removeItem('login');
-          alert('Acceso denegado. Solo los administradores pueden acceder a esta sección.');
-          window.location.href = '/login.html';
+          // Si es 401, la sesión expiró
+          if (res.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            localStorage.removeItem('login');
+            alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+            window.location.href = '/login.html';
+            return;
+          }
+          
+          // Si es 403, el usuario no tiene el rol correcto
+          if (res.status === 403) {
+            return res.json().then(data => {
+              localStorage.removeItem('token');
+              localStorage.removeItem('user');
+              localStorage.removeItem('login');
+              alert(data.message || 'Acceso denegado. Solo usuarios con rol de control escolar pueden acceder a esta sección.');
+              window.location.href = '/login.html';
+            });
+          }
         }
       })
       .catch(err => {
@@ -147,7 +160,8 @@
         headers
       });
 
-      if (response.status === 401 || response.status === 403) {
+      // Solo tratar 401 como sesión expirada, 403 puede ser falta de permisos específicos
+      if (response.status === 401) {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         localStorage.removeItem('login');
@@ -155,9 +169,33 @@
         window.location.href = '/login.html';
         return;
       }
+      
+      // Para 403, solo retornar la respuesta sin cerrar sesión
+      // El código que llama a esta función debe manejar el 403 apropiadamente
 
       return response;
     };
+
+    // Configurar botón de logout
+    function setupLogout() {
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          localStorage.removeItem('login');
+          window.location.href = '/login.html';
+        });
+      }
+    }
+
+    // Configurar logout cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupLogout);
+    } else {
+      setupLogout();
+    }
   </script>
 
   
@@ -171,77 +209,87 @@
     const btnExportar = document.getElementById('btnExportar');
     if (btnExportar) {
       btnExportar.addEventListener('click', () => {
-        const cargandoEl = document.getElementById('cargandoExport');
-        if (cargandoEl) cargandoEl.classList.remove('hidden');
         // Redirigir para descargar el excel (la ruta debe existir en el servidor)
         window.location.href = `${BASE_URL}/api/exportar-excel`;
       });
     }
 
-    // Búsqueda simple de alumnos y renderizado en la tabla (intenta usar la API con autenticación)
+    // Búsqueda de alumnos usando la API correcta
     async function buscarAlumnos() {
-      const folio = document.getElementById('searchFolio')?.value || '';
-      const apellidos = document.getElementById('searchApellidos')?.value || '';
+      const folio = document.getElementById('searchFolio')?.value.trim() || '';
+      const apellidos = document.getElementById('searchApellidos')?.value.trim() || '';
       const resultadosTable = document.getElementById('resultadosTable');
       if (!resultadosTable) return;
 
-      resultadosTable.innerHTML = `<tr><td colspan="6" class="px-6 py-4 text-center text-gray-500">Buscando...</td></tr>`;
+      if (!folio && !apellidos) {
+        resultadosTable.innerHTML = `<tr><td colspan="5" class="px-6 py-4 text-center text-gray-500">Ingresa al menos un criterio de búsqueda</td></tr>`;
+        return;
+      }
+
+      resultadosTable.innerHTML = `<tr><td colspan="5" class="px-6 py-4 text-center text-gray-500">Buscando...</td></tr>`;
 
       try {
-        const params = new URLSearchParams();
-        if (folio) params.set('folio', folio);
-        if (apellidos) params.set('apellidos', apellidos);
-
-        const res = await authenticatedFetch(`${BASE_URL}/api/alumnos?${params.toString()}`);
+        const res = await authenticatedFetch(`${BASE_URL}/api/dashboard/alumnos?folio=${folio}&apellidos=${apellidos}`);
         if (!res) return;
+        
         if (!res.ok) {
-          const text = await res.text();
-          throw new Error(text || 'Error en búsqueda');
+          const errorText = await res.text();
+          throw new Error(errorText || 'Error en búsqueda');
         }
 
         const data = await res.json();
         renderResultados(data || []);
       } catch (err) {
         console.error('Error buscando alumnos:', err);
-        resultadosTable.innerHTML = `<tr><td colspan="6" class="px-6 py-4 text-center text-red-500">Error buscando alumnos</td></tr>`;
+        resultadosTable.innerHTML = `<tr><td colspan="5" class="px-6 py-4 text-center text-red-500">Error buscando alumnos: ${err.message}</td></tr>`;
       }
     }
 
     function renderResultados(items) {
       const resultadosTable = document.getElementById('resultadosTable');
       if (!resultadosTable) return;
+      
       if (!items.length) {
-        resultadosTable.innerHTML = `<tr><td colspan="6" class="px-6 py-4 text-center text-gray-500">No se encontraron registros</td></tr>`;
+        resultadosTable.innerHTML = `<tr><td colspan="5" class="px-6 py-4 text-center text-gray-500">No se encontraron registros</td></tr>`;
         return;
       }
 
-      resultadosTable.innerHTML = items.map(item => `
-        <tr>
-          <td class="px-6 py-3 text-sm text-gray-700">${item.folio || ''}</td>
-          <td class="px-6 py-3 text-sm text-gray-700">${(item.nombres || '') + ' ' + (item.primer_apellido || '') + ' ' + (item.segundo_apellido || '')}</td>
-          <td class="px-6 py-3 text-sm text-gray-700">${item.curp || ''}</td>
-          <td class="px-6 py-3 text-sm text-gray-700">${item.semestre || ''}</td>
-          <td class="px-6 py-3 text-sm text-gray-700">${item.grupo || ''}</td>
-          <td class="px-6 py-3 text-sm text-gray-700">
-            <button class="bg-[#4C0000] text-white px-3 py-1 rounded-md btn-ver" data-folio="${item.folio || ''}">Ver</button>
-          </td>
-        </tr>
-      `).join('');
-
-      // Delegación simple para botones 'Ver'
-      resultadosTable.querySelectorAll('.btn-ver').forEach(b => {
-        b.addEventListener('click', () => {
-          const folio = b.getAttribute('data-folio');
-          if (folio) {
-            // Por ahora solo navegamos a la vista del alumno si existe ruta
-            window.location.href = `/alumnos/${folio}`;
-          }
-        });
-      });
+      resultadosTable.innerHTML = items.map(alumno => {
+        const datos = alumno.datos_alumno || {};
+        return `
+          <tr class="hover:bg-gray-50">
+            <td class="px-6 py-3 text-sm text-gray-700">${alumno.folio || ''}</td>
+            <td class="px-6 py-3 text-sm text-gray-700">${datos.primer_apellido || ''} ${datos.segundo_apellido || ''} ${datos.nombres || ''}</td>
+            <td class="px-6 py-3 text-sm text-gray-700">${datos.curp || ''}</td>
+            <td class="px-6 py-3 text-sm text-gray-700">${datos.semestre || ''}</td>
+            <td class="px-6 py-3 text-sm text-gray-700">${datos.grupo || ''}</td>
+          </tr>
+        `;
+      }).join('');
     }
 
     const btnBuscar = document.getElementById('btnBuscar');
     if (btnBuscar) btnBuscar.addEventListener('click', buscarAlumnos);
+
+    // Permitir búsqueda con Enter
+    const searchFolio = document.getElementById('searchFolio');
+    const searchApellidos = document.getElementById('searchApellidos');
+    
+    if (searchFolio) {
+      searchFolio.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          buscarAlumnos();
+        }
+      });
+    }
+    
+    if (searchApellidos) {
+      searchApellidos.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          buscarAlumnos();
+        }
+      });
+    }
   </script>
   <script src="/js/chatbot.js"></script>
 </body>

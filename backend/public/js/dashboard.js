@@ -48,16 +48,69 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  // Verificar que el usuario sea admin
+  // Obtener la URL actual y el rol del usuario
+  const currentPath = window.location.pathname;
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const userRole = user.role;
+
+  // Redirigir si está en dashboard-admin (ya no existe, redirigir a dashboard-subdireccion)
+  if (currentPath === '/dashboard-admin') {
+    window.location.href = '/dashboard-subdireccion';
+    return;
+  }
+
+    // Verificar que el usuario tenga acceso a dashboard-subdireccion (admin o subdireccion)
   try {
-    const verifyRes = await authenticatedFetch('/api/auth/verify');
-    if (!verifyRes || !verifyRes.ok) {
-      alert('Acceso denegado. Solo los administradores pueden acceder a esta sección.');
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      localStorage.removeItem('login');
-      window.location.href = '/login.html';
-      return;
+    const token = getToken();
+    console.log('Usuario actual:', user);
+    
+    const verifyRes = await fetch('/api/auth/verify-dashboard-admin', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!verifyRes.ok) {
+      // Si es 401, la sesión expiró
+      if (verifyRes.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('login');
+        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+        window.location.href = '/login.html';
+        return;
+      }
+      
+      // Si es 403, el usuario no tiene el rol correcto
+      if (verifyRes.status === 403) {
+        const data = await verifyRes.json().catch(() => ({}));
+        console.error('Acceso denegado. Rol del usuario:', userRole);
+        alert(data.message || 'Acceso denegado. Solo usuarios con rol de administrador o subdirección pueden acceder a esta sección.');
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('login');
+        window.location.href = '/login.html';
+        return;
+      }
+    }
+    
+    // Si llegamos aquí, el usuario tiene acceso
+    console.log('Acceso autorizado para dashboard');
+    
+    // Verificar rol del usuario y mostrar opciones según el rol (solo en dashboard-subdireccion para admin)
+    if (currentPath === '/dashboard-subdireccion' && userRole === 'admin') {
+      // Mostrar enlace al panel administrativo si es admin
+      const navLinks = document.querySelector('.hidden.md\\:flex.items-center.space-x-6');
+      if (navLinks) {
+        // Verificar que el enlace no exista ya
+        if (!navLinks.querySelector('a[href="/admin-panel"]')) {
+          const adminPanelLink = document.createElement('a');
+          adminPanelLink.href = '/admin-panel';
+          adminPanelLink.className = 'text-white hover:text-gray-200 transition-colors duration-200 font-medium';
+          adminPanelLink.textContent = 'Panel Admin';
+          navLinks.insertBefore(adminPanelLink, navLinks.firstChild);
+        }
+      }
     }
   } catch (error) {
     console.error('Error verificando autenticación:', error);
@@ -65,12 +118,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  document.getElementById('logoutBtn').addEventListener('click', () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('login');
-    window.location.href = '/login.html';
-  });
+  // Configurar logout para dashboard-subdireccion
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    // Remover listeners anteriores si existen clonando el botón
+    const newLogoutBtn = logoutBtn.cloneNode(true);
+    logoutBtn.parentNode.replaceChild(newLogoutBtn, logoutBtn);
+    
+    newLogoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('login');
+      window.location.href = '/login.html';
+    });
+  }
 
   const searchFolio = document.getElementById('searchFolio');
   const searchApellidos = document.getElementById('searchApellidos');
@@ -118,6 +180,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       })
       .then(alumno => {
         document.getElementById('editId').value = alumno._id;
+        // Cargar el folio del alumno
+        document.getElementById('folio').value = alumno.folio || '';
         const da = alumno.datos_alumno || {};
         document.getElementById('primer_apellido').value = da.primer_apellido || '';
         document.getElementById('segundo_apellido').value = da.segundo_apellido || '';
@@ -241,11 +305,45 @@ document.addEventListener('DOMContentLoaded', async () => {
     actualizarOpciones();
   }
 
-document.getElementById('btnGuardar').addEventListener('click', () => {
+document.getElementById('btnGuardar').addEventListener('click', async () => {
   const id = document.getElementById('editId').value;
+  const folio = document.getElementById('folio').value.trim();
+
+  // Validar que el folio sea obligatorio
+  if (!folio) {
+    alert('⚠️ El folio es obligatorio. Por favor ingresa un folio.');
+    document.getElementById('folio').focus();
+    return;
+  }
+
+  // Verificar si el folio ya existe (excepto si es el mismo alumno que se está editando)
+  try {
+    const checkRes = await authenticatedFetch(`/api/dashboard/alumnos?folio=${folio}`);
+    if (checkRes && checkRes.ok) {
+      const alumnos = await checkRes.json();
+      // Si hay alumnos con ese folio y no es el mismo que estamos editando
+      const folioDuplicado = alumnos.find(alumno => {
+        // Si estamos editando (hay id), verificar que no sea el mismo alumno
+        if (id) {
+          return alumno._id !== id && alumno.folio === folio;
+        }
+        // Si estamos creando (no hay id), cualquier alumno con ese folio es duplicado
+        return alumno.folio === folio;
+      });
+
+      if (folioDuplicado) {
+        alert('❌ Este folio ya está en uso por otro alumno. Por favor ingresa un folio diferente.');
+        document.getElementById('folio').focus();
+        return;
+      }
+    }
+  } catch (err) {
+    console.error('Error verificando folio:', err);
+    // Continuar con el guardado si hay error en la verificación
+  }
 
   const datos = {
-    folio: document.getElementById('folio').value,
+    folio: folio,
     datos_alumno: {
       primer_apellido: document.getElementById('primer_apellido').value,
       segundo_apellido: document.getElementById('segundo_apellido').value,
@@ -332,10 +430,26 @@ document.getElementById('btnGuardar').addEventListener('click', () => {
     method: metodo,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(datos)
-  }).then((res) => {
+  }).then(async (res) => {
     if (!res) return;
-    alert('Guardado correctamente');
+    
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({ message: 'Error al guardar' }));
+      // Verificar si es error de folio duplicado
+      if (errorData.message && (errorData.message.includes('duplicate') || errorData.message.includes('ya existe') || errorData.message.includes('folio'))) {
+        alert('❌ Este folio ya está en uso. Por favor ingresa un folio diferente.');
+        document.getElementById('folio').focus();
+        return;
+      }
+      alert('❌ Error: ' + (errorData.message || 'No se pudo guardar el alumno'));
+      return;
+    }
+    
+    alert('✅ Guardado correctamente');
     location.reload();
+  }).catch((err) => {
+    console.error('Error al guardar:', err);
+    alert('❌ Error al guardar. Por favor intenta nuevamente.');
   });
 });
 
@@ -391,6 +505,8 @@ document.getElementById('btnAgregarNuevo').addEventListener('click', () => {
   document.getElementById('editId').value = '';
   const inputs = document.querySelectorAll('#editForm input, #editForm select, #editForm textarea');
   inputs.forEach(input => input.value = '');
+  // Limpiar el campo folio también
+  document.getElementById('folio').value = '';
   new bootstrap.Modal(document.getElementById('editModal')).show();
 });
 

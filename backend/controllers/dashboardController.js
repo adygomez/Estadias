@@ -22,12 +22,58 @@ exports.getAlumno = async (req, res) => {
   }
 };
 
+// Crear un nuevo alumno
+exports.createAlumno = async (req, res) => {
+  try {
+    const { folio } = req.body;
+
+    // Validar que el folio sea obligatorio
+    if (!folio || !folio.trim()) {
+      return res.status(400).json({ message: 'El folio es obligatorio' });
+    }
+
+    // Verificar si el folio ya existe
+    const alumnoExistente = await Alumno.findOne({ folio: folio.trim() });
+    if (alumnoExistente) {
+      return res.status(400).json({ message: 'Este folio ya está en uso por otro alumno' });
+    }
+
+    const nuevoAlumno = new Alumno(req.body);
+    await nuevoAlumno.save();
+    res.status(201).json(nuevoAlumno);
+  } catch (err) {
+    // Manejar error de folio duplicado de MongoDB
+    if (err.code === 11000 || err.message.includes('duplicate')) {
+      return res.status(400).json({ message: 'Este folio ya está en uso por otro alumno' });
+    }
+    res.status(500).json({ message: err.message });
+  }
+};
+
 // Actualizar un alumno
 exports.updateAlumno = async (req, res) => {
   try {
+    const { folio } = req.body;
+    const alumnoId = req.params.id;
+
+    // Validar que el folio sea obligatorio
+    if (!folio || !folio.trim()) {
+      return res.status(400).json({ message: 'El folio es obligatorio' });
+    }
+
+    // Verificar si el folio ya existe en otro alumno
+    const alumnoExistente = await Alumno.findOne({ folio: folio.trim() });
+    if (alumnoExistente && alumnoExistente._id.toString() !== alumnoId) {
+      return res.status(400).json({ message: 'Este folio ya está en uso por otro alumno' });
+    }
+
     await Alumno.findByIdAndUpdate(req.params.id, req.body);
     res.json({ message: 'Alumno actualizado correctamente' });
   } catch (err) {
+    // Manejar error de folio duplicado de MongoDB
+    if (err.code === 11000 || err.message.includes('duplicate')) {
+      return res.status(400).json({ message: 'Este folio ya está en uso por otro alumno' });
+    }
     res.status(500).json({ message: err.message });
   }
 };

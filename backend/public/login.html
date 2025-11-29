@@ -30,7 +30,6 @@
       <!-- Título del Panel -->
       <div class="w-full bg-gray-300 py-4">
         <h2 class="text-2xl font-semibold text-gray-800 text-center">Iniciar Sesión</h2>
-        <h2 class="text-2xl font-semibold text-gray-800 text-center">Administrador</h2>
       </div>
       
       <!-- Logo DG ETI (centrado) -->
@@ -85,9 +84,9 @@
           </div>
         </div>
 
-        <!-- Enlace de recuperación -->
+        <!-- Enlace de recuperación (oculto para mantener el espacio) -->
         <div class="flex justify-center">
-          <a href="#" class="text-[#4C0000] text-sm hover:underline">¿Olvidó su nombre de usuario o contraseña?</a>
+          <a href="#" class="text-[#4C0000] text-sm hover:underline invisible">¿Olvidó su nombre de usuario o contraseña?</a>
         </div>
 
         <!-- Botón Ingresar -->
@@ -136,11 +135,16 @@
         localStorage.setItem('user', JSON.stringify(data.user));
         localStorage.setItem('login', 'true'); // Mantener para compatibilidad
         
-        // Verificar que el usuario sea admin antes de redirigir
-        if (data.user.role === 'admin') {
-          window.location.href = '/dashboard-admin';
+        // Redirigir según el rol del usuario
+        const role = data.user.role;
+        if (role === 'admin') {
+          window.location.href = '/admin-panel';
+        } else if (role === 'subdireccion') {
+          window.location.href = '/dashboard-subdireccion';
+        } else if (role === 'control_escolar') {
+          window.location.href = '/dashboard-controlEscolar';
         } else {
-          alert('Acceso denegado. Solo los administradores pueden acceder al dashboard.');
+          alert('Rol no reconocido. Contacte al administrador.');
           localStorage.removeItem('token');
           localStorage.removeItem('user');
           localStorage.removeItem('login');
