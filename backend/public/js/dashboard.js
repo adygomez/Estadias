@@ -1,6 +1,7 @@
+// Usar window.location.origin en producción para que funcione con cualquier dominio
 const BASE_URL = window.location.origin.includes('localhost')
   ? 'http://localhost:3001'
-  : 'https://registro272.onrender.com';
+  : window.location.origin;
 
 // Función para obtener el token JWT
 const getToken = () => {

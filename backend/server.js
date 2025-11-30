@@ -8,9 +8,34 @@ require('dotenv').config();
 
 const app = express();
 
-//  CORS
+//  CORS - Configuración con variables de entorno
+const allowedOrigins = process.env.ALLOWED_ORIGINS 
+  ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
+  : ['http://localhost:3001', 'http://localhost:3000'];
+
 const corsOptions = {
-  origin: 'https://registro272.onrender.com',
+  origin: function (origin, callback) {
+    // Permitir requests sin origin (como Postman, mobile apps, etc.)
+    if (!origin) return callback(null, true);
+    
+    // Permitir localhost en desarrollo
+    if (origin.includes('localhost')) {
+      return callback(null, true);
+    }
+    
+    // Permitir cualquier subdominio de railway.app
+    if (origin.includes('railway.app')) {
+      return callback(null, true);
+    }
+    
+    // Verificar si el origin está en la lista permitida
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.warn(`⚠️ CORS bloqueado para origin: ${origin}`);
+      callback(new Error('No permitido por CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 };
@@ -28,6 +53,14 @@ app.use('/pdfs', express.static(path.join(__dirname, 'public/pdfs')));
 app.use('/api', require('./routers/alumno.js'));
 app.use('/api', require('./routers/auth.js'));
 app.use('/api', require('./routers/grupo.js'));
+
+// Endpoint público para obtener configuración (sin autenticación)
+app.get('/api/config', (req, res) => {
+  res.json({
+    baseUrl: process.env.BASE_URL || req.protocol + '://' + req.get('host'),
+    allowedOrigins: allowedOrigins
+  });
+});
 
 // Endpoint público para obtener logros (sin autenticación)
 const Logro = require('./models/Logro');

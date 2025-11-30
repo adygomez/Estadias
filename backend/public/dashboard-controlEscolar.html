@@ -200,10 +200,10 @@
 
   
   <script>
-    // BASE_URL detection (igual que en views/dashboard.html)
+    // Usar window.location.origin en producción para que funcione con cualquier dominio
     const BASE_URL = window.location.origin.includes('localhost')
       ? 'http://localhost:3001'
-      : 'https://registro272.onrender.com';
+      : window.location.origin;
 
     // Exportar alumnos
     const btnExportar = document.getElementById('btnExportar');
