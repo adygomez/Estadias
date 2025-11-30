@@ -147,7 +147,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const result = await res.json();
     if (res.ok) {
-      alert('✅ Registro guardado con éxito');
+      let mensaje = '✅ Registro guardado con éxito';
+      if (result.matricula) {
+        mensaje += `\n\n📋 Tu matrícula es: ${result.matricula}\n\n⚠️ IMPORTANTE: Guarda esta matrícula, la necesitarás para reinscribirte en los siguientes semestres.`;
+      }
+      alert(mensaje);
       window.open(result.pdf_url, '_blank');
       deshabilitarFormulario();
     } else {

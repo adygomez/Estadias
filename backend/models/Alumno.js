@@ -1,7 +1,40 @@
 const mongoose = require('mongoose');
 
 const alumnoSchema = new mongoose.Schema({
-  folio: { type: String, required: true, unique: true },
+  // Campos para inscripción (tipo_registro: 'inscripcion')
+  folio: { 
+    type: String, 
+    required: function() { return this.tipo_registro === 'inscripcion'; },
+    unique: true,
+    sparse: true // Permite null/undefined para reinscripciones
+  },
+  
+  // Campos para reinscripción (tipo_registro: 'reinscripcion')
+  matricula: { 
+    type: String, 
+    required: function() { return this.tipo_registro === 'reinscripcion'; },
+    index: true // Índice para búsquedas rápidas
+  },
+  inscripcion_original_id: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Alumno',
+    required: function() { return this.tipo_registro === 'reinscripcion'; }
+  },
+  semestre_reinscripcion: { 
+    type: Number, 
+    required: function() { return this.tipo_registro === 'reinscripcion'; },
+    min: 2,
+    max: 6
+  },
+  
+  // Campo para identificar el tipo de registro
+  tipo_registro: { 
+    type: String, 
+    enum: ['inscripcion', 'reinscripcion'], 
+    default: 'inscripcion',
+    required: true
+  },
+  
   registro_completado: { type: Boolean, default: false },
 
   datos_alumno: {
@@ -92,6 +125,13 @@ const alumnoSchema = new mongoose.Schema({
 }, {
   timestamps: true,
   collection: 'alumnos'
+});
+
+// Índice compuesto para evitar reinscripciones duplicadas del mismo semestre
+alumnoSchema.index({ matricula: 1, semestre_reinscripcion: 1 }, { 
+  unique: true, 
+  sparse: true,
+  partialFilterExpression: { tipo_registro: 'reinscripcion' }
 });
 
 module.exports = mongoose.model('Alumno', alumnoSchema);

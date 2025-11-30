@@ -663,21 +663,39 @@
     }
 
     // Inicializar scripts cuando el modal se abre
-    let scriptsInicializados = false;
     document.getElementById('formularioModal')?.addEventListener('shown.bs.modal', function () {
       const form = document.getElementById('registroForm');
       if (!form) return;
 
-      // Cargar catálogos y scripts necesarios solo una vez
-      if (!scriptsInicializados) {
-        // Esperar un momento para que el DOM del modal esté completamente renderizado
-        setTimeout(() => {
-          if (typeof cargarCatalogo === 'function') cargarCatalogo();
-          if (typeof cargarCatalogoGeneral === 'function') cargarCatalogoGeneral();
-          if (typeof consultarFolioYAutocompletar === 'function') consultarFolioYAutocompletar();
-          scriptsInicializados = true;
-        }, 100);
-      }
+      // Esperar un momento para que el DOM del modal esté completamente renderizado
+      setTimeout(() => {
+        // Cargar catálogos cada vez que se abre el modal (asegurar que los selects estén disponibles)
+        const estadoNacimiento = document.getElementById('estado_nacimiento');
+        const estadoNacimientoGeneral = document.getElementById('estado_nacimiento_general');
+        
+        if (estadoNacimiento) {
+          if (typeof cargarCatalogo === 'function') {
+            cargarCatalogo();
+          } else {
+            // Si la función no está disponible, cargar el catálogo directamente
+            cargarCatalogoDirecto('nacimiento');
+          }
+        }
+        
+        if (estadoNacimientoGeneral) {
+          if (typeof cargarCatalogoGeneral === 'function') {
+            cargarCatalogoGeneral();
+          } else {
+            // Si la función no está disponible, cargar el catálogo directamente
+            cargarCatalogoDirecto('nacimiento_general');
+          }
+        }
+        
+        // Cargar datos del folio si existe (solo si no se han cargado antes)
+        if (typeof consultarFolioYAutocompletar === 'function') {
+          consultarFolioYAutocompletar();
+        }
+      }, 200);
 
       // Script para opciones de carrera (siempre ejecutar)
       const opciones = ["A Y B", "PROGRAMACIÓN", "GESTIÓN E INNOVACIÓN TURÍSTICA", "VENTAS"];
@@ -715,14 +733,335 @@
       });
 
       // Asegurar que el submit del formulario funcione
-      // El scripts.js ya debería tener el listener, pero lo verificamos
+      // Agregar el listener directamente aquí porque el formulario está en un modal
       const registroForm = document.getElementById('registroForm');
-      if (registroForm && !registroForm.dataset.listenerAdded) {
-        // Si scripts.js no agregó el listener, lo agregamos manualmente
-        // Pero primero verificamos si ya existe
-        registroForm.dataset.listenerAdded = 'true';
+      if (registroForm) {
+        // Remover listener anterior si existe para evitar duplicados
+        const nuevoForm = registroForm.cloneNode(true);
+        registroForm.parentNode.replaceChild(nuevoForm, registroForm);
+        
+        // Obtener referencia actualizada
+        const formActualizado = document.getElementById('registroForm');
+        
+        // Agregar listener de submit
+        if (!formActualizado.dataset.listenerAdded) {
+          formActualizado.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Validar campos obligatorios
+            const camposObligatorios = [
+              'nombres','primer_apellido','segundo_apellido','curp','carrera',
+              'periodo_semestral','semestre','fecha_nacimiento','edad','sexo',
+              'estado_nacimiento','municipio_nacimiento','ciudad_nacimiento','estado_civil',
+              'primera_opcion','segunda_opcion','tercera_opcion','cuarta_opcion',
+              'colonia','domicilio','codigo_postal','telefono_alumno','correo_alumno',
+              'tipo_sangre','contacto_emergencia_nombre','contacto_emergencia_telefono',
+              'habla_lengua_indigena_respuesta','numero_seguro_social','unidad_medica_familiar',
+              'enfermedad_cronica_o_alergia_respuesta','enfermedad_cronica_o_alergia_detalle',
+              'discapacidad','entrega_diagnostico','detalle_enfermedad',
+              'nombre_secundaria','regimen','promedio_general','modalidad',
+              'nombre_padre','telefono_padre','nombre_madre','telefono_madre',
+              'vive_con','persona_emergencia_nombre','persona_emergencia_parentesco','persona_emergencia_telefono',
+              'responsable_emergencia_nombre','responsable_emergencia_telefono','responsable_emergencia_parentesco','carta_poder',
+              'paraescolar'
+            ];
+
+            for (const campo of camposObligatorios) {
+              const input = document.querySelector(`[name="${campo}"]`);
+              if (!input || !input.value.trim()) {
+                alert(`⚠️ Por favor completa el campo: ${campo.replaceAll('_', ' ')}`);
+                input?.focus();
+                return;
+              }
+            }
+
+            const folio = localStorage.getItem('alumnoFolio');
+            if (!folio) {
+              alert('❌ Folio perdido. Por favor, vuelve a iniciar el proceso de registro.');
+              return;
+            }
+
+            const formData = new FormData(e.target);
+            const estadoClave = document.getElementById('estado_nacimiento')?.selectedOptions[0]?.dataset.clave;
+            const municipioClave = document.getElementById('municipio_nacimiento')?.selectedOptions[0]?.dataset.clave;
+            const ciudadClave = document.getElementById('ciudad_nacimiento')?.selectedOptions[0]?.dataset.clave;
+
+            const estadoClaveG = document.getElementById('estado_nacimiento_general')?.selectedOptions[0]?.dataset.clave;
+            const municipioClaveG = document.getElementById('municipio_nacimiento_general')?.selectedOptions[0]?.dataset.clave;
+            const ciudadClaveG = document.getElementById('ciudad_nacimiento_general')?.selectedOptions[0]?.dataset.clave;
+
+            const nuevoRegistro = {
+              folio,
+              datos_alumno: {
+                nombres: formData.get('nombres'),
+                primer_apellido: formData.get('primer_apellido'),
+                segundo_apellido: formData.get('segundo_apellido'),
+                curp: formData.get('curp'),
+                carrera: formData.get('carrera'),
+                periodo_semestral: formData.get('periodo_semestral'),
+                semestre: formData.get('semestre'),
+                grupo: formData.get('grupo'),
+                turno: formData.get('turno'),
+                fecha_nacimiento: formData.get('fecha_nacimiento'),
+                edad: formData.get('edad'),
+                sexo: formData.get('sexo'),
+                estado_nacimiento: estadoClave,
+                municipio_nacimiento: municipioClave,
+                ciudad_nacimiento: ciudadClave,
+                estado_civil: formData.get('estado_civil'),
+                nacionalidad: formData.get('nacionalidad'),         
+                pais_extranjero: formData.get('pais_extranjero')
+              },
+              datos_generales: {
+                colonia: formData.get('colonia'),
+                domicilio: formData.get('domicilio'),
+                codigo_postal: formData.get('codigo_postal'),
+                telefono_alumno: formData.get('telefono_alumno'),
+                correo_alumno: formData.get('correo_alumno'),
+                paraescolar: formData.get('paraescolar'),
+                tipo_sangre: formData.get('tipo_sangre'),
+                contacto_emergencia_nombre: formData.get('contacto_emergencia_nombre'),
+                contacto_emergencia_telefono: formData.get('contacto_emergencia_telefono'),
+                habla_lengua_indigena: {
+                  respuesta: formData.get('habla_lengua_indigena_respuesta'),
+                  cual: formData.get('habla_lengua_indigena_cual')
+                },
+                entrega_diagnostico: formData.get('entrega_diagnostico'),
+                detalle_enfermedad: formData.get('detalle_enfermedad'),
+                responsable_emergencia: {
+                  nombre: formData.get('responsable_emergencia_nombre'),
+                  telefono: formData.get('responsable_emergencia_telefono'),
+                  parentesco: formData.get('responsable_emergencia_parentesco')
+                },
+                carta_poder: formData.get('carta_poder'),
+                primera_opcion: formData.get('primera_opcion'),
+                segunda_opcion: formData.get('segunda_opcion'),
+                tercera_opcion: formData.get('tercera_opcion'),
+                cuarta_opcion: formData.get('cuarta_opcion'),
+                estado_nacimiento_general: estadoClaveG,
+                municipio_nacimiento_general: municipioClaveG,
+                ciudad_nacimiento_general: ciudadClaveG
+              },
+              datos_medicos: {
+                numero_seguro_social: formData.get('numero_seguro_social'),
+                unidad_medica_familiar: formData.get('unidad_medica_familiar'),
+                enfermedad_cronica_o_alergia: {
+                  respuesta: formData.get('enfermedad_cronica_o_alergia_respuesta'),
+                  detalle: formData.get('enfermedad_cronica_o_alergia_detalle')
+                },
+                discapacidad: formData.get('discapacidad')
+              },
+              secundaria_origen: {
+                nombre_secundaria: formData.get('nombre_secundaria'),
+                regimen: formData.get('regimen'),
+                promedio_general: formData.get('promedio_general'),
+                modalidad: formData.get('modalidad')
+              },
+              tutor_responsable: {
+                nombre_padre: formData.get('nombre_padre'),
+                telefono_padre: formData.get('telefono_padre'),
+                nombre_madre: formData.get('nombre_madre'),
+                telefono_madre: formData.get('telefono_madre'),
+                vive_con: formData.get('vive_con')
+              },
+              persona_emergencia: {
+                nombre: formData.get('persona_emergencia_nombre'),
+                parentesco: formData.get('persona_emergencia_parentesco'),
+                telefono: formData.get('persona_emergencia_telefono')
+              }
+            };
+
+            const estadoCivilMap = {
+              'soltero': 1,
+              'casado': 2,
+              'union_libre': 3,
+              'divorciado': 4,
+              'viudo': 5
+            };
+            const textoEC = nuevoRegistro.datos_alumno.estado_civil?.toLowerCase();
+            nuevoRegistro.datos_alumno.estado_civil = estadoCivilMap[textoEC] || 0;
+
+            try {
+              // Mostrar indicador de carga
+              const submitBtn = formActualizado.querySelector('button[type="submit"]') || 
+                               document.querySelector('button[form="registroForm"]');
+              if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Guardando...';
+              }
+
+              const res = await fetch(`${BASE_URL}/api/guardar`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(nuevoRegistro)
+              });
+
+              const result = await res.json();
+              
+              if (res.ok) {
+                let mensaje = '✅ Registro guardado con éxito';
+                if (result.matricula) {
+                  mensaje += `\n\n📋 Tu matrícula es: ${result.matricula}\n\n⚠️ IMPORTANTE: Guarda esta matrícula, la necesitarás para reinscribirte en los siguientes semestres.`;
+                }
+                alert(mensaje);
+                
+                // Abrir PDF si está disponible
+                if (result.pdf_url) {
+                  const pdfUrl = result.pdf_url.startsWith('http') 
+                    ? result.pdf_url 
+                    : `${BASE_URL}${result.pdf_url}`;
+                  window.open(pdfUrl, '_blank');
+                }
+                
+                // Deshabilitar formulario
+                Array.from(formActualizado.elements).forEach(el => {
+                  el.disabled = true;
+                });
+                
+                // Cerrar modal después de un momento
+                setTimeout(() => {
+                  const modal = bootstrap.Modal.getInstance(document.getElementById('formularioModal'));
+                  if (modal) modal.hide();
+                }, 2000);
+              } else {
+                alert(result.message || '❌ Error al guardar el registro');
+              }
+            } catch (err) {
+              console.error('Error al guardar:', err);
+              alert('❌ Error de conexión. Por favor intenta nuevamente.');
+            } finally {
+              // Restaurar botón
+              const submitBtn = formActualizado.querySelector('button[type="submit"]') || 
+                               document.querySelector('button[form="registroForm"]');
+              if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Guardar Registro';
+              }
+            }
+          });
+          
+          formActualizado.dataset.listenerAdded = 'true';
+        }
       }
     });
+
+    // Función auxiliar para cargar catálogo directamente si scripts.js no está disponible
+    async function cargarCatalogoDirecto(sufijo) {
+      try {
+        const res = await fetch('/data/catalogo.json');
+        if (!res.ok) {
+          console.error('❌ Error al cargar catálogo:', res.statusText);
+          return;
+        }
+        const data = await res.json();
+        cargarSelectoresDirecto(sufijo, data);
+      } catch (err) {
+        console.error('❌ Error cargando catálogo:', err);
+      }
+    }
+
+    // Función auxiliar para cargar selectores directamente
+    function cargarSelectoresDirecto(sufijo, data) {
+      const estado = document.getElementById(`estado_${sufijo}`);
+      const municipio = document.getElementById(`municipio_${sufijo}`);
+      const ciudad = document.getElementById(`ciudad_${sufijo}`);
+
+      if (!estado || !municipio || !ciudad) {
+        console.error('❌ No se encontraron los elementos del formulario');
+        return;
+      }
+
+      estado.innerHTML = '<option value="">-- Selecciona Estado --</option>';
+      municipio.innerHTML = '<option value="">-- Selecciona Municipio --</option>';
+      ciudad.innerHTML = '<option value="">-- Selecciona Ciudad --</option>';
+
+      data.forEach(est => {
+        const opt = document.createElement('option');
+        opt.value = est.nombre;
+        opt.dataset.clave = est.clave;
+        opt.dataset.municipios = JSON.stringify(est.municipios || []);
+        opt.textContent = est.nombre;
+        estado.appendChild(opt);
+      });
+
+      // Remover listeners anteriores si existen y agregar nuevos
+      const nuevoEstado = estado.cloneNode(true);
+      estado.parentNode.replaceChild(nuevoEstado, estado);
+      
+      // Obtener referencias actualizadas después del reemplazo
+      const estadoActual = document.getElementById(`estado_${sufijo}`);
+      const municipioActual = document.getElementById(`municipio_${sufijo}`);
+      const ciudadActual = document.getElementById(`ciudad_${sufijo}`);
+
+      estadoActual.addEventListener('change', function () {
+        const selected = this.selectedOptions[0];
+        if (!selected || !selected.dataset.municipios) {
+          municipioActual.innerHTML = '<option value="">-- Selecciona Municipio --</option>';
+          ciudadActual.innerHTML = '<option value="">-- Selecciona Ciudad --</option>';
+          municipioActual.disabled = true;
+          ciudadActual.disabled = true;
+          return;
+        }
+
+        const municipios = JSON.parse(selected.dataset.municipios || '[]');
+
+        municipioActual.innerHTML = '<option value="">-- Selecciona Municipio --</option>';
+        ciudadActual.innerHTML = '<option value="">-- Selecciona Ciudad --</option>';
+
+        municipios.forEach(mun => {
+          const opt = document.createElement('option');
+          opt.value = mun.nombre;
+          opt.dataset.clave = mun.clave;
+          opt.dataset.localidades = JSON.stringify(mun.localidades || []);
+          opt.textContent = mun.nombre;
+          municipioActual.appendChild(opt);
+        });
+
+        // Habilitar municipio si hay opciones disponibles, deshabilitar si no hay
+        if (municipios.length > 0) {
+          municipioActual.disabled = false;
+          municipioActual.removeAttribute('disabled'); // Asegurar que se quite el atributo
+        } else {
+          municipioActual.disabled = true;
+        }
+        // Siempre deshabilitar ciudad hasta que se seleccione un municipio
+        ciudadActual.disabled = true;
+      });
+
+      // Agregar listener al municipio para cargar ciudades
+      // Usar el elemento directamente sin clonar
+      municipioActual.addEventListener('change', function () {
+        // Obtener referencias actualizadas dentro del evento
+        const municipioSelect = document.getElementById(`municipio_${sufijo}`);
+        const ciudadSelect = document.getElementById(`ciudad_${sufijo}`);
+        
+        const selected = this.selectedOptions[0];
+        if (!selected || !selected.dataset.localidades) {
+          ciudadSelect.innerHTML = '<option value="">-- Selecciona Ciudad --</option>';
+          ciudadSelect.disabled = true;
+          return;
+        }
+
+        const localidades = JSON.parse(selected.dataset.localidades || '[]');
+
+        ciudadSelect.innerHTML = '<option value="">-- Selecciona Ciudad --</option>';
+        localidades.forEach(loc => {
+          const opt = document.createElement('option');
+          opt.value = loc.nombre;
+          opt.dataset.clave = loc.clave;
+          opt.textContent = loc.nombre;
+          ciudadSelect.appendChild(opt);
+        });
+
+        // Habilitar ciudad si hay opciones disponibles, deshabilitar si no hay
+        if (localidades.length > 0) {
+          ciudadSelect.disabled = false;
+          ciudadSelect.removeAttribute('disabled'); // Asegurar que se quite el atributo
+        } else {
+          ciudadSelect.disabled = true;
+        }
+      });
+    }
   </script>
   
   <!-- Bootstrap JS -->

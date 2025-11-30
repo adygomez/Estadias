@@ -48,9 +48,9 @@
             </label>
             <div class="flex-1 w-full flex flex-col md:flex-row gap-4">
               <input 
-                id="numeroControlRegistro"
+                id="matriculaRegistro"
                 type="text" 
-                placeholder="Coloca tu No.control para reinscribirte"
+                placeholder="Coloca tu matrícula para reinscribirte"
                 class="bg-[#4C0000] text-white px-6 md:px-8 py-3 md:py-4 rounded-3xl text-base md:text-lg font-normal placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#6a0000] transition-all duration-200 flex-1 w-full"
               />
               <button id="btnReinscribir" class="bg-orange-500 hover:bg-orange-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-3xl text-base md:text-lg font-bold transition-colors duration-200 w-full md:w-auto md:flex-shrink-0">
@@ -68,11 +68,22 @@
             </label>
             <div class="flex-1 w-full flex flex-col md:flex-row gap-4">
               <input 
-                id="numeroControlReimpresion"
+                id="matriculaReimpresion"
                 type="text" 
-                placeholder="Coloca tu No.control para reimprimir tu constancia de reinscripción"
+                placeholder="Matrícula"
                 class="bg-[#4C0000] text-white px-6 md:px-8 py-3 md:py-4 rounded-3xl text-base md:text-lg font-normal placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#6a0000] transition-all duration-200 flex-1 w-full"
               />
+              <select 
+                id="semestreReimpresion"
+                class="bg-[#4C0000] text-white px-6 md:px-8 py-3 md:py-4 rounded-3xl text-base md:text-lg font-normal focus:outline-none focus:ring-2 focus:ring-[#6a0000] transition-all duration-200"
+              >
+                <option value="">Semestre</option>
+                <option value="2">2º Semestre</option>
+                <option value="3">3º Semestre</option>
+                <option value="4">4º Semestre</option>
+                <option value="5">5º Semestre</option>
+                <option value="6">6º Semestre</option>
+              </select>
               <button id="btnReimprimirReinscripcion" class="bg-orange-500 hover:bg-orange-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-3xl text-base md:text-lg font-bold transition-colors duration-200 w-full md:w-auto md:flex-shrink-0">
                 Reimprimir
               </button>
@@ -137,7 +148,18 @@
                   <input name="periodo_semestral" type="text" readonly value="2025-2026" class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100"/>
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Semestre</label>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Semestre de Reinscripción *</label>
+                  <select id="semestre_reinscripcion" name="semestre_reinscripcion" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent">
+                    <option value="">Selecciona el semestre</option>
+                    <option value="2">2º Semestre</option>
+                    <option value="3">3º Semestre</option>
+                    <option value="4">4º Semestre</option>
+                    <option value="5">5º Semestre</option>
+                    <option value="6">6º Semestre</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Semestre (mostrado)</label>
                   <input name="semestre" type="text" readonly class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100" placeholder="Semestre"/>
                 </div>
                 <div>
@@ -523,55 +545,51 @@
 
     // Funcionalidad del botón Reinscribir
     const btnReinscribir = document.getElementById('btnReinscribir');
-    const inputNumeroControl = document.getElementById('numeroControlRegistro');
+    const inputMatricula = document.getElementById('matriculaRegistro');
 
-    if (btnReinscribir && inputNumeroControl) {
+    if (btnReinscribir && inputMatricula) {
       btnReinscribir.addEventListener('click', async () => {
-        const numeroControl = inputNumeroControl.value.trim();
+        const matricula = inputMatricula.value.trim();
         
-        if (!numeroControl) {
-          alert('⚠️ Por favor ingresa tu número de control');
-          inputNumeroControl.focus();
+        if (!matricula) {
+          alert('⚠️ Por favor ingresa tu matrícula');
+          inputMatricula.focus();
           return;
         }
 
         try {
-          // En reinscripción, el número de control es el mismo que el folio
-          // Buscar el alumno por folio (número de control)
-          const res = await fetch(`${BASE_URL}/api/folio/${numeroControl}`);
+          // Obtener información del próximo semestre disponible
+          const res = await fetch(`${BASE_URL}/api/reinscripcion/proximo-semestre/${matricula}`);
           const data = await res.json();
 
           if (res.ok) {
-            // Validar que el alumno existe (en reinscripción debe existir)
-            if (!data) {
-              alert('❌ Número de control no encontrado. Solo alumnos de 2º a 6º semestre pueden reinscribirse.');
-              inputNumeroControl.focus();
-              return;
-            }
-
-            // Guardar número de control (folio) en localStorage
-            localStorage.setItem('alumnoFolio', numeroControl);
+          // Guardar información en localStorage
+          // Usar la matrícula de la inscripción original si existe, sino usar la ingresada
+          const matriculaFinal = data.inscripcionOriginal.matricula || matricula;
+          localStorage.setItem('alumnoMatricula', matriculaFinal);
+          localStorage.setItem('inscripcionOriginalId', data.inscripcionOriginal._id);
+          localStorage.setItem('proximoSemestre', data.proximoSemestre);
             
             // Abrir modal con el formulario
             const modalElement = document.getElementById('formularioModal');
             if (modalElement) {
-              // Cargar y prellenar datos del alumno existente
-              await cargarDatosAlumnoEnModal(numeroControl);
+              // Cargar y prellenar datos de la inscripción original
+              await cargarDatosInscripcionEnModal(data.inscripcionOriginal, data.proximoSemestre, data.semestresCompletados);
               const modal = new bootstrap.Modal(modalElement);
               modal.show();
             }
           } else {
-            alert(data.message || '❌ Número de control no encontrado. Verifica que seas alumno de 2º a 6º semestre.');
-            inputNumeroControl.focus();
+            alert(data.message || '❌ Matrícula no encontrada. Verifica que hayas completado tu inscripción inicial.');
+            inputMatricula.focus();
           }
         } catch (err) {
-          console.error('Error al validar número de control:', err);
+          console.error('Error al validar matrícula:', err);
           alert('❌ Error de conexión. Por favor intenta nuevamente.');
         }
       });
 
       // Permitir enviar con Enter
-      inputNumeroControl.addEventListener('keypress', (e) => {
+      inputMatricula.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
           btnReinscribir.click();
         }
@@ -580,15 +598,23 @@
 
     // Funcionalidad del botón Reimprimir
     const btnReimprimirReinscripcion = document.getElementById('btnReimprimirReinscripcion');
-    const inputNumeroControlReimpresion = document.getElementById('numeroControlReimpresion');
+    const inputMatriculaReimpresion = document.getElementById('matriculaReimpresion');
+    const selectSemestreReimpresion = document.getElementById('semestreReimpresion');
 
-    if (btnReimprimirReinscripcion && inputNumeroControlReimpresion) {
+    if (btnReimprimirReinscripcion && inputMatriculaReimpresion && selectSemestreReimpresion) {
       btnReimprimirReinscripcion.addEventListener('click', async () => {
-        const numeroControl = inputNumeroControlReimpresion.value.trim();
+        const matricula = inputMatriculaReimpresion.value.trim();
+        const semestre = selectSemestreReimpresion.value;
         
-        if (!numeroControl) {
-          alert('⚠️ Por favor ingresa tu número de control');
-          inputNumeroControlReimpresion.focus();
+        if (!matricula) {
+          alert('⚠️ Por favor ingresa tu matrícula');
+          inputMatriculaReimpresion.focus();
+          return;
+        }
+        
+        if (!semestre) {
+          alert('⚠️ Por favor selecciona el semestre');
+          selectSemestreReimpresion.focus();
           return;
         }
 
@@ -597,8 +623,8 @@
           btnReimprimirReinscripcion.disabled = true;
           btnReimprimirReinscripcion.textContent = 'Generando PDF...';
 
-          // El número de control es el mismo que el folio
-          const res = await fetch(`${BASE_URL}/api/reimprimir/${numeroControl}`);
+          // Reimprimir usando matrícula y semestre
+          const res = await fetch(`${BASE_URL}/api/reimprimir-reinscripcion/${matricula}/${semestre}`);
           const data = await res.json();
 
           if (res.ok) {
@@ -609,9 +635,10 @@
             
             // Abrir el PDF en una nueva ventana
             window.open(pdfUrl, '_blank');
-            inputNumeroControlReimpresion.value = '';
+            inputMatriculaReimpresion.value = '';
+            selectSemestreReimpresion.value = '';
           } else {
-            alert(data.message || '❌ No se pudo reimprimir el PDF. Verifica que el número de control esté registrado y completado.');
+            alert(data.message || '❌ No se pudo reimprimir el PDF. Verifica que la matrícula y semestre estén correctos.');
           }
         } catch (err) {
           console.error('Error al reimprimir PDF:', err);
@@ -624,24 +651,41 @@
       });
 
       // Permitir enviar con Enter
-      inputNumeroControlReimpresion.addEventListener('keypress', (e) => {
+      inputMatriculaReimpresion.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          btnReimprimirReinscripcion.click();
+        }
+      });
+      selectSemestreReimpresion.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
           btnReimprimirReinscripcion.click();
         }
       });
     }
 
-    // Función para cargar y prellenar datos del alumno en el modal
-    async function cargarDatosAlumnoEnModal(numeroControl) {
+    // Función para cargar y prellenar datos de la inscripción original en el modal
+    async function cargarDatosInscripcionEnModal(inscripcionOriginal, proximoSemestre, semestresCompletados) {
       try {
-        const res = await fetch(`${BASE_URL}/api/folio/${numeroControl}`);
-        if (!res.ok) return;
-        
-        const data = await res.json();
         const form = document.getElementById('registroForm');
         if (!form) return;
+        
+        // Establecer el semestre sugerido
+        const selectSemestre = form.querySelector('[name="semestre_reinscripcion"]');
+        if (selectSemestre) {
+          selectSemestre.value = proximoSemestre;
+          // Deshabilitar opciones de semestres ya completados
+          Array.from(selectSemestre.options).forEach(option => {
+            const semestreNum = parseInt(option.value);
+            if (semestresCompletados.includes(semestreNum)) {
+              option.disabled = true;
+              option.textContent += ' (Ya completado)';
+            }
+          });
+        }
+        
+        const data = inscripcionOriginal;
 
-        // Prellenar TODOS los campos con los datos existentes del alumno
+        // Prellenar TODOS los campos con los datos de la inscripción original
         if (data.datos_alumno) {
           const da = data.datos_alumno;
           if (form.querySelector('[name="nombres"]')) form.querySelector('[name="nombres"]').value = da.nombres || '';
@@ -649,9 +693,11 @@
           if (form.querySelector('[name="segundo_apellido"]')) form.querySelector('[name="segundo_apellido"]').value = da.segundo_apellido || '';
           if (form.querySelector('[name="curp"]')) form.querySelector('[name="curp"]').value = da.curp || '';
           if (form.querySelector('[name="carrera"]')) form.querySelector('[name="carrera"]').value = da.carrera || '';
+          // Grupo y turno pueden cambiar, así que los dejamos editables
           if (form.querySelector('[name="grupo"]')) form.querySelector('[name="grupo"]').value = da.grupo || '';
           if (form.querySelector('[name="turno"]')) form.querySelector('[name="turno"]').value = da.turno || '';
-          if (form.querySelector('[name="semestre"]')) form.querySelector('[name="semestre"]').value = da.semestre || '';
+          // El semestre mostrado se actualizará cuando se seleccione el semestre de reinscripción
+          if (form.querySelector('[name="semestre"]')) form.querySelector('[name="semestre"]').value = proximoSemestre || '';
           if (form.querySelector('[name="periodo_semestral"]')) form.querySelector('[name="periodo_semestral"]').value = da.periodo_semestral || '';
           if (form.querySelector('[name="fecha_nacimiento"]')) form.querySelector('[name="fecha_nacimiento"]').value = da.fecha_nacimiento || '';
           if (form.querySelector('[name="edad"]')) form.querySelector('[name="edad"]').value = da.edad || '';
@@ -662,6 +708,15 @@
           // Estado civil: convertir número a string para el select
           const estadoCivil = da.estado_civil ? String(da.estado_civil) : '';
           if (form.querySelector('[name="estado_civil"]')) form.querySelector('[name="estado_civil"]').value = estadoCivil;
+        }
+        
+        // Actualizar el campo semestre cuando cambie el semestre de reinscripción
+        const selectSemestreReinscripcion = form.querySelector('[name="semestre_reinscripcion"]');
+        const inputSemestre = form.querySelector('[name="semestre"]');
+        if (selectSemestreReinscripcion && inputSemestre) {
+          selectSemestreReinscripcion.addEventListener('change', function() {
+            inputSemestre.value = this.value || '';
+          });
         }
 
         if (data.datos_generales) {
@@ -788,10 +843,162 @@
         }
       });
 
-      // Asegurar que el submit del formulario funcione
+      // Asegurar que el submit del formulario funcione para reinscripción
       const registroForm = document.getElementById('registroForm');
       if (registroForm && !registroForm.dataset.listenerAdded) {
         registroForm.dataset.listenerAdded = 'true';
+        
+        registroForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          // Validar campos obligatorios
+          const semestreReinscripcion = form.querySelector('[name="semestre_reinscripcion"]')?.value;
+          if (!semestreReinscripcion) {
+            alert('⚠️ Por favor selecciona el semestre de reinscripción');
+            form.querySelector('[name="semestre_reinscripcion"]')?.focus();
+            return;
+          }
+          
+          const matricula = localStorage.getItem('alumnoMatricula');
+          const inscripcionOriginalId = localStorage.getItem('inscripcionOriginalId');
+          
+          if (!matricula || !inscripcionOriginalId) {
+            alert('❌ Error: No se encontró la información de matrícula. Por favor, inicia el proceso nuevamente.');
+            return;
+          }
+          
+          // Obtener datos del formulario (similar a scripts.js)
+          const formData = new FormData(registroForm);
+          const estadoClave = document.getElementById('estado_nacimiento')?.selectedOptions[0]?.dataset.clave;
+          const municipioClave = document.getElementById('municipio_nacimiento')?.selectedOptions[0]?.dataset.clave;
+          const ciudadClave = document.getElementById('ciudad_nacimiento')?.selectedOptions[0]?.dataset.clave;
+          
+          const estadoClaveG = document.getElementById('estado_nacimiento_general')?.selectedOptions[0]?.dataset.clave;
+          const municipioClaveG = document.getElementById('municipio_nacimiento_general')?.selectedOptions[0]?.dataset.clave;
+          const ciudadClaveG = document.getElementById('ciudad_nacimiento_general')?.selectedOptions[0]?.dataset.clave;
+          
+          const nuevoRegistro = {
+            tipo_registro: 'reinscripcion',
+            matricula: matricula,
+            inscripcion_original_id: inscripcionOriginalId,
+            semestre_reinscripcion: parseInt(semestreReinscripcion),
+            datos_alumno: {
+              nombres: formData.get('nombres'),
+              primer_apellido: formData.get('primer_apellido'),
+              segundo_apellido: formData.get('segundo_apellido'),
+              curp: formData.get('curp'),
+              carrera: formData.get('carrera'),
+              periodo_semestral: formData.get('periodo_semestral'),
+              semestre: semestreReinscripcion,
+              grupo: formData.get('grupo'),
+              turno: formData.get('turno'),
+              fecha_nacimiento: formData.get('fecha_nacimiento'),
+              edad: formData.get('edad'),
+              sexo: formData.get('sexo'),
+              estado_nacimiento: estadoClave,
+              municipio_nacimiento: municipioClave,
+              ciudad_nacimiento: ciudadClave,
+              estado_civil: formData.get('estado_civil'),
+              nacionalidad: formData.get('nacionalidad'),
+              pais_extranjero: formData.get('pais_extranjero')
+            },
+            datos_generales: {
+              colonia: formData.get('colonia'),
+              domicilio: formData.get('domicilio'),
+              codigo_postal: formData.get('codigo_postal'),
+              telefono_alumno: formData.get('telefono_alumno'),
+              correo_alumno: formData.get('correo_alumno'),
+              paraescolar: formData.get('paraescolar'),
+              tipo_sangre: formData.get('tipo_sangre'),
+              contacto_emergencia_nombre: formData.get('contacto_emergencia_nombre'),
+              contacto_emergencia_telefono: formData.get('contacto_emergencia_telefono'),
+              habla_lengua_indigena: {
+                respuesta: formData.get('habla_lengua_indigena_respuesta'),
+                cual: formData.get('habla_lengua_indigena_cual')
+              },
+              entrega_diagnostico: formData.get('entrega_diagnostico'),
+              detalle_enfermedad: formData.get('detalle_enfermedad'),
+              responsable_emergencia: {
+                nombre: formData.get('responsable_emergencia_nombre'),
+                telefono: formData.get('responsable_emergencia_telefono'),
+                parentesco: formData.get('responsable_emergencia_parentesco')
+              },
+              carta_poder: formData.get('carta_poder'),
+              primera_opcion: formData.get('primera_opcion'),
+              segunda_opcion: formData.get('segunda_opcion'),
+              tercera_opcion: formData.get('tercera_opcion'),
+              cuarta_opcion: formData.get('cuarta_opcion'),
+              estado_nacimiento_general: estadoClaveG,
+              municipio_nacimiento_general: municipioClaveG,
+              ciudad_nacimiento_general: ciudadClaveG
+            },
+            datos_medicos: {
+              numero_seguro_social: formData.get('numero_seguro_social'),
+              unidad_medica_familiar: formData.get('unidad_medica_familiar'),
+              enfermedad_cronica_o_alergia: {
+                respuesta: formData.get('enfermedad_cronica_o_alergia_respuesta'),
+                detalle: formData.get('enfermedad_cronica_o_alergia_detalle')
+              },
+              discapacidad: formData.get('discapacidad')
+            },
+            secundaria_origen: {
+              nombre_secundaria: formData.get('nombre_secundaria'),
+              regimen: formData.get('regimen'),
+              promedio_general: formData.get('promedio_general'),
+              modalidad: formData.get('modalidad')
+            },
+            tutor_responsable: {
+              nombre_padre: formData.get('nombre_padre'),
+              telefono_padre: formData.get('telefono_padre'),
+              nombre_madre: formData.get('nombre_madre'),
+              telefono_madre: formData.get('telefono_madre'),
+              vive_con: formData.get('vive_con')
+            },
+            persona_emergencia: {
+              nombre: formData.get('persona_emergencia_nombre'),
+              parentesco: formData.get('persona_emergencia_parentesco'),
+              telefono: formData.get('persona_emergencia_telefono')
+            }
+          };
+          
+          // Convertir estado civil si es necesario
+          const estadoCivilMap = {
+            '1': 1, '2': 2, '3': 3, '4': 4, '5': 5
+          };
+          const estadoCivilValue = formData.get('estado_civil');
+          nuevoRegistro.datos_alumno.estado_civil = estadoCivilMap[estadoCivilValue] || parseInt(estadoCivilValue) || 0;
+          
+          try {
+            const res = await fetch(`${BASE_URL}/api/reinscripcion/guardar`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(nuevoRegistro)
+            });
+            
+            const result = await res.json();
+            if (res.ok) {
+              alert('✅ Reinscripción guardada con éxito');
+              const pdfUrl = result.pdf_url.startsWith('http') 
+                ? result.pdf_url 
+                : `${BASE_URL}${result.pdf_url}`;
+              window.open(pdfUrl, '_blank');
+              
+              // Cerrar modal y limpiar
+              const modal = bootstrap.Modal.getInstance(document.getElementById('formularioModal'));
+              if (modal) modal.hide();
+              registroForm.reset();
+              localStorage.removeItem('alumnoMatricula');
+              localStorage.removeItem('inscripcionOriginalId');
+              localStorage.removeItem('proximoSemestre');
+              inputMatricula.value = '';
+            } else {
+              alert(result.message || '❌ Error al guardar la reinscripción');
+            }
+          } catch (err) {
+            console.error('Error al guardar reinscripción:', err);
+            alert('❌ Error de conexión. Por favor intenta nuevamente.');
+          }
+        });
       }
     });
   </script>

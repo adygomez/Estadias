@@ -10,6 +10,9 @@ router.use(authenticateToken);
 // Rutas de alumnos: accesibles para admin, subdireccion y control_escolar
 router.get('/alumnos', dashboardController.getAllAlumnos);
 router.get('/alumno/:id', dashboardController.getAlumno);
+router.get('/alumno-por-folio/:folio', dashboardController.getAlumnoPorFolio);
+router.get('/alumno-por-matricula/:matricula', dashboardController.getAlumnoPorMatricula);
+router.get('/reinscripcion/:matricula/:semestre', dashboardController.getReinscripcionPorSemestre);
 router.post('/alumnos', dashboardController.createAlumno);
 router.put('/alumno/:id', dashboardController.updateAlumno);
 router.delete('/alumno/:id', dashboardController.deleteAlumno);

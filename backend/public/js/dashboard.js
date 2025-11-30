@@ -134,54 +134,254 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
+  // ========== SISTEMA DE PESTAÑAS ==========
+  const tabFolio = document.getElementById('tabFolio');
+  const tabMatricula = document.getElementById('tabMatricula');
+  const seccionFolio = document.getElementById('seccionFolio');
+  const seccionMatricula = document.getElementById('seccionMatricula');
+
+  // Variables globales para almacenar datos
+  let alumnoFolioActual = null;
+  let alumnoMatriculaActual = null;
+
+  // Cambiar entre pestañas
+  if (tabFolio && tabMatricula) {
+    tabFolio.addEventListener('click', () => {
+      tabFolio.classList.add('active', 'border-[#4C0000]', 'text-[#4C0000]');
+      tabFolio.classList.remove('border-transparent', 'text-gray-500');
+      tabMatricula.classList.remove('active', 'border-[#4C0000]', 'text-[#4C0000]');
+      tabMatricula.classList.add('border-transparent', 'text-gray-500');
+      seccionFolio.classList.remove('hidden');
+      seccionMatricula.classList.add('hidden');
+    });
+
+    tabMatricula.addEventListener('click', () => {
+      tabMatricula.classList.add('active', 'border-[#4C0000]', 'text-[#4C0000]');
+      tabMatricula.classList.remove('border-transparent', 'text-gray-500');
+      tabFolio.classList.remove('active', 'border-[#4C0000]', 'text-[#4C0000]');
+      tabFolio.classList.add('border-transparent', 'text-gray-500');
+      seccionMatricula.classList.remove('hidden');
+      seccionFolio.classList.add('hidden');
+    });
+  }
+
+  // ========== BÚSQUEDA POR FOLIO ==========
   const searchFolio = document.getElementById('searchFolio');
-  const searchApellidos = document.getElementById('searchApellidos');
-  const btnBuscar = document.getElementById('btnBuscar');
-  const resultadosTable = document.getElementById('resultadosTable');
+  const btnBuscarFolio = document.getElementById('btnBuscarFolio');
+  const resultadoFolio = document.getElementById('resultadoFolio');
+  const infoFolio = document.getElementById('infoFolio');
+  const btnEditarFolio = document.getElementById('btnEditarFolio');
 
-  btnBuscar.addEventListener('click', async () => {
-    resultadosTable.innerHTML = '';
-    const folio = searchFolio.value.trim();
-    const apellidos = searchApellidos.value.trim();
-    const res = await authenticatedFetch(`/api/dashboard/alumnos?folio=${folio}&apellidos=${apellidos}`);
-    if (!res) return;
-    const data = await res.json();
+  if (btnBuscarFolio) {
+    btnBuscarFolio.addEventListener('click', async () => {
+      const folio = searchFolio?.value.trim();
+      if (!folio) {
+        alert('⚠️ Por favor ingresa un folio');
+        return;
+      }
 
-    data.forEach(alumno => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${alumno.folio}</td>
-        <td>${alumno.datos_alumno.primer_apellido} ${alumno.datos_alumno.segundo_apellido} ${alumno.datos_alumno.nombres}</td>
-        <td>${alumno.datos_alumno.curp}</td>
-        <td>${alumno.datos_alumno.semestre}</td>
-        <td>${alumno.datos_alumno.grupo}</td>
-        <td>
-          <button class="btn btn-sm btn-warning btnEditar" data-id="${alumno._id}">Editar</button>
-          <button class="btn btn-sm btn-danger btnEliminar" data-id="${alumno._id}">Eliminar</button>
-        </td>
-      `;
-      resultadosTable.appendChild(row);
-    });
-
-    document.querySelectorAll('.btnEditar').forEach(btn => {
-      btn.addEventListener('click', abrirModalEdicion);
-    });
-    document.querySelectorAll('.btnEliminar').forEach(btn => {
-      btn.addEventListener('click', eliminarAlumno);
-    });
-  });
-
-  function abrirModalEdicion(e) {
-    const id = e.target.dataset.id;
-    authenticatedFetch(`/api/dashboard/alumnos/${id}`)
-      .then(res => {
+      try {
+        const res = await authenticatedFetch(`/api/dashboard/alumno-por-folio/${folio}`);
         if (!res) return;
-        return res.json();
-      })
-      .then(alumno => {
-        document.getElementById('editId').value = alumno._id;
-        // Cargar el folio del alumno
-        document.getElementById('folio').value = alumno.folio || '';
+
+        if (!res.ok) {
+          const data = await res.json();
+          alert(data.message || '❌ No se encontró inscripción con ese folio');
+          resultadoFolio.classList.add('hidden');
+          return;
+        }
+
+        const alumno = await res.json();
+        alumnoFolioActual = alumno;
+
+        // Mostrar información
+        const da = alumno.datos_alumno || {};
+        infoFolio.innerHTML = `
+          <div><strong>Folio:</strong> ${alumno.folio || 'N/A'}</div>
+          <div><strong>Matrícula:</strong> ${alumno.matricula || 'N/A'}</div>
+          <div><strong>Nombre:</strong> ${da.primer_apellido || ''} ${da.segundo_apellido || ''} ${da.nombres || ''}</div>
+          <div><strong>CURP:</strong> ${da.curp || 'N/A'}</div>
+          <div><strong>Semestre:</strong> ${da.semestre || 'N/A'}</div>
+          <div><strong>Grupo:</strong> ${da.grupo || 'N/A'}</div>
+          <div><strong>Carrera:</strong> ${da.carrera || 'N/A'}</div>
+          <div><strong>Turno:</strong> ${da.turno || 'N/A'}</div>
+        `;
+
+        resultadoFolio.classList.remove('hidden');
+      } catch (err) {
+        console.error('Error buscando por folio:', err);
+        alert('❌ Error al buscar. Intenta nuevamente.');
+      }
+    });
+
+    // Permitir buscar con Enter
+    if (searchFolio) {
+      searchFolio.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') btnBuscarFolio.click();
+      });
+    }
+  }
+
+  // Editar inscripción por folio
+  if (btnEditarFolio) {
+    btnEditarFolio.addEventListener('click', () => {
+      if (!alumnoFolioActual) {
+        alert('⚠️ Primero busca un alumno por folio');
+        return;
+      }
+      abrirModalEdicionConDatos(alumnoFolioActual);
+    });
+  }
+
+  // ========== BÚSQUEDA POR MATRÍCULA ==========
+  const searchMatricula = document.getElementById('searchMatricula');
+  const btnBuscarMatricula = document.getElementById('btnBuscarMatricula');
+  const resultadoMatricula = document.getElementById('resultadoMatricula');
+  const infoMatricula = document.getElementById('infoMatricula');
+  const selectorSemestre = document.getElementById('selectorSemestre');
+  const infoSemestre = document.getElementById('infoSemestre');
+  const detallesSemestre = document.getElementById('detallesSemestre');
+  const btnEditarMatricula = document.getElementById('btnEditarMatricula');
+
+  if (btnBuscarMatricula) {
+    btnBuscarMatricula.addEventListener('click', async () => {
+      const matricula = searchMatricula?.value.trim();
+      if (!matricula) {
+        alert('⚠️ Por favor ingresa una matrícula');
+        return;
+      }
+
+      try {
+        const res = await authenticatedFetch(`/api/dashboard/alumno-por-matricula/${matricula}`);
+        if (!res) return;
+
+        if (!res.ok) {
+          const data = await res.json();
+          alert(data.message || '❌ No se encontró inscripción con esa matrícula');
+          resultadoMatricula.classList.add('hidden');
+          return;
+        }
+
+        const data = await res.json();
+        alumnoMatriculaActual = data;
+
+        // Mostrar información básica
+        const da = data.inscripcion.datos_alumno || {};
+        infoMatricula.innerHTML = `
+          <div><strong>Folio:</strong> ${data.inscripcion.folio || 'N/A'}</div>
+          <div><strong>Matrícula:</strong> ${data.matricula || 'N/A'}</div>
+          <div><strong>Nombre:</strong> ${da.primer_apellido || ''} ${da.segundo_apellido || ''} ${da.nombres || ''}</div>
+          <div><strong>CURP:</strong> ${da.curp || 'N/A'}</div>
+        `;
+
+        // Llenar selector de semestres
+        selectorSemestre.innerHTML = '<option value="">-- Selecciona un semestre --</option>';
+        selectorSemestre.innerHTML += '<option value="1">1º Semestre (Inscripción)</option>';
+        
+        data.semestresDisponibles.forEach(sem => {
+          selectorSemestre.innerHTML += `<option value="${sem.semestre}">${sem.semestre}º Semestre</option>`;
+        });
+
+        resultadoMatricula.classList.remove('hidden');
+        infoSemestre.classList.add('hidden');
+      } catch (err) {
+        console.error('Error buscando por matrícula:', err);
+        alert('❌ Error al buscar. Intenta nuevamente.');
+      }
+    });
+
+    // Permitir buscar con Enter
+    if (searchMatricula) {
+      searchMatricula.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') btnBuscarMatricula.click();
+      });
+    }
+  }
+
+  // Cargar datos del semestre seleccionado
+  if (selectorSemestre) {
+    selectorSemestre.addEventListener('change', async () => {
+      const semestre = selectorSemestre.value;
+      if (!semestre || !alumnoMatriculaActual) return;
+
+      try {
+        let registro = null;
+        
+        if (semestre === '1') {
+          // Mostrar inscripción original
+          registro = alumnoMatriculaActual.inscripcion;
+        } else {
+          // Buscar reinscripción del semestre
+          const res = await authenticatedFetch(`/api/dashboard/reinscripcion/${alumnoMatriculaActual.matricula}/${semestre}`);
+          if (!res) return;
+          
+          if (!res.ok) {
+            alert('❌ No se encontró reinscripción para ese semestre');
+            return;
+          }
+          
+          registro = await res.json();
+        }
+
+        if (!registro) return;
+
+        // Mostrar detalles del semestre
+        const da = registro.datos_alumno || {};
+        detallesSemestre.innerHTML = `
+          <div><strong>Semestre:</strong> ${da.semestre || semestre}</div>
+          <div><strong>Grupo:</strong> ${da.grupo || 'N/A'}</div>
+          <div><strong>Turno:</strong> ${da.turno || 'N/A'}</div>
+          <div><strong>Carrera:</strong> ${da.carrera || 'N/A'}</div>
+          <div><strong>Periodo:</strong> ${da.periodo_semestral || 'N/A'}</div>
+          <div><strong>Registro completado:</strong> ${registro.registro_completado ? 'Sí' : 'No'}</div>
+        `;
+
+        // Guardar registro actual para edición
+        alumnoMatriculaActual.registroActual = registro;
+        infoSemestre.classList.remove('hidden');
+      } catch (err) {
+        console.error('Error cargando semestre:', err);
+        alert('❌ Error al cargar datos del semestre');
+      }
+    });
+  }
+
+  // Editar reinscripción por matrícula
+  if (btnEditarMatricula) {
+    btnEditarMatricula.addEventListener('click', () => {
+      if (!alumnoMatriculaActual || !alumnoMatriculaActual.registroActual) {
+        alert('⚠️ Primero selecciona un semestre');
+        return;
+      }
+      abrirModalEdicionConDatos(alumnoMatriculaActual.registroActual);
+    });
+  }
+
+  // Función para abrir modal con datos (usada por ambos flujos)
+  function abrirModalEdicionConDatos(alumno) {
+    if (!alumno) return;
+    
+    document.getElementById('editId').value = alumno._id;
+    
+    // Manejar folio según tipo de registro
+    const folioInput = document.getElementById('folio');
+    const folioRequired = document.getElementById('folioRequired');
+    const esReinscripcion = alumno.tipo_registro === 'reinscripcion';
+    
+    if (folioInput) {
+      folioInput.value = alumno.folio || '';
+      if (esReinscripcion) {
+        folioInput.required = false;
+        folioInput.disabled = true;
+        folioInput.classList.add('bg-gray-100');
+        if (folioRequired) folioRequired.style.display = 'none';
+      } else {
+        folioInput.required = true;
+        folioInput.disabled = false;
+        folioInput.classList.remove('bg-gray-100');
+        if (folioRequired) folioRequired.style.display = 'inline';
+      }
+    }
         const da = alumno.datos_alumno || {};
         document.getElementById('primer_apellido').value = da.primer_apellido || '';
         document.getElementById('segundo_apellido').value = da.segundo_apellido || '';
@@ -256,10 +456,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('persona_emergencia_telefono').value = pe.telefono || '';
 
         // Inicializar script de opciones de carrera (evitar repeticiones)
-        inicializarOpcionesCarrera();
+        if (typeof inicializarOpcionesCarrera === 'function') {
+          inicializarOpcionesCarrera();
+        }
         
+        // Abrir modal
         new bootstrap.Modal(document.getElementById('editModal')).show();
-      });
   }
 
   // Función para manejar las opciones de carrera (evitar repeticiones)
@@ -308,42 +510,58 @@ document.addEventListener('DOMContentLoaded', async () => {
 document.getElementById('btnGuardar').addEventListener('click', async () => {
   const id = document.getElementById('editId').value;
   const folio = document.getElementById('folio').value.trim();
+  
+  // Obtener el tipo de registro del alumno actual (si existe)
+  let esReinscripcion = false;
+  if (id) {
+    try {
+      const res = await authenticatedFetch(`/api/dashboard/alumno/${id}`);
+      if (res && res.ok) {
+        const alumno = await res.json();
+        esReinscripcion = alumno.tipo_registro === 'reinscripcion';
+      }
+    } catch (err) {
+      console.error('Error obteniendo tipo de registro:', err);
+    }
+  }
 
-  // Validar que el folio sea obligatorio
-  if (!folio) {
-    alert('⚠️ El folio es obligatorio. Por favor ingresa un folio.');
+  // Validar folio solo para inscripciones
+  if (!esReinscripcion && !folio) {
+    alert('⚠️ El folio es obligatorio para inscripciones. Por favor ingresa un folio.');
     document.getElementById('folio').focus();
     return;
   }
 
-  // Verificar si el folio ya existe (excepto si es el mismo alumno que se está editando)
-  try {
-    const checkRes = await authenticatedFetch(`/api/dashboard/alumnos?folio=${folio}`);
-    if (checkRes && checkRes.ok) {
-      const alumnos = await checkRes.json();
-      // Si hay alumnos con ese folio y no es el mismo que estamos editando
-      const folioDuplicado = alumnos.find(alumno => {
-        // Si estamos editando (hay id), verificar que no sea el mismo alumno
-        if (id) {
-          return alumno._id !== id && alumno.folio === folio;
-        }
-        // Si estamos creando (no hay id), cualquier alumno con ese folio es duplicado
-        return alumno.folio === folio;
-      });
+  // Verificar si el folio ya existe (solo para inscripciones)
+  if (!esReinscripcion && folio) {
+    try {
+      const checkRes = await authenticatedFetch(`/api/dashboard/alumnos?folio=${folio}`);
+      if (checkRes && checkRes.ok) {
+        const alumnos = await checkRes.json();
+        // Si hay alumnos con ese folio y no es el mismo que estamos editando
+        const folioDuplicado = alumnos.find(alumno => {
+          // Si estamos editando (hay id), verificar que no sea el mismo alumno
+          if (id) {
+            return alumno._id !== id && alumno.folio === folio;
+          }
+          // Si estamos creando (no hay id), cualquier alumno con ese folio es duplicado
+          return alumno.folio === folio;
+        });
 
-      if (folioDuplicado) {
-        alert('❌ Este folio ya está en uso por otro alumno. Por favor ingresa un folio diferente.');
-        document.getElementById('folio').focus();
-        return;
+        if (folioDuplicado) {
+          alert('❌ Este folio ya está en uso por otro alumno. Por favor ingresa un folio diferente.');
+          document.getElementById('folio').focus();
+          return;
+        }
       }
+    } catch (err) {
+      console.error('Error verificando folio:', err);
+      // Continuar con el guardado si hay error en la verificación
     }
-  } catch (err) {
-    console.error('Error verificando folio:', err);
-    // Continuar con el guardado si hay error en la verificación
   }
 
+  // Construir datos según tipo de registro
   const datos = {
-    folio: folio,
     datos_alumno: {
       primer_apellido: document.getElementById('primer_apellido').value,
       segundo_apellido: document.getElementById('segundo_apellido').value,
@@ -422,6 +640,29 @@ document.getElementById('btnGuardar').addEventListener('click', async () => {
       telefono: document.getElementById('persona_emergencia_telefono').value
     }
   };
+
+  // Agregar campos según tipo de registro
+  if (esReinscripcion && id) {
+    // Para reinscripciones: obtener datos del alumno actual
+    try {
+      const res = await authenticatedFetch(`/api/dashboard/alumno/${id}`);
+      if (res && res.ok) {
+        const alumnoActual = await res.json();
+        datos.tipo_registro = 'reinscripcion';
+        datos.matricula = alumnoActual.matricula;
+        datos.semestre_reinscripcion = alumnoActual.semestre_reinscripcion;
+        datos.inscripcion_original_id = alumnoActual.inscripcion_original_id;
+      }
+    } catch (err) {
+      console.error('Error obteniendo datos de reinscripción:', err);
+      alert('❌ Error al obtener datos de la reinscripción');
+      return;
+    }
+  } else if (!esReinscripcion) {
+    // Para inscripciones: incluir folio
+    datos.folio = folio;
+    datos.tipo_registro = 'inscripcion';
+  }
 
   const metodo = id ? 'PUT' : 'POST';
   const url = id ? `/api/dashboard/alumnos/${id}` : `/api/dashboard/alumnos`;

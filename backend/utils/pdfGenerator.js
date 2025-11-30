@@ -102,6 +102,15 @@ async function generarPDF(datos, nombreArchivo = 'formulario.pdf') {
     y += 80;
   }
 
+  // Mostrar título de REINSCRIPCIÓN si aplica
+  if (datos.tipo_registro === 'reinscripcion') {
+    doc.fontSize(16).fillColor('#89042e').text('REINSCRIPCIÓN', marginX, y, { align: 'center', width: 500 });
+    if (datos.semestre_reinscripcion) {
+      doc.fontSize(12).fillColor('#000').text(`Semestre ${datos.semestre_reinscripcion}`, marginX, y + 20, { align: 'center', width: 500 });
+    }
+    y += 40;
+  }
+
   y = drawSectionTitle('Datos del Alumno', y);
   y = drawBox('Nombres', alumno.nombres, marginX, y);
   y = drawBox('Primer Apellido', alumno.primer_apellido, marginX + 260, y);
