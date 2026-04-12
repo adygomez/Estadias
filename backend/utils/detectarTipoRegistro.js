@@ -52,3 +52,5 @@ function detectarYAsignarTipoRegistro(doc) {
 
 module.exports = detectarYAsignarTipoRegistro;
 
+
+

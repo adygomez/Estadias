@@ -8,52 +8,120 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@400;500;600;700&family=Work+Sans:wght@700;800;900&display=swap" rel="stylesheet">
   <link rel="icon" href="/favicon.png" type="image/png">
-  <link rel="stylesheet" href="/css/chatbot.css">
 </head>
 <body class="relative min-h-screen font-['Montserrat']">
 <!-- Navbar Principal -->
-<nav class="relative z-10 bg-[#4C0000] w-full py-3">
+<nav class="relative z-50 bg-[#4C0000] w-full py-3">
   <div class="flex items-center justify-between px-4 md:px-6">
-    <!-- Logo Section (Left) -->
-    <div class="flex items-center space-x-4">
-      
-    </div>
-    
-    <!-- Navigation Links (Right) -->
-    <div class="flex items-center space-x-8">
-      <!-- Navigation Links -->
-      <div class="hidden md:flex items-center space-x-6">
-        <a href="index.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Inicio</a>
-        <a href="inscripcion.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Inscripción</a>
-        <a href="reinscripcion.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Reinscripción</a>
+    <div class="flex items-center space-x-4"></div>
+
+    <div class="flex items-center gap-3 md:gap-6">
+      <!-- Escritorio: enlaces + submenús hover -->
+      <div class="hidden md:flex items-center gap-4 lg:gap-6">
+        <a href="index.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Home</a>
+
+        <div class="relative group">
+          <span class="text-white font-medium cursor-default flex items-center gap-1 py-1 border-b-2 border-transparent group-hover:border-white/40">
+            Sobre nosotros
+            <svg class="w-4 h-4 opacity-80" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </span>
+          <div class="absolute left-0 top-full pt-2 min-w-[17rem] opacity-0 invisible pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition-opacity duration-150 z-50">
+            <div class="bg-[#4C0000] border border-red-800/50 rounded-lg shadow-lg py-2">
+              <a href="logros-carreras.html#eventos" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Eventos</a>
+              <a href="logros-carreras.html#actividades-deportivas" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Actividades deportivas y culturas</a>
+              <a href="logros-carreras.html#clubes" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Clubes</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative group">
+          <span class="text-white font-medium cursor-default flex items-center gap-1 py-1 border-b-2 border-transparent group-hover:border-white/40">
+            Oferta educativa
+            <svg class="w-4 h-4 opacity-80" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </span>
+          <div class="absolute left-0 top-full pt-2 min-w-[17rem] opacity-0 invisible pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition-opacity duration-150 z-50">
+            <div class="bg-[#4C0000] border border-red-800/50 rounded-lg shadow-lg py-2">
+              <a href="index.html#ventas" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Ventas</a>
+              <a href="index.html#programacion" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Programación</a>
+              <a href="index.html#preparacion-alimentos-bebidas" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Preparación de alimentos y bebidas</a>
+              <a href="index.html#robotica" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Robótica</a>
+              <a href="index.html#gestion-empresarial" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Gestión e Innovación turística</a>
+              <a href="index.html#educacion-dual" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Educacion Dual</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative group">
+          <span class="text-white font-medium cursor-default flex items-center gap-1 py-1 border-b-2 border-transparent group-hover:border-white/40">
+            Servicios escolares
+            <svg class="w-4 h-4 opacity-80" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </span>
+          <div class="absolute left-0 top-full pt-2 min-w-[14rem] opacity-0 invisible pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition-opacity duration-150 z-50">
+            <div class="bg-[#4C0000] border border-red-800/50 rounded-lg shadow-lg py-2">
+              <a href="inscripcion.html" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Proceso de admisión</a>
+            </div>
+          </div>
+        </div>
       </div>
-      
-      <!-- Login Button -->
-      <a href="login.html" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2">
+
+      <a href="login.html" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2 shrink-0">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
         </svg>
         <span class="text-white">Iniciar Sesión</span>
       </a>
-      
-      <!-- Mobile Menu Button -->
-      <button class="md:hidden text-white hover:text-gray-200" onclick="toggleMobileMenu()">
+
+      <button type="button" id="nav-burger" class="md:hidden text-white hover:text-gray-200 p-1 rounded focus:outline-none focus:ring-2 focus:ring-white/40" onclick="toggleMobileMenu()" aria-expanded="false" aria-controls="mobile-menu">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </button>
     </div>
   </div>
-  
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="md:hidden mt-4 pb-4 border-t border-red-800 hidden">
-    <div class="flex flex-col space-y-3 pt-4 px-4 md:px-6">
-      <a href="index.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Inicio</a>
-      <a href="inscripcion.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Inscripción</a>
-      <a href="reinscripcion.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Reinscripción</a>
-      <a href="login.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Iniciar Sesión</a>
+
+  <!-- Móvil: panel hamburguesa -->
+  <div id="mobile-menu" class="md:hidden border-t border-red-800 hidden">
+    <div class="px-4 md:px-6 py-4 space-y-1 text-white">
+      <a href="index.html" class="block py-2 font-medium hover:text-gray-200 transition-colors">Home</a>
+
+      <details class="group border-b border-red-800/60 pb-2 mb-2">
+        <summary class="cursor-pointer list-none py-2 font-medium flex items-center justify-between [&::-webkit-details-marker]:hidden">
+          Sobre nosotros
+          <svg class="w-4 h-4 opacity-80 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </summary>
+        <div class="pl-3 mt-1 space-y-1 border-l border-red-800/50 ml-1">
+          <a href="logros-carreras.html#eventos" class="block py-1.5 text-sm text-gray-200 hover:text-white">Eventos</a>
+          <a href="logros-carreras.html#actividades-deportivas" class="block py-1.5 text-sm text-gray-200 hover:text-white">Actividades deportivas y culturas</a>
+          <a href="logros-carreras.html#clubes" class="block py-1.5 text-sm text-gray-200 hover:text-white">Clubes</a>
+        </div>
+      </details>
+
+      <details class="group border-b border-red-800/60 pb-2 mb-2">
+        <summary class="cursor-pointer list-none py-2 font-medium flex items-center justify-between [&::-webkit-details-marker]:hidden">
+          Oferta educativa
+          <svg class="w-4 h-4 opacity-80 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </summary>
+        <div class="pl-3 mt-1 space-y-1 border-l border-red-800/50 ml-1">
+          <a href="index.html#ventas" class="block py-1.5 text-sm text-gray-200 hover:text-white">Ventas</a>
+          <a href="index.html#programacion" class="block py-1.5 text-sm text-gray-200 hover:text-white">Programación</a>
+          <a href="index.html#preparacion-alimentos-bebidas" class="block py-1.5 text-sm text-gray-200 hover:text-white">Preparación de alimentos y bebidas</a>
+          <a href="index.html#robotica" class="block py-1.5 text-sm text-gray-200 hover:text-white">Robótica</a>
+          <a href="index.html#gestion-empresarial" class="block py-1.5 text-sm text-gray-200 hover:text-white">Gestión e Innovación turística</a>
+          <a href="index.html#educacion-dual" class="block py-1.5 text-sm text-gray-200 hover:text-white">Educacion Dual</a>
+        </div>
+      </details>
+
+      <details class="group border-b border-red-800/60 pb-2">
+        <summary class="cursor-pointer list-none py-2 font-medium flex items-center justify-between [&::-webkit-details-marker]:hidden">
+          Servicios escolares
+          <svg class="w-4 h-4 opacity-80 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </summary>
+        <div class="pl-3 mt-1 space-y-1 border-l border-red-800/50 ml-1">
+          <a href="inscripcion.html" class="block py-1.5 text-sm text-gray-200 hover:text-white">Proceso de admisión</a>
+        </div>
+      </details>
     </div>
   </div>
 </nav>
@@ -61,8 +129,22 @@
   <script>
     function toggleMobileMenu() {
       const mobileMenu = document.getElementById('mobile-menu');
+      const btn = document.getElementById('nav-burger');
       mobileMenu.classList.toggle('hidden');
+      const open = !mobileMenu.classList.contains('hidden');
+      if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     }
+    document.addEventListener('DOMContentLoaded', function () {
+      const panel = document.getElementById('mobile-menu');
+      if (!panel) return;
+      panel.querySelectorAll('a[href]').forEach(function (a) {
+        a.addEventListener('click', function () {
+          panel.classList.add('hidden');
+          const btn = document.getElementById('nav-burger');
+          if (btn) btn.setAttribute('aria-expanded', 'false');
+        });
+      });
+    });
   </script>
 
   <!-- Sección Principal con Imagen de Fondo -->
@@ -88,190 +170,476 @@
     </div>
   </div>
 
-  <!-- Logros -->
-  <section class="bg-white py-12 md:py-16 px-6 md:px-12">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Nuestros Logros</h2>
-      <div class="grid gap-8 md:grid-cols-2" id="logrosSection">
-        <!-- Los logros se cargarán aquí dinámicamente -->
-        <div class="flex items-start space-x-4">
-          <img src="/images/Icon-Logros.svg" alt="Icono logro" class="w-9 h-9 md:w-10 md:h-10">
-          <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex-1">
-            <h3 class="text-sm md:text-base font-semibold text-gray-900">Cargando...</h3>
-            <p class="text-xs md:text-sm text-gray-600 mt-2">Cargando logros...</p>
+  <!-- Instalaciones: título + bloque naranja + imagen (desktop con solape; móvil apilado) -->
+  <section id="instalaciones" class="scroll-mt-20 bg-white py-10 md:py-14 lg:py-20 overflow-x-hidden">
+    <div class="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
+      <!-- Móvil / tablet: título → imagen → texto -->
+      <div class="lg:hidden space-y-5 md:space-y-6">
+        <h2 class="font-['Work_Sans'] font-black uppercase leading-[0.9] tracking-tight text-[#4C0000] text-[clamp(2.25rem,12vw,5.5rem)]">
+          INSTALACIONES
+        </h2>
+        <div class="w-full overflow-hidden rounded-lg shadow-lg">
+          <img
+            src="/images/UpQroo-1024x654.webp"
+            alt="Instalaciones del CBTis 272"
+            class="block w-full max-w-full h-auto max-h-[560px] min-h-[220px] object-cover object-center"
+            width="1024"
+            height="654"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="w-full rounded-lg bg-[#FF8F00] p-5 sm:p-6 md:p-8">
+          <p class="font-['Inter'] text-[clamp(1rem,3.8vw,1.125rem)] leading-[1.6] text-gray-900 text-pretty">
+            Nuestras instalaciones ofrecen espacios modernos y equipados para el aprendizaje técnico y humano: laboratorios, talleres, áreas deportivas y espacios comunes pensados para acompañar la formación integral de la comunidad estudiantil del CBTis 272.
+          </p>
+        </div>
+      </div>
+
+      <!-- Escritorio grande: solape título / naranja / imagen -->
+      <div class="hidden lg:block relative pb-4">
+        <h2 class="relative z-30 font-['Work_Sans'] font-black uppercase leading-[0.82] tracking-tight text-[#4C0000] text-[clamp(4rem,12vw,10.5rem)] pl-0.5">
+          INSTALACIONES
+        </h2>
+        <div class="relative z-10 -mt-[clamp(2rem,4.5vw,3.75rem)] min-h-[min(560px,70vh)]">
+          <div class="relative w-[72%] max-w-[72%] bg-[#FF8F00] pl-8 xl:pl-10 pr-[min(42%,28rem)] pt-[clamp(4.5rem,7vw,7.5rem)] pb-12 xl:pb-14 min-h-[min(520px,65vh)]">
+            <p class="font-['Inter'] text-[clamp(1rem,1.15vw,1.125rem)] leading-[1.6] text-gray-900 text-pretty max-w-2xl">
+              Nuestras instalaciones ofrecen espacios modernos y equipados para el aprendizaje técnico y humano: laboratorios, talleres, áreas deportivas y espacios comunes pensados para acompañar la formación integral de la comunidad estudiantil del CBTis 272.
+            </p>
+          </div>
+          <div class="absolute right-0 top-[clamp(1.5rem,4vw,4.5rem)] z-20 w-[min(48%,42rem)] max-w-full">
+            <img
+              src="/images/UpQroo-1024x654.webp"
+              alt="Instalaciones del CBTis 272"
+              class="block h-[560px] w-full max-w-full object-cover object-center shadow-2xl"
+              width="1024"
+              height="654"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Carreras -->
-  <section class="bg-white py-12 md:py-16 px-6 md:px-12">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Nuestras Carreras</h2>
-      <div class="grid gap-8 md:grid-cols-2 items-stretch">
-        <!-- Card 1 -->
-        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col">
-          <div class="h-48 bg-gray-200 overflow-hidden">
-            <img src="/images/AyB.webp" alt="Preparación de alimentos y bebidas" class="w-full h-full object-cover">
-          </div>
-          <div class="p-6 flex flex-col flex-grow">
-            <div class="space-y-6 flex-grow">
-              <div class="space-y-2">
-                <span class="inline-block bg-emerald-100 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full">Cocina</span>
-                <div>
-                  <h3 class="text-lg font-semibold text-gray-900">Preparación de alimentos y bebidas</h3>
-                  <p class="text-sm text-gray-600 mt-2">
-                    La carrera de Técnico en Preparación de Alimentos y Bebidas forma especialistas en la elaboración y servicio de comida y bebidas, dentro del ámbito de los servicios turísticos.
-                  </p>
-                </div>
-              </div>
-              <div class="grid grid-cols-3 gap-4 text-center text-xs text-gray-600">
-                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
-                  Repostería y Panadería
-                </div>
-                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
-                  Repostería y Panadería
-                </div>
-                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
-                  Repostería y Panadería
-                </div>
-              </div>
-            </div>
-            <div class="w-full bg-[#4C0000] text-white font-semibold py-2 rounded-md text-center mt-6">
-              CBTIS 272
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col">
-          <div class="h-48 bg-gray-200 overflow-hidden">
-            <img src="/images/Ventas.webp" alt="Ventas" class="w-full h-full object-cover">
-          </div>
-          <div class="p-6 flex flex-col flex-grow">
-            <div class="space-y-6 flex-grow">
-              <div class="space-y-2">
-                <span class="inline-block bg-emerald-100 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full">Administración</span>
-                <div>
-                  <h3 class="text-lg font-semibold text-gray-900">Ventas</h3>
-                  <p class="text-sm text-gray-600 mt-2">
-                    Prepara a los estudiantes para comercializar productos y servicios, asistir en la administración del área de ventas, realizar estudios de mercado y asesorar clientes. Los egresados obtienen las habilidades necesarias para trabajar en el área comercial de diversas empresas o iniciar sus propios proyectos. 
-                  </p>
-                </div>
-              </div>
-              <div class="grid grid-cols-3 gap-4 text-center text-xs text-gray-600">
-                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
-                  Auxilia en el proceso de administración del área de ventas
-                </div>
-                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
-                  Auxilia en la elaboración del estudio de mercado
-                </div>
-                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
-                  Posiciona el producto y/o servicio en el mercado
-                </div>
-              </div>
-            </div>
-            <div class="w-full bg-[#4C0000] text-white font-semibold py-2 rounded-md text-center mt-6">
-              CBTIS 272
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col">
-          <div class="h-48 bg-gray-200 overflow-hidden">
-            <img src="/images/Programacion.webp" alt="Programación" class="w-full h-full object-cover">
-          </div>
-          <div class="p-6 flex flex-col flex-grow">
-            <div class="space-y-6 flex-grow">
-              <div class="space-y-2">
-                <span class="inline-block bg-emerald-100 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full">Tecnologia</span>
-                <div>
-                  <h3 class="text-lg font-semibold text-gray-900">Programación</h3>
-                  <p class="text-sm text-gray-600 mt-2">
-                    Forma al estudiante para el desarrollo de software de sistemas informáticos, desarrollo de software con herramientas orientadas a la productividad, la administración de bases de datos en un sistema de información, el desarrollo de aplicaciones web y el desarrollo de aplicaciones móviles multiplataforma. Todas estas competencias posibilitan al egresado su incorporación al mundo laboral
-                  </p>
-                </div>
-              </div>
-              <div class="grid grid-cols-3 gap-4 text-center text-xs text-gray-600">
-                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
-                  Desarrollo de software de sistemas informáticos
-                </div>
-                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
-                  Desarrollo de aplicaciones web en un sistema de información
-                </div>
-                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
-                  Repostería y Panadería
-                </div>
-              </div>
-            </div>
-            <div class="w-full bg-[#4C0000] text-white font-semibold py-2 rounded-md text-center mt-6">
-              CBTIS 272
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col">
-          <div class="h-48 bg-gray-200 overflow-hidden">
-            <img src="/images/Gestion.webp" alt="Gestión e Innovación Turística" class="w-full h-full object-cover">
-          </div>
-          <div class="p-6 flex flex-col flex-grow">
-            <div class="space-y-6 flex-grow">
-              <div class="space-y-2">
-                <span class="inline-block bg-emerald-100 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full">Innovación</span>
-                <div>
-                  <h3 class="text-lg font-semibold text-gray-900">Gestión e Innovación Turística </h3>
-                  <p class="text-sm text-gray-600 mt-2">
-                    Colabora en la gestión de proyectos, productos y servicios en organizaciones y empresas turísticas públicas o privadas que promuevan el desarrollo local y regional, integrando tecnología, las tendencias del mercado y prácticas sostenibles con actitud de servicio ético y habilidades comunicativas en una segunda lengua.
-                  </p>
-                </div>
-              </div>
-              <div class="grid grid-cols-3 gap-4 text-center text-xs text-gray-600">
-                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
-                  Atiende al cliente en el entorno turístico
-                </div>
-                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
-                  Auxilia en la gestión operativa de productos y servicios turísticos
-                </div>
-                <div class="h-20 flex items-center justify-center border border-gray-200 rounded-full">
-                  Elabora productos y servicios turísticos innovadores
-                </div>
-              </div>
-            </div>
-            <div class="w-full bg-[#4C0000] text-white font-semibold py-2 rounded-md text-center mt-6">
-              CBTIS 272
-            </div>
-          </div>
-        </div>
+  <!-- Video institucional: mismo ancho de contenido que Instalaciones; carga diferida para no frenar la página -->
+  <section class="bg-white py-8 md:py-10 lg:py-12" aria-label="Video del plantel">
+    <div class="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
+      <div id="video-institucional-wrap" class="relative w-full overflow-hidden rounded-lg bg-neutral-200 shadow-md aspect-video">
+        <video
+          id="video-institucional"
+          class="absolute inset-0 z-0 h-full w-full object-cover"
+          controls
+          playsinline
+          preload="none"
+          poster="/images/UpQroo-1024x654.webp"
+        >
+          <source src="/images/CBTIS%20272.mp4" type="video/mp4">
+          Tu navegador no admite la reproducción de video embebido.
+        </video>
+        <button
+          type="button"
+          id="video-play-trigger"
+          class="absolute inset-0 z-10 flex cursor-pointer items-center justify-center border-0 bg-transparent p-0 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black/40"
+          aria-label="Reproducir video del plantel"
+        >
+          <span class="absolute inset-0 bg-black/25 transition-colors hover:bg-black/35" aria-hidden="true"></span>
+          <span class="relative flex h-16 w-16 items-center justify-center rounded-full bg-white/95 shadow-xl ring-1 ring-black/10 transition-transform hover:scale-105 active:scale-95 md:h-20 md:w-20">
+            <svg class="ml-1 h-8 w-8 text-[#4C0000] md:h-10 md:w-10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </span>
+        </button>
       </div>
     </div>
+  </section>
+  <script>
+    (function () {
+      var wrap = document.getElementById('video-institucional-wrap');
+      var video = document.getElementById('video-institucional');
+      var btn = document.getElementById('video-play-trigger');
+      if (!wrap || !video || !btn) return;
 
+      function hideOverlay() {
+        btn.classList.add('hidden');
+      }
+      function showOverlay() {
+        btn.classList.remove('hidden');
+      }
+
+      btn.addEventListener('click', function () {
+        if (video.ended) video.currentTime = 0;
+        video.play().catch(function () {});
+      });
+      video.addEventListener('play', hideOverlay);
+      video.addEventListener('ended', showOverlay);
+    })();
+  </script>
+
+  <!-- Oferta académica: títulos Work Sans, cuerpo Inter; mismo ancho que Instalaciones / video -->
+  <section id="oferta-academica" class="scroll-mt-20 bg-white py-10 md:py-14 lg:py-20" aria-labelledby="oferta-academica-titulo">
+    <div class="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 id="oferta-academica-titulo" class="font-['Work_Sans'] font-black uppercase leading-[0.9] tracking-tight text-[#4C0000] text-[clamp(4rem,12vw,10.5rem)]">
+          OFERTA
+        </h2>
+        <p class="mt-1 font-['Work_Sans'] font-bold leading-tight text-[#4C0000] text-[clamp(1.875rem,3.8vw,3.125rem)]">
+          Academica
+        </p>
+      </div>
+      <div class="mx-auto mt-8 max-w-4xl space-y-5 text-left">
+        <p class="font-['Inter'] text-[clamp(1rem,2.4vw,1.125rem)] leading-[1.6] text-gray-900 text-pretty">
+          En la Universidad Politécnica de Quintana Roo encontrarás una oferta educativa de vanguardia, diseñada para formar profesionales altamente capacitados en áreas clave como salud, tecnología, ingeniería, finanzas y administración.
+        </p>
+        <p class="font-['Inter'] text-[clamp(1rem,2.4vw,1.125rem)] leading-[1.6] text-gray-900 text-pretty">
+          Con programas basados en competencias, prácticas reales y un enfoque integral, te preparamos para enfrentar los retos del mundo laboral con visión, ética e innovación. ¡Aquí comienza tu futuro profesional!
+        </p>
+      </div>
+    </div>
   </section>
 
-  <!-- Imagen Destacada -->
-  <div class="w-full h-[17.125rem]">
-    <img src="/backgroundoriginal.jpg" alt="CBTis 272" class="w-full h-full object-cover">
-  </div>
+  <!-- Especialidades: 6 tarjetas, 3 columnas en escritorio (colores en ciclo) -->
+  <section class="overflow-x-hidden bg-white pb-10 md:pb-14 lg:pb-16" aria-label="Especialidades del plantel">
+    <div class="mx-auto grid w-full max-w-[1600px] grid-cols-1 gap-y-6 lg:grid-cols-3 lg:gap-x-0 lg:gap-y-12">
+      <!-- Ventas -->
+      <article id="ventas" class="scroll-mt-24 flex min-h-[26rem] flex-col lg:min-h-[38rem] bg-[#FF8F00] p-8 text-white sm:p-9 md:p-10 lg:p-12">
+        <div class="flex gap-4">
+          <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-white p-2 sm:h-16 sm:w-16 sm:p-2.5" aria-hidden="true">
+            <svg class="h-9 w-9 shrink-0 sm:h-10 sm:w-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M10 19H6.2C5.0799 19 4.51984 19 4.09202 18.782C3.71569 18.5903 3.40973 18.2843 3.21799 17.908C3 17.4802 3 16.9201 3 15.8V8.2C3 7.07989 3 6.51984 3.21799 6.09202C3.40973 5.71569 3.71569 5.40973 4.09202 5.21799C4.51984 5 5.0799 5 6.2 5H17.8C18.9201 5 19.4802 5 19.908 5.21799C20.2843 5.40973 20.5903 5.71569 20.782 6.09202C21 6.51984 21 7.0799 21 8.2V8.5M9 9.5V8.5M9 9.5H11.0001M9 9.5C7.88279 9.49998 7.00244 9.62616 7.0001 10.8325C6.99834 11.7328 7.00009 12 9.00009 12C11.0001 12 11.0001 12.2055 11.0001 13.1667C11.0001 13.889 11 14.5 9 14.5M9 15.5V14.5M9 14.5L7.0001 14.5M14 10H17M14 20L16.025 19.595C16.2015 19.5597 16.2898 19.542 16.3721 19.5097C16.4452 19.4811 16.5147 19.4439 16.579 19.399C16.6516 19.3484 16.7152 19.2848 16.8426 19.1574L21 15C21.5523 14.4477 21.5523 13.5523 21 13C20.4477 12.4477 19.5523 12.4477 19 13L14.8426 17.1574C14.7152 17.2848 14.6516 17.3484 14.601 17.421C14.5561 17.4853 14.5189 17.5548 14.4903 17.6279C14.458 17.7102 14.4403 17.7985 14.405 17.975L14 20Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </div>
+          <h3 class="min-w-0 flex-1 font-['Work_Sans'] font-bold leading-snug text-[clamp(1.05rem,2.1vw,1.35rem)]">Ventas</h3>
+        </div>
+        <div class="mt-6 space-y-4 font-['Inter'] font-normal leading-[1.6] text-[clamp(0.9375rem,1.8vw,1rem)] text-white">
+          <p>La carrera técnica en Ventas forma estudiantes capaces de posicionar productos y servicios en el mercado mediante estrategias innovadoras, adaptadas a las nuevas tecnologías y a las necesidades de los clientes. Durante su formación, desarrollan habilidades para analizar mercados, apoyar en la administración del área de ventas y aplicar técnicas efectivas de comunicación y comercialización.</p>
+          <p>Asimismo, adquieren competencias para asesorar al cliente, identificar oportunidades de negocio y contribuir al crecimiento de una empresa en un entorno competitivo y globalizado. Esta preparación les permite integrarse al mundo laboral o emprender sus propios proyectos comerciales.</p>
+          <p>Además, fortalecen habilidades socioemocionales y para la vida que impulsan la toma de decisiones, el trabajo en equipo y el desarrollo personal.</p>
+        </div>
+        <p class="mt-6 font-['Work_Sans'] font-bold">
+          <a href="#" class="text-white underline decoration-white underline-offset-[3px] transition-opacity hover:opacity-90">Conocer Más</a>
+        </p>
+        <div class="mt-auto space-y-3 pt-10">
+          <div class="flex items-center gap-2.5 font-['Inter'] text-[clamp(0.9375rem,1.8vw,1rem)]">
+            <svg aria-hidden="true" class="h-5 w-5 shrink-0 text-white" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M622.34 153.2L343.4 67.5c-15.2-4.67-31.6-4.67-46.79 0L17.66 153.2c-23.54 7.23-23.54 38.36 0 45.59l48.63 14.94c-10.67 13.19-17.23 29.28-17.88 46.9C38.78 266.15 32 276.11 32 288c0 10.78 5.68 19.85 13.86 25.65L20.33 428.53C18.11 438.52 25.71 448 35.94 448h56.11c10.24 0 17.84-9.48 15.62-19.47L82.14 313.65C90.32 307.85 96 298.78 96 288c0-11.57-6.47-21.25-15.66-26.87.76-15.02 8.44-28.3 20.69-36.72L296.6 284.5c9.06 2.78 26.44 6.25 46.79 0l278.95-85.7c23.55-7.24 23.55-38.36 0-45.6zM352.79 315.09c-28.53 8.76-52.84 3.92-65.59 0l-145.02-44.55L128 384c0 35.35 85.96 64 192 64s192-28.65 192-64l-14.18-113.47-145.03 44.56z"></path></svg>
+            <span>Semestral</span>
+          </div>
+          <div class="flex items-center gap-2.5 font-['Inter'] text-[clamp(0.9375rem,1.8vw,1rem)]">
+            <svg aria-hidden="true" class="h-5 w-5 shrink-0 text-white" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M400 64h-48V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H160V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 400H54a6 6 0 0 1-6-6V160h352v298a6 6 0 0 1-6 6zm-52.849-200.65L198.842 404.519c-4.705 4.667-12.303 4.637-16.971-.068l-75.091-75.699c-4.667-4.705-4.637-12.303.068-16.971l22.719-22.536c4.705-4.667 12.303-4.637 16.97.069l44.104 44.461 111.072-110.181c4.705-4.667 12.303-4.637 16.971.068l22.536 22.718c4.667 4.705 4.636 12.303-.069 16.97z"></path></svg>
+            <span>3 años</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Programación -->
+      <article id="programacion" class="scroll-mt-24 flex min-h-[26rem] flex-col lg:min-h-[38rem] bg-[#FF6400] p-8 text-white sm:p-9 md:p-10 lg:p-12">
+        <div class="flex gap-4">
+          <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-white p-2 sm:h-16 sm:w-16 sm:p-2.5" aria-hidden="true">
+            <svg class="h-9 w-9 shrink-0 sm:h-10 sm:w-10" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill="#2D2D2D" d="M57.736,106.664h396.712V396.8c12.304,0,19.336,0,19.2,0V102.4c0-7.04-5.76-12.8-12.8-12.8H51.328 c-7.04,0-12.8,5.76-12.8,12.8v294.4c0,0,7.008,0,19.2,0V106.664H57.736z"></path>
+              <path fill="#8AD5DD" d="M57.736,106.664V396.8c71.888,0,324.84,0,396.712,0V106.664H57.736z M136.68,238.344 c9.6-30.36,22.928-60.72,37.176-83.96l28.496-2.48c-9.6,26.336-17.352,56.384-21.688,83.648L136.68,238.344z M197.096,238.344 c9.6-30.36,22.928-60.72,37.176-83.96l28.496-2.48c-9.296,26.336-17.352,56.384-21.688,83.648L197.096,238.344z M249.216,345.824 c9.296-26.336,17.352-56.392,21.688-83.648l44-2.792c-9.608,30.36-23.24,60.72-37.176,83.952L249.216,345.824z M338.136,343.336 l-28.504,2.488c9.296-26.336,17.352-56.392,21.688-83.648l44-2.792C365.704,289.744,352.384,320.104,338.136,343.336z"></path>
+              <path fill="#E8E8E8" d="M512,396.8h-38.352c0.136,0-6.896,0-19.2,0c-71.872,0-324.824,0-396.712,0c-12.2,0-19.2,0-19.2,0H0 v8.536h512V396.8z"></path>
+              <polygon fill="#C9C9C9" points="486.4,422.4 512,405.336 0,405.336 25.6,422.4 "></polygon>
+              <path fill="#FFFFFF" d="M173.864,154.384c-14.248,23.24-27.576,53.6-37.176,83.96l43.992-2.792 c4.336-27.264,12.088-57.32,21.688-83.648L173.864,154.384z"></path>
+              <path fill="#FFFFFF" d="M234.28,154.384c-14.248,23.24-27.576,53.6-37.176,83.96l43.992-2.792 c4.336-27.264,12.392-57.32,21.688-83.648L234.28,154.384z"></path>
+              <path fill="#FFFFFF" d="M309.632,345.824l28.504-2.488c14.248-23.232,27.568-53.592,37.176-83.952l-44,2.792 C326.984,289.432,318.928,319.488,309.632,345.824z"></path>
+              <path fill="#FFFFFF" d="M270.904,262.168c-4.336,27.256-12.392,57.312-21.688,83.648l28.504-2.488 c13.936-23.232,27.568-53.592,37.176-83.952L270.904,262.168z"></path>
+            </svg>
+          </div>
+          <h3 class="min-w-0 flex-1 font-['Work_Sans'] font-bold leading-snug text-[clamp(1.05rem,2.1vw,1.35rem)]">Programación</h3>
+        </div>
+        <div class="mt-6 space-y-4 font-['Inter'] font-normal leading-[1.6] text-[clamp(0.9375rem,1.8vw,1rem)] text-white">
+          <p>La carrera técnica en Programación forma estudiantes capaces de desarrollar software para distintos sistemas, utilizando herramientas modernas y enfocadas en la productividad. Durante su formación, adquieren habilidades en la creación de aplicaciones web y móviles, así como en la administración de bases de datos, permitiéndoles construir soluciones tecnológicas completas.</p>
+          <p>Esta carrera abre oportunidades para integrarse al mundo laboral como desarrolladores o analistas de software, continuar con estudios superiores o emprender proyectos propios. Además, fortalece habilidades para la vida y el trabajo, fomentando la toma de decisiones informadas, el aprendizaje constante y el compromiso con su entorno.</p>
+        </div>
+        <p class="mt-6 font-['Work_Sans'] font-bold">
+          <a href="#" class="text-white underline decoration-white underline-offset-[3px] transition-opacity hover:opacity-90">Conocer Más</a>
+        </p>
+        <div class="mt-auto space-y-3 pt-10">
+          <div class="flex items-center gap-2.5 font-['Inter'] text-[clamp(0.9375rem,1.8vw,1rem)]">
+            <svg aria-hidden="true" class="h-5 w-5 shrink-0 text-white" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M622.34 153.2L343.4 67.5c-15.2-4.67-31.6-4.67-46.79 0L17.66 153.2c-23.54 7.23-23.54 38.36 0 45.59l48.63 14.94c-10.67 13.19-17.23 29.28-17.88 46.9C38.78 266.15 32 276.11 32 288c0 10.78 5.68 19.85 13.86 25.65L20.33 428.53C18.11 438.52 25.71 448 35.94 448h56.11c10.24 0 17.84-9.48 15.62-19.47L82.14 313.65C90.32 307.85 96 298.78 96 288c0-11.57-6.47-21.25-15.66-26.87.76-15.02 8.44-28.3 20.69-36.72L296.6 284.5c9.06 2.78 26.44 6.25 46.79 0l278.95-85.7c23.55-7.24 23.55-38.36 0-45.6zM352.79 315.09c-28.53 8.76-52.84 3.92-65.59 0l-145.02-44.55L128 384c0 35.35 85.96 64 192 64s192-28.65 192-64l-14.18-113.47-145.03 44.56z"></path></svg>
+            <span>Semestral</span>
+          </div>
+          <div class="flex items-center gap-2.5 font-['Inter'] text-[clamp(0.9375rem,1.8vw,1rem)]">
+            <svg aria-hidden="true" class="h-5 w-5 shrink-0 text-white" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M400 64h-48V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H160V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 400H54a6 6 0 0 1-6-6V160h352v298a6 6 0 0 1-6 6zm-52.849-200.65L198.842 404.519c-4.705 4.667-12.303 4.637-16.971-.068l-75.091-75.699c-4.667-4.705-4.637-12.303.068-16.971l22.719-22.536c4.705-4.667 12.303-4.637 16.97.069l44.104 44.461 111.072-110.181c4.705-4.667 12.303-4.637 16.971.068l22.536 22.718c4.667 4.705 4.636 12.303-.069 16.97z"></path></svg>
+            <span>3 años</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Preparación de alimentos y bebidas -->
+      <article id="preparacion-alimentos-bebidas" class="scroll-mt-24 flex min-h-[26rem] flex-col lg:min-h-[38rem] bg-[#4c0000] p-8 text-white sm:p-9 md:p-10 lg:p-12">
+        <div class="flex gap-4">
+          <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-white p-2 sm:h-16 sm:w-16 sm:p-2.5" aria-hidden="true">
+            <svg class="h-9 w-9 shrink-0 sm:h-10 sm:w-10" viewBox="0 0 478.775 478.775" xmlns="http://www.w3.org/2000/svg" fill="#000000" aria-hidden="true">
+              <path d="M438.612,102.499h-17.159c-22.178,0-40.163,17.985-40.163,40.163v18.664l0.078-0.032l14.448-13.442 l-15.057,30.804l-35.175,13.707l12.094-21.842l2.728-4.911c2.135-3.857,0.732-8.712-3.117-10.846 c-3.865-2.136-8.696-0.741-10.848,3.117l-12.016,21.709l-12.094,21.843l-8.12,3.163c-10.271,3.998-15.337,15.562-11.347,25.833 c0.438,1.114,1.138,2.01,1.746,3l-9.07,16.371c-12.515-9.943-33.259-17.565-37.826-9.296c-7.152,12.929-2.492,29.199,10.442,36.351 c12.921,7.163,29.223,2.504,36.346-10.434c0.046-0.085,13.277-23.837,13.277-23.837c1.217,0.233,2.416,0.554,3.679,0.554 c2.415,0,4.863-0.445,7.247-1.373l73.811-28.77c4.66-1.816,8.477-5.33,10.675-9.826l19.762-40.46l-5.657,47.948 c-0.778,6.538-5.111,11.79-10.848,14.042l-8.134,3.163l-27.025,10.536v73.538h0.032v142.659c0,13.224,10.721,23.939,23.939,23.939 c5.469,0,10.442-1.902,14.462-4.987c-3.07-5.657-4.987-12.047-4.987-18.951V311.94h15.959v142.659 c0,13.224,10.724,23.939,23.939,23.939c13.217,0,23.939-10.715,23.939-23.939l0.203-203.628V142.662 C478.775,120.485,460.789,102.499,438.612,102.499z"></path>
+              <path d="M430.024,93.522c25.777,0,46.661-20.876,46.661-46.638c0-25.77-20.884-46.646-46.661-46.646 c-25.747,0-46.631,20.876-46.631,46.646C383.393,72.646,404.277,93.522,430.024,93.522z"></path>
+              <path d="M353.423,293.012h-10.629v-5.931c0-2.182-1.762-3.951-3.943-3.951H224.393 c-2.182,0-3.957,1.77-3.957,3.951v5.931h-10.646c-4.411,0-7.979,3.568-7.979,7.979c0,4.41,3.568,7.979,7.979,7.979h10.646v21.826 c0,15.367,12.452,27.82,27.819,27.82h66.719c15.367,0,27.82-12.453,27.82-27.82v-21.826h10.629c4.411,0,7.979-3.57,7.979-7.979 C361.403,296.581,357.835,293.012,353.423,293.012z"></path>
+              <path d="M325.681,376.798h-90.283c-6.609,0-11.97,5.36-11.97,11.969v77.801c0,6.607,5.36,11.969,11.97,11.969 c6.608,0,11.969-5.362,11.969-11.969v-65.832h66.346v65.832c0,6.607,5.362,11.969,11.969,11.969c6.609,0,11.97-5.362,11.97-11.969 v-77.801C337.651,382.158,332.291,376.798,325.681,376.798z"></path>
+              <path d="M48.75,93.522c25.747,0,46.631-20.876,46.631-46.638c0-25.77-20.884-46.646-46.631-46.646 c-25.777,0-46.662,20.876-46.662,46.646C2.089,72.646,22.973,93.522,48.75,93.522z"></path>
+              <path d="M216.773,178.266c0-23.26-77.52-25.014-89.63-5.384c-1.029,1.66-1.746,3.421-1.746,5.384 c0,4.084,0.702,7.964,1.715,11.729l-29.097-11.339l-19.996-40.911l19.466,21.086v-16.169c0-22.177-17.986-40.163-40.163-40.163 h-17.16C17.986,102.499,0,120.485,0,142.662v108.309v60.969h0.203v142.659c0,13.224,10.723,23.939,23.939,23.939 c13.215,0,23.938-10.715,23.938-23.939V311.94H64.04v142.659c0,6.904-1.917,13.294-4.988,18.951 c4.02,3.085,8.994,4.987,14.462,4.987c13.218,0,23.938-10.715,23.938-23.939V311.94h0.032v-73.538l-27.025-10.536l-7.121-2.773 c-6.608-2.571-11.003-8.401-12.095-14.915l-9.07-54.93l23.409,47.925c2.197,4.496,6.015,8.01,10.675,9.826l73.811,28.77 c2.384,0.927,4.832,1.373,7.247,1.373c7.98,0,15.507-4.824,18.594-12.71c0.903-2.33,1.215-4.722,1.23-7.084 c5.596-0.749,10.815-2.485,15.586-5.074C206.985,210.544,216.773,195.628,216.773,178.266z"></path>
+            </svg>
+          </div>
+          <h3 class="min-w-0 flex-1 font-['Work_Sans'] font-bold leading-snug text-[clamp(1.05rem,2.1vw,1.35rem)]">Preparación de alimentos y bebidas</h3>
+        </div>
+        <div class="mt-6 space-y-4 font-['Inter'] font-normal leading-[1.6] text-[clamp(0.9375rem,1.8vw,1rem)] text-white">
+          <p>La carrera técnica en Preparación de Alimentos y Bebidas forma estudiantes capaces de elaborar una amplia variedad de platillos de la cocina mexicana e internacional, así como panadería, repostería y bebidas. Durante su formación, desarrollan habilidades para trabajar con técnicas culinarias, seguir recetarios base y brindar un servicio de calidad al comensal.</p>
+          <p>Esta carrera permite integrarse al sector gastronómico en restaurantes, cafeterías, comedores industriales y diversos establecimientos de alimentos y bebidas, así como emprender proyectos propios. Los egresados pueden desempeñarse como cocineros, meseros, cantineros o especialistas en la elaboración de productos alimenticios.</p>
+          <p>Además, fortalecen habilidades para la vida y el trabajo que impulsan la toma de decisiones, el aprendizaje continuo y el desarrollo personal.</p>
+        </div>
+        <p class="mt-6 font-['Work_Sans'] font-bold">
+          <a href="#" class="text-white underline decoration-white underline-offset-[3px] transition-opacity hover:opacity-90">Conocer Más</a>
+        </p>
+        <div class="mt-auto space-y-3 pt-10">
+          <div class="flex items-center gap-2.5 font-['Inter'] text-[clamp(0.9375rem,1.8vw,1rem)]">
+            <svg aria-hidden="true" class="h-5 w-5 shrink-0 text-white" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M622.34 153.2L343.4 67.5c-15.2-4.67-31.6-4.67-46.79 0L17.66 153.2c-23.54 7.23-23.54 38.36 0 45.59l48.63 14.94c-10.67 13.19-17.23 29.28-17.88 46.9C38.78 266.15 32 276.11 32 288c0 10.78 5.68 19.85 13.86 25.65L20.33 428.53C18.11 438.52 25.71 448 35.94 448h56.11c10.24 0 17.84-9.48 15.62-19.47L82.14 313.65C90.32 307.85 96 298.78 96 288c0-11.57-6.47-21.25-15.66-26.87.76-15.02 8.44-28.3 20.69-36.72L296.6 284.5c9.06 2.78 26.44 6.25 46.79 0l278.95-85.7c23.55-7.24 23.55-38.36 0-45.6zM352.79 315.09c-28.53 8.76-52.84 3.92-65.59 0l-145.02-44.55L128 384c0 35.35 85.96 64 192 64s192-28.65 192-64l-14.18-113.47-145.03 44.56z"></path></svg>
+            <span>Semestral</span>
+          </div>
+          <div class="flex items-center gap-2.5 font-['Inter'] text-[clamp(0.9375rem,1.8vw,1rem)]">
+            <svg aria-hidden="true" class="h-5 w-5 shrink-0 text-white" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M400 64h-48V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H160V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 400H54a6 6 0 0 1-6-6V160h352v298a6 6 0 0 1-6 6zm-52.849-200.65L198.842 404.519c-4.705 4.667-12.303 4.637-16.971-.068l-75.091-75.699c-4.667-4.705-4.637-12.303.068-16.971l22.719-22.536c4.705-4.667 12.303-4.637 16.97.069l44.104 44.461 111.072-110.181c4.705-4.667 12.303-4.637 16.971.068l22.536 22.718c4.667 4.705 4.636 12.303-.069 16.97z"></path></svg>
+            <span>3 años</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Gestión e Innovación turística -->
+      <article id="gestion-empresarial" class="scroll-mt-24 flex min-h-[26rem] flex-col lg:min-h-[38rem] bg-[#FF8F00] p-8 text-white sm:p-9 md:p-10 lg:p-12">
+        <div class="flex gap-4">
+          <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-white p-2 sm:h-16 sm:w-16 sm:p-2.5" aria-hidden="true">
+            <svg class="h-9 w-9 shrink-0 sm:h-10 sm:w-10" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="#000000" aria-hidden="true">
+              <path d="M446.73,268.439h-45.29c-3.741,0-6.774,3.033-6.774,6.774s3.033,6.774,6.774,6.774h38.515v180.271h-31.74V305.661 c0-3.741-3.033-6.774-6.774-6.774s-6.774,3.033-6.774,6.774v163.372c0,3.741,3.033,6.773,6.774,6.773h45.29 c3.74,0,6.773-3.032,6.773-6.773V275.214C453.504,271.473,450.471,268.439,446.73,268.439z"></path>
+              <path d="M361.641,352.701h-45.289c-3.742,0-6.775,3.033-6.775,6.774v109.558c0,3.741,3.033,6.773,6.775,6.773h45.289 c3.741,0,6.773-3.032,6.773-6.773V359.476C368.414,355.734,365.382,352.701,361.641,352.701z M354.866,462.259h-31.741V366.25 h31.741V462.259z"></path>
+              <path d="M276.551,390.57h-45.289c-3.742,0-6.774,3.033-6.774,6.775v71.688c0,3.741,3.033,6.773,6.774,6.773h45.289 c3.742,0,6.774-3.032,6.774-6.773v-71.688C283.325,393.604,280.293,390.57,276.551,390.57z M269.776,462.259h-31.741v-58.14h31.741 V462.259z"></path>
+              <path d="M191.461,422.544h-45.29c-3.741,0-6.774,3.032-6.774,6.774v39.715c0,3.741,3.033,6.773,6.774,6.773h45.29 c3.741,0,6.774-3.032,6.774-6.773v-39.715C198.235,425.576,195.203,422.544,191.461,422.544z M184.687,462.259h-31.741v-26.166 h31.741V462.259z"></path>
+              <path d="M413.077,177.319c1.143-2.308,0.877-5.065-0.685-7.113l-26.73-35.032c-1.281-1.68-3.273-2.666-5.385-2.666 c-2.113,0-4.105,0.986-5.387,2.666l-26.729,35.032c-2.27,2.974-1.697,7.225,1.276,9.495c1.228,0.936,2.672,1.389,4.104,1.389 c2.041,0,4.057-0.917,5.391-2.665l21.344-27.974l13.039,17.09h-13.039c-3.742,0-6.774,3.033-6.774,6.774 c0,97.535-79.351,176.885-176.885,176.885c-3.742,0-6.774,3.033-6.774,6.775c0,3.74,3.033,6.773,6.774,6.773 c102.737,0,186.718-81.78,190.3-183.659h20.088C409.582,181.089,411.936,179.628,413.077,177.319z"></path>
+              <path d="M289.732,276.23c0.386-0.295,0.733-0.629,1.048-0.999c27.02-25.228,43.958-61.123,43.958-100.917 c0-76.16-61.961-138.121-138.121-138.121c-3.452,0-6.862,0.17-10.251,0.42c-0.008,0-0.016-0.001-0.024,0 c-0.005,0-0.01,0.002-0.016,0.003c-38.972,2.887-73.493,21.985-96.806,50.595c-0.391,0.383-0.723,0.819-1.013,1.288 c-18.762,23.587-30.013,53.403-30.013,85.814c0,36.062,13.906,68.926,36.62,93.55c0.29,0.378,0.619,0.72,0.981,1.029 c25.207,26.774,60.933,43.542,100.521,43.542C232.463,312.436,265.157,298.703,289.732,276.23z M191.14,274.525 c-14.631-11.31-32.874-17.537-51.368-17.537h-36.23c-19.574-22.013-31.497-50.971-31.497-82.674 c0-28.364,9.547-54.528,25.571-75.492h37.786c9.966,0,18.075,8.108,18.075,18.075c0,9.967-8.109,18.076-18.075,18.076h-18.369 c-15.455,0-28.029,12.574-28.029,28.029c0,15.456,12.574,28.029,28.029,28.029h1.417c9.157,0,16.605,7.45,16.605,16.607 c0,9.157-7.449,16.606-16.605,16.606c-3.742,0-6.774,3.032-6.774,6.774c0,3.741,3.033,6.774,6.774,6.774 c16.627,0,30.154-13.528,30.154-30.155c0-16.628-13.527-30.155-30.154-30.155h-1.417c-7.985,0-14.48-6.496-14.48-14.481 c0-7.985,6.496-14.48,14.48-14.48h18.369c17.437,0,31.624-14.186,31.624-31.625c0-17.438-14.187-31.624-31.624-31.624h-25.785 c19.031-18.599,43.973-31.148,71.714-34.561c5.422,24.208,26.823,41.732,52.294,41.732h19.699c3.741,0,6.773-3.033,6.773-6.774 s-3.032-6.774-6.773-6.774h-19.699c-18.304,0-33.787-12.107-38.555-29.116c0.518-0.006,1.028-0.039,1.547-0.039 c68.689,0,124.572,55.883,124.572,124.573c0,35.244-14.736,67.092-38.342,89.774h-22.665c-7.25,0-13.148-5.897-13.148-13.147 s5.898-13.147,13.148-13.147h2.568c15.05,0,27.294-12.245,27.294-27.294s-12.244-27.293-27.294-27.293h-24.105 c-11.336,0-20.558-9.223-20.558-20.559s9.222-20.558,20.558-20.558h49.802c3.741,0,6.773-3.032,6.773-6.774 s-3.032-6.774-6.773-6.774h-49.802c-18.807,0-34.106,15.3-34.106,34.106s15.3,34.107,34.106,34.107h24.105 c7.579,0,13.745,6.166,13.745,13.745s-6.166,13.745-13.745,13.745h-2.568c-14.721,0-26.696,11.976-26.696,26.696 s11.976,26.695,26.696,26.695h5.951c-19.869,13.412-43.794,21.25-69.516,21.25c-29.976,0-57.51-10.646-79.028-28.351h22.182 c15.511,0,30.811,5.224,43.083,14.708c1.232,0.953,2.691,1.414,4.138,1.414c2.025,0,4.03-0.904,5.364-2.632 C194.645,281.066,194.101,276.813,191.14,274.525z"></path>
+            </svg>
+          </div>
+          <h3 class="min-w-0 flex-1 font-['Work_Sans'] font-bold leading-snug text-[clamp(1.05rem,2.1vw,1.35rem)]">Gestión e Innovación turística</h3>
+        </div>
+        <div class="mt-6 space-y-4 font-['Inter'] font-normal leading-[1.6] text-[clamp(0.9375rem,1.8vw,1rem)] text-white">
+          <p>La carrera técnica en Gestión e Innovación Turística forma estudiantes capaces de integrarse al sector turístico mediante el desarrollo de proyectos, productos y servicios que mejoren la experiencia del viajero. Durante su formación, adquieren herramientas para apoyar en la gestión de empresas turísticas, así como para diseñar estrategias innovadoras adaptadas a las necesidades actuales del sector.</p>
+          <p>Además, fomentan prácticas sostenibles, comunicación asertiva y el uso de una segunda lengua, lo que les permite desempeñarse como verdaderos embajadores turísticos. Esta preparación les brinda la oportunidad de integrarse al mundo laboral o continuar su formación académica en un sector dinámico y en constante crecimiento.</p>
+        </div>
+        <p class="mt-6 font-['Work_Sans'] font-bold">
+          <a href="#" class="text-white underline decoration-white underline-offset-[3px] transition-opacity hover:opacity-90">Conocer Más</a>
+        </p>
+        <div class="mt-auto space-y-3 pt-10">
+          <div class="flex items-center gap-2.5 font-['Inter'] text-[clamp(0.9375rem,1.8vw,1rem)]">
+            <svg aria-hidden="true" class="h-5 w-5 shrink-0 text-white" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M622.34 153.2L343.4 67.5c-15.2-4.67-31.6-4.67-46.79 0L17.66 153.2c-23.54 7.23-23.54 38.36 0 45.59l48.63 14.94c-10.67 13.19-17.23 29.28-17.88 46.9C38.78 266.15 32 276.11 32 288c0 10.78 5.68 19.85 13.86 25.65L20.33 428.53C18.11 438.52 25.71 448 35.94 448h56.11c10.24 0 17.84-9.48 15.62-19.47L82.14 313.65C90.32 307.85 96 298.78 96 288c0-11.57-6.47-21.25-15.66-26.87.76-15.02 8.44-28.3 20.69-36.72L296.6 284.5c9.06 2.78 26.44 6.25 46.79 0l278.95-85.7c23.55-7.24 23.55-38.36 0-45.6zM352.79 315.09c-28.53 8.76-52.84 3.92-65.59 0l-145.02-44.55L128 384c0 35.35 85.96 64 192 64s192-28.65 192-64l-14.18-113.47-145.03 44.56z"></path></svg>
+            <span>Semestral</span>
+          </div>
+          <div class="flex items-center gap-2.5 font-['Inter'] text-[clamp(0.9375rem,1.8vw,1rem)]">
+            <svg aria-hidden="true" class="h-5 w-5 shrink-0 text-white" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M400 64h-48V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H160V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 400H54a6 6 0 0 1-6-6V160h352v298a6 6 0 0 1-6 6zm-52.849-200.65L198.842 404.519c-4.705 4.667-12.303 4.637-16.971-.068l-75.091-75.699c-4.667-4.705-4.637-12.303.068-16.971l22.719-22.536c4.705-4.667 12.303-4.637 16.97.069l44.104 44.461 111.072-110.181c4.705-4.667 12.303-4.637 16.971.068l22.536 22.718c4.667 4.705 4.636 12.303-.069 16.97z"></path></svg>
+            <span>3 años</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Robotica -->
+      <article id="robotica" class="scroll-mt-24 flex min-h-[26rem] flex-col lg:min-h-[38rem] bg-[#FF6400] p-8 text-white sm:p-9 md:p-10 lg:p-12">
+        <div class="flex gap-4">
+          <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-white p-2 sm:h-16 sm:w-16 sm:p-2.5" aria-hidden="true">
+            <svg class="h-9 w-9 shrink-0 sm:h-10 sm:w-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 15C8.44771 15 8 15.4477 8 16C8 16.5523 8.44771 17 9 17C9.55229 17 10 16.5523 10 16C10 15.4477 9.55229 15 9 15Z" fill="#0F0F0F"></path>
+              <path d="M14 16C14 15.4477 14.4477 15 15 15C15.5523 15 16 15.4477 16 16C16 16.5523 15.5523 17 15 17C14.4477 17 14 16.5523 14 16Z" fill="#0F0F0F"></path>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1C10.8954 1 10 1.89543 10 3C10 3.74028 10.4022 4.38663 11 4.73244V7H6C4.34315 7 3 8.34315 3 10V20C3 21.6569 4.34315 23 6 23H18C19.6569 23 21 21.6569 21 20V10C21 8.34315 19.6569 7 18 7H13V4.73244C13.5978 4.38663 14 3.74028 14 3C14 1.89543 13.1046 1 12 1ZM5 10C5 9.44772 5.44772 9 6 9H7.38197L8.82918 11.8944C9.16796 12.572 9.86049 13 10.618 13H13.382C14.1395 13 14.832 12.572 15.1708 11.8944L16.618 9H18C18.5523 9 19 9.44772 19 10V20C19 20.5523 18.5523 21 18 21H6C5.44772 21 5 20.5523 5 20V10ZM13.382 11L14.382 9H9.61803L10.618 11H13.382Z" fill="#0F0F0F"></path>
+              <path d="M1 14C0.447715 14 0 14.4477 0 15V17C0 17.5523 0.447715 18 1 18C1.55228 18 2 17.5523 2 17V15C2 14.4477 1.55228 14 1 14Z" fill="#0F0F0F"></path>
+              <path d="M22 15C22 14.4477 22.4477 14 23 14C23.5523 14 24 14.4477 24 15V17C24 17.5523 23.5523 18 23 18C22.4477 18 22 17.5523 22 17V15Z" fill="#0F0F0F"></path>
+            </svg>
+          </div>
+          <h3 class="min-w-0 flex-1 font-['Work_Sans'] font-bold leading-snug text-[clamp(1.05rem,2.1vw,1.35rem)]">Robotica</h3>
+        </div>
+        <div class="mt-6 space-y-4 font-['Inter'] font-normal leading-[1.6] text-[clamp(0.9375rem,1.8vw,1rem)] text-white">
+          <p>La carrera técnica en Robótica forma estudiantes capaces de analizar problemas, diseñar soluciones inteligentes y comprender procesos lógicos mediante el uso de tecnología avanzada. A lo largo de su formación, desarrollan habilidades para detectar fallas, dar mantenimiento preventivo y trabajar con sistemas que integran mecánica, electrónica y software en proyectos innovadores.</p>
+          <p>Además, fortalecen habilidades para la vida y el trabajo que les permiten tomar decisiones informadas, aprender de manera continua y convertirse en agentes de cambio en su entorno. Su formación también promueve una visión sostenible, impulsando soluciones responsables con el medio ambiente, la sociedad y la economía.</p>
+        </div>
+        <p class="mt-6 font-['Work_Sans'] font-bold">
+          <a href="#" class="text-white underline decoration-white underline-offset-[3px] transition-opacity hover:opacity-90">Conocer Más</a>
+        </p>
+        <div class="mt-auto space-y-3 pt-10">
+          <div class="flex items-center gap-2.5 font-['Inter'] text-[clamp(0.9375rem,1.8vw,1rem)]">
+            <svg aria-hidden="true" class="h-5 w-5 shrink-0 text-white" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M622.34 153.2L343.4 67.5c-15.2-4.67-31.6-4.67-46.79 0L17.66 153.2c-23.54 7.23-23.54 38.36 0 45.59l48.63 14.94c-10.67 13.19-17.23 29.28-17.88 46.9C38.78 266.15 32 276.11 32 288c0 10.78 5.68 19.85 13.86 25.65L20.33 428.53C18.11 438.52 25.71 448 35.94 448h56.11c10.24 0 17.84-9.48 15.62-19.47L82.14 313.65C90.32 307.85 96 298.78 96 288c0-11.57-6.47-21.25-15.66-26.87.76-15.02 8.44-28.3 20.69-36.72L296.6 284.5c9.06 2.78 26.44 6.25 46.79 0l278.95-85.7c23.55-7.24 23.55-38.36 0-45.6zM352.79 315.09c-28.53 8.76-52.84 3.92-65.59 0l-145.02-44.55L128 384c0 35.35 85.96 64 192 64s192-28.65 192-64l-14.18-113.47-145.03 44.56z"></path></svg>
+            <span>Semestral</span>
+          </div>
+          <div class="flex items-center gap-2.5 font-['Inter'] text-[clamp(0.9375rem,1.8vw,1rem)]">
+            <svg aria-hidden="true" class="h-5 w-5 shrink-0 text-white" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M400 64h-48V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H160V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 400H54a6 6 0 0 1-6-6V160h352v298a6 6 0 0 1-6 6zm-52.849-200.65L198.842 404.519c-4.705 4.667-12.303 4.637-16.971-.068l-75.091-75.699c-4.667-4.705-4.637-12.303.068-16.971l22.719-22.536c4.705-4.667 12.303-4.637 16.97.069l44.104 44.461 111.072-110.181c4.705-4.667 12.303-4.637 16.971.068l22.536 22.718c4.667 4.705 4.636 12.303-.069 16.97z"></path></svg>
+            <span>3 años</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Educacion Dual -->
+      <article id="educacion-dual" class="scroll-mt-24 flex min-h-[26rem] flex-col lg:min-h-[38rem] bg-[#4c0000] p-8 text-white sm:p-9 md:p-10 lg:p-12">
+        <div class="flex gap-4">
+          <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-white p-2 sm:h-16 sm:w-16 sm:p-2.5" aria-hidden="true">
+            <svg class="h-9 w-9 shrink-0 sm:h-10 sm:w-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#000000" aria-hidden="true">
+              <circle cx="377.172" cy="164.224" r="37.081"/>
+              <path d="M174.829,491.418l14.338-107.463l-4.645-34.808l1.414-1.28l-26.719-24.368l-0.225-0.224 c-17.494-17.521-19.881-44.519-7.158-64.61l-0.721-1.063l7.842-7.953l20.902-20.902c1.477-1.479,2.988-2.528,4.514-3.786 c-11.586-6.324-24.668-9.461-38.1-9.461h-21.398c-21.104,0-41.354,7.223-56.271,22.139L47.7,257.5h0.043 c-15.029,16-15.029,40.289,0,55.344l38.881,35.893L67.409,492.919c-0.383,2.881,1.867,5.581,4.77,5.581h29.363 c2.408,0,4.432-1.674,4.77-4.059l15.908-115.395c0.268-1.957,0.924-3.755,1.869-5.374c5.016-8.553,17.953-8.538,22.947,0.013 c0.969,1.619,1.621,3.448,1.889,5.407l15.91,115.347c0.338,2.387,2.361,4.061,4.77,4.061h5.711 C174.69,496.5,174.511,493.824,174.829,491.418z M93.173,304.668l-12.285-12.307c-3.285-3.285-3.285-8.596,0-11.881l15.545-15.545 c0.811-0.813,2.184-0.137,2.027,1.01L93.173,304.668z"></path>
+              <circle cx="135.571" cy="164.225" r="37.081"/>
+              <path d="M211.427,64.974l5.396,1.191c0.971,0.213,1.704,0.971,1.919,1.939c0.834,3.764,2.206,7.322,4.049,10.584 c0.465,0.82,0.434,1.828-0.074,2.625l-3.352,5.225c-0.646,1.008-0.505,2.328,0.343,3.174l5.258,5.264 c0.85,0.846,2.167,0.988,3.175,0.344l4.749-3.041c0.838-0.537,1.913-0.531,2.75,0.008c3.148,2.014,6.607,3.588,10.289,4.627 c0.902,0.256,1.592,0.984,1.793,1.9l1.334,6.39c0.258,1.164,1.291,2.296,2.488,2.296h7.441c1.197,0,2.232-1.132,2.486-2.296 l1.201-5.613c0.213-0.975,0.977-1.806,1.955-2.017c3.775-0.813,7.346-2.212,10.621-4.039c0.82-0.457,1.822-0.447,2.611,0.059 l5.178,3.306c1.01,0.646,2.33,0.5,3.176-0.348l5.262-5.263c0.846-0.846,0.988-2.167,0.346-3.178l-2.949-4.602 c-0.539-0.844-0.529-1.921,0.016-2.761c2.076-3.195,3.691-6.719,4.754-10.477c0.256-0.9,0.984-1.588,1.902-1.787l5.907-1.287 c1.168-0.254,2.047-1.291,2.047-2.486v-7.441c0-1.195-0.879-2.23-2.047-2.488l-5.222-1.141c-0.98-0.215-1.749-0.982-1.956-1.961 c-0.822-3.879-2.228-7.541-4.118-10.895c-0.461-0.82-0.438-1.826,0.068-2.619l3.17-4.951c0.645-1.006,0.501-2.328-0.347-3.172 l-5.262-5.264c-0.846-0.846-2.164-0.99-3.172-0.344l-4.427,2.834c-0.842,0.539-1.918,0.531-2.758-0.014 c-3.254-2.105-6.844-3.734-10.674-4.791c-0.908-0.252-1.602-0.982-1.807-1.904l-1.25-5.883c-0.258-1.168-1.293-2.177-2.488-2.177 h-7.441c-1.197,0-2.232,1.009-2.486,2.177l-1.135,5.26c-0.213,0.973-0.975,1.769-1.949,1.981c-3.865,0.842-7.518,2.284-10.854,4.19 c-0.822,0.467-1.836,0.455-2.631-0.055l-4.998-3.198c-1.01-0.643-2.33-0.499-3.176,0.349l-5.262,5.262 c-0.848,0.846-0.99,2.167-0.344,3.174l2.928,4.573c0.535,0.838,0.531,1.907-0.002,2.745c-2.049,3.205-3.635,6.732-4.668,10.488 c-0.25,0.908-0.984,1.605-1.904,1.809l-5.863,1.303c-1.17,0.254-1.927,1.289-1.927,2.486v7.441 C209.5,63.681,210.257,64.716,211.427,64.974z M256.378,37.8c12.193,0,22.076,9.885,22.076,22.076 c0,12.193-9.883,22.076-22.076,22.076c-12.191,0-22.074-9.883-22.074-22.076C234.304,47.685,244.187,37.8,256.378,37.8z"></path>
+              <path d="M135.167,106.572c0.287,0.041,0.57,0.059,0.852,0.059c3.041,0,5.695-2.246,6.121-5.344 c2.762-20.082,20.154-35.223,40.459-35.223c3.416,0,6.188-2.771,6.188-6.188s-2.771-6.188-6.188-6.188 c-26.455,0-49.119,19.738-52.719,45.91C129.413,102.984,131.782,106.107,135.167,106.572z"></path>
+              <path d="M327.524,66.064c20.35,0,37.748,15.182,40.469,35.311c0.42,3.107,3.076,5.359,6.123,5.359c0.277,0,0.557-0.018,0.838-0.057 c3.387-0.459,5.762-3.574,5.305-6.961c-3.549-26.238-26.219-46.027-52.734-46.027c-3.418,0-6.188,2.771-6.188,6.188 S324.106,66.064,327.524,66.064z"></path>
+              <path d="M316.776,435.057l-11.451-85.861l11.475-10.461l27.404-24.998c15.031-15.051,15.031-39.443,0-54.473l0.045-0.068 l-20.902-20.903c-2.092-2.092-4.297-3.815-6.592-5.59c-14.041-11.271-31.545-17.202-49.68-17.202h-21.4 c-18.133,0-35.639,5.931-49.68,17.181c-2.293,1.797-4.5,3.649-6.592,5.741l-20.902,20.837l0.047,0.037 c-15.029,15.029-15.029,39.404,0,54.457l27.404,24.987l11.473,10.458l-11.451,85.86l-7.76,58.206 c-0.361,2.721,1.619,5.06,4.273,5.331c0.158,0.021,0.338-0.096,0.494-0.096h29.363c2.406,0,4.432-1.664,4.768-4.047l15.91-115.389 c0.27-1.957,0.922-3.774,1.867-5.394c5.018-8.527,17.955-8.515,22.949,0.013c0.967,1.619,1.621,3.472,1.891,5.433l15.908,115.333 c0.336,2.385,2.361,4.051,4.77,4.051h29.363c0.154,0,0.336,0.115,0.494,0.094c2.654-0.273,4.637-2.666,4.275-5.389L316.776,435.057 z M213.974,304.691l-12.285-12.309c-3.285-3.285-3.285-8.594,0-11.879l15.549-15.547c0.811-0.811,2.182-0.137,2.025,0.988 L213.974,304.691z M293.487,265.945c-0.154-1.125,1.217-1.799,2.027-0.988l15.547,15.547c3.285,3.285,3.285,8.594,0,11.879 l-12.285,12.309L293.487,265.945z"></path>
+              <path d="M465.007,259.242l0.043-0.068l-20.898-20.634c-14.941-14.916-35.17-23.04-56.275-23.04h-21.396 c-13.445,0-26.539,3.142-38.131,9.485c1.525,1.291,3.045,2.522,4.543,4.02l28.791,28.66l-0.766,1.063 c12.723,20.096,10.336,47.057-7.162,64.58l-0.453,0.417L326.81,347.88l1.42,1.296l-4.643,34.823l14.334,107.38 c0.32,2.432,0.141,5.121-0.494,7.121h5.721c2.406,0,4.432-1.674,4.77-4.059l15.908-115.395c0.27-1.957,0.92-3.755,1.867-5.374 c5.018-8.553,17.955-8.538,22.949,0.013c0.947,1.619,1.596,3.448,1.891,5.407l15.906,115.347c0.338,2.387,2.361,4.061,4.771,4.061 h29.361c2.902,0,5.152-2.482,4.77-5.365l-19.215-144.012l38.881-35.437C480.036,298.634,480.036,274.271,465.007,259.242z M431.862,292.361l-12.283,12.307l-5.287-38.723c-0.158-1.146,1.215-1.822,2.025-1.01l15.545,15.545 C435.151,283.766,435.151,289.076,431.862,292.361z"></path>
+              <path d="M256.376,126.5h-0.002c-20.479,0-37.078,16.519-37.078,36.999c0,20.479,16.6,37.001,37.078,37.001h0.002 c20.479,0,37.08-16.522,37.08-37.001C293.456,143.019,276.854,126.5,256.376,126.5z"></path>
+            </svg>
+          </div>
+          <h3 class="min-w-0 flex-1 font-['Work_Sans'] font-bold leading-snug text-[clamp(1.05rem,2.1vw,1.35rem)]">Educacion Dual</h3>
+        </div>
+        <div class="mt-6 space-y-4 font-['Inter'] font-normal leading-[1.6] text-[clamp(0.9375rem,1.8vw,1rem)] text-white">
+          <p>La Educación Dual es una modalidad que combina la formación académica en la escuela con la experiencia práctica en empresas, permitiendo a los estudiantes desarrollar sus conocimientos en un entorno real de trabajo. Este modelo tiene como objetivo fortalecer su formación integral y prepararlos de manera más efectiva para el mundo laboral.</p>
+          <p>Durante su proceso educativo, los estudiantes aplican lo aprendido en el aula directamente en el ámbito profesional, adquiriendo experiencia, habilidades técnicas y mayor confianza en su desempeño. Además, cuentan con el acompañamiento tanto de la institución educativa como de la empresa, asegurando una formación completa y de calidad.</p>
+          <p>Esta modalidad brinda mayores oportunidades de crecimiento, facilitando la inserción laboral y el desarrollo de competencias que responden a las necesidades actuales del sector productivo.</p>
+        </div>
+        <p class="mt-6 font-['Work_Sans'] font-bold">
+          <a href="#" class="text-white underline decoration-white underline-offset-[3px] transition-opacity hover:opacity-90">Conocer Más</a>
+        </p>
+        <div class="mt-auto space-y-3 pt-10">
+          <div class="flex items-center gap-2.5 font-['Inter'] text-[clamp(0.9375rem,1.8vw,1rem)]">
+            <svg aria-hidden="true" class="h-5 w-5 shrink-0 text-white" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M622.34 153.2L343.4 67.5c-15.2-4.67-31.6-4.67-46.79 0L17.66 153.2c-23.54 7.23-23.54 38.36 0 45.59l48.63 14.94c-10.67 13.19-17.23 29.28-17.88 46.9C38.78 266.15 32 276.11 32 288c0 10.78 5.68 19.85 13.86 25.65L20.33 428.53C18.11 438.52 25.71 448 35.94 448h56.11c10.24 0 17.84-9.48 15.62-19.47L82.14 313.65C90.32 307.85 96 298.78 96 288c0-11.57-6.47-21.25-15.66-26.87.76-15.02 8.44-28.3 20.69-36.72L296.6 284.5c9.06 2.78 26.44 6.25 46.79 0l278.95-85.7c23.55-7.24 23.55-38.36 0-45.6zM352.79 315.09c-28.53 8.76-52.84 3.92-65.59 0l-145.02-44.55L128 384c0 35.35 85.96 64 192 64s192-28.65 192-64l-14.18-113.47-145.03 44.56z"></path></svg>
+            <span>Semestral</span>
+          </div>
+          <div class="flex items-center gap-2.5 font-['Inter'] text-[clamp(0.9375rem,1.8vw,1rem)]">
+            <svg aria-hidden="true" class="h-5 w-5 shrink-0 text-white" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M400 64h-48V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H160V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 400H54a6 6 0 0 1-6-6V160h352v298a6 6 0 0 1-6 6zm-52.849-200.65L198.842 404.519c-4.705 4.667-12.303 4.637-16.971-.068l-75.091-75.699c-4.667-4.705-4.637-12.303.068-16.971l22.719-22.536c4.705-4.667 12.303-4.637 16.97.069l44.104 44.461 111.072-110.181c4.705-4.667 12.303-4.637 16.971.068l22.536 22.718c4.667 4.705 4.636 12.303-.069 16.97z"></path></svg>
+            <span>3 años</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Galería: imagen principal + 6 miniaturas (intercambio al hacer clic) -->
+  <section class="scroll-mt-20 bg-[#4C0000] py-8 md:py-12 lg:py-14" aria-label="Galería de fotos del plantel">
+    <div class="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
+      <div id="galeria-fotos-root" class="flex min-h-0 flex-col gap-2 sm:gap-3 md:gap-4">
+        <div class="relative aspect-video w-full overflow-hidden bg-black/25">
+          <img
+            id="galeria-fotos-main"
+            src="/images/image%2068.webp"
+            alt="Fotografía destacada de la galería institucional"
+            class="absolute inset-0 h-full w-full object-cover object-center"
+            width="1200"
+            height="675"
+            decoding="async"
+          />
+        </div>
+        <div
+          id="galeria-fotos-thumbs"
+          class="grid grid-cols-3 gap-2 sm:grid-cols-6 sm:gap-2.5 md:gap-3"
+          role="list"
+          aria-label="Miniaturas de la galería"
+        ></div>
+      </div>
+    </div>
+  </section>
+  <script>
+    (function () {
+      var nums = [68, 69, 70, 71, 72, 73, 74];
+      var paths = nums.map(function (n) {
+        return '/images/image%20' + n + '.webp';
+      });
+      var mainIdx = 0;
+      var mainEl = document.getElementById('galeria-fotos-main');
+      var thumbsEl = document.getElementById('galeria-fotos-thumbs');
+      if (!mainEl || !thumbsEl) return;
+
+      function render() {
+        mainEl.src = paths[mainIdx];
+        thumbsEl.innerHTML = '';
+        paths.forEach(function (src, i) {
+          if (i === mainIdx) return;
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.setAttribute('role', 'listitem');
+          btn.className =
+            'group relative aspect-square w-full cursor-pointer overflow-hidden border-0 bg-black/20 p-0 outline-none ring-2 ring-transparent transition duration-200 hover:opacity-95 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#4C0000]';
+          btn.setAttribute('aria-label', 'Ampliar imagen ' + nums[i] + ' en la vista principal');
+          var img = document.createElement('img');
+          img.src = src;
+          img.alt = '';
+          img.className = 'h-full w-full object-cover';
+          img.loading = 'lazy';
+          img.decoding = 'async';
+          img.width = 200;
+          img.height = 200;
+          btn.appendChild(img);
+          btn.addEventListener('click', function () {
+            mainIdx = i;
+            render();
+          });
+          thumbsEl.appendChild(btn);
+        });
+      }
+      render();
+    })();
+  </script>
+
+  <!-- Sobre nosotros: accesos circulares al menú Sobre nosotros -->
+  <section class="scroll-mt-20 bg-white py-12 md:py-16 lg:py-20" aria-labelledby="sobre-nosotros-accesos-titulo">
+    <div class="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
+      <h2 id="sobre-nosotros-accesos-titulo" class="font-['Work_Sans'] text-2xl font-bold uppercase tracking-[0.12em] text-neutral-900 sm:text-3xl md:tracking-[0.18em]">
+        Sobre nosotros
+      </h2>
+      <div class="mx-auto mt-10 grid max-w-5xl grid-cols-1 items-center justify-items-center gap-10 sm:mt-12 md:mt-14 md:max-w-none md:grid-cols-3 md:gap-8 lg:gap-12 xl:gap-16">
+        <a
+          href="logros-carreras.html#eventos"
+          class="flex aspect-square w-[min(85vw,280px)] cursor-pointer items-center justify-center rounded-full border-2 border-neutral-900 bg-white px-5 text-center font-['Inter'] text-sm font-medium leading-snug text-neutral-900 antialiased transition duration-200 hover:border-[#4C0000] hover:bg-[#4C0000]/5 hover:text-[#4C0000] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4C0000] focus-visible:ring-offset-2 md:w-full md:max-w-[220px] lg:max-w-[250px] xl:max-w-[270px]"
+        >
+          Noticias y eventos
+        </a>
+        <a
+          href="logros-carreras.html#actividades-deportivas"
+          class="flex aspect-square w-[min(85vw,280px)] cursor-pointer items-center justify-center rounded-full border-2 border-neutral-900 bg-white px-4 text-center font-['Inter'] text-sm font-medium leading-tight text-neutral-900 antialiased transition duration-200 hover:border-[#4C0000] hover:bg-[#4C0000]/5 hover:text-[#4C0000] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4C0000] focus-visible:ring-offset-2 md:w-full md:max-w-[220px] lg:max-w-[250px] xl:max-w-[270px]"
+        >
+          Actividades deportivas y culturales
+        </a>
+        <a
+          href="logros-carreras.html#clubes"
+          class="flex aspect-square w-[min(85vw,280px)] cursor-pointer items-center justify-center rounded-full border-2 border-neutral-900 bg-white px-5 text-center font-['Inter'] text-sm font-medium leading-snug text-neutral-900 antialiased transition duration-200 hover:border-[#4C0000] hover:bg-[#4C0000]/5 hover:text-[#4C0000] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4C0000] focus-visible:ring-offset-2 md:w-full md:max-w-[220px] lg:max-w-[250px] xl:max-w-[270px]"
+        >
+          Clubes y talleres
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mapa embebido: CBTIS 272 -->
+  <section class="scroll-mt-20 bg-white pb-10 md:pb-14 lg:pb-16" aria-label="Ubicación del plantel en el mapa">
+    <div class="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8">
+      <div class="relative h-[200px] w-full overflow-hidden rounded-lg bg-neutral-200 shadow-sm sm:h-[230px] md:h-[260px] lg:h-[280px]">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14881.398573680744!2d-86.903761!3d21.178265!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f4dd34f2889cd67%3A0x827ed2d8c6290bb6!2sCBTIS%20272!5e0!3m2!1ses-419!2smx!4v1775955645389!5m2!1ses-419!2smx"
+          class="absolute inset-0 h-full w-full border-0"
+          title="Ubicación CBTIS 272 en Google Maps"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer class="bg-[#4C0000] text-white py-10 px-6 md:px-12">
     <div class="max-w-6xl mx-auto">
       <div class="grid gap-8 md:grid-cols-3 text-sm md:text-base">
         <div class="space-y-3">
-          <h3 class="text-lg font-semibold uppercase tracking-wide">SIIR 272</h3>
+          <h3 class="text-lg font-semibold uppercase tracking-wide">CBTIS 272</h3>
           <p class="text-gray-200">
-            Portal oficial de inscripción y reinscripción a nuestro plantel.
+            Portal oficial de nuestro plantel.
           </p>
         </div>
         <div class="space-y-3">
-          <h3 class="text-lg font-semibold uppercase tracking-wide">Especialidades</h3>
+          <h3 class="text-lg font-semibold uppercase tracking-wide">Oferta Academica</h3>
           <ul class="space-y-1 text-gray-200">
-            <li>Ventas</li>
-            <li>Programación</li>
-            <li>Preparación de alimentos y bebidas</li>
-            <li>Gestión e Innovación</li>
+            <li><a href="#ventas" class="transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#4C0000] rounded-sm">Ventas</a></li>
+            <li><a href="#programacion" class="transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#4C0000] rounded-sm">Programación</a></li>
+            <li><a href="#preparacion-alimentos-bebidas" class="transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#4C0000] rounded-sm">Preparación de alimentos y bebidas</a></li>
+            <li><a href="#gestion-empresarial" class="transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#4C0000] rounded-sm">Gestión e Innovación turística</a></li>
+            <li><a href="#robotica" class="transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#4C0000] rounded-sm">Robotica</a></li>
+            <li><a href="#educacion-dual" class="transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#4C0000] rounded-sm">Educacion Dual</a></li>
           </ul>
         </div>
         <div class="space-y-3">
@@ -284,63 +652,49 @@
         </div>
       </div>
 
-      <div class="border-t border-gray-500 mt-10 pt-4 text-center text-xs md:text-sm text-gray-200 uppercase tracking-wide">
-        © 2025 SIIR 272. Todos los derechos reservados.
+      <div class="border-t border-gray-500 mt-10 pt-6 flex flex-col items-center gap-6 md:flex-row md:items-center md:justify-between md:gap-8">
+        <p class="text-center text-xs md:text-sm text-gray-200 uppercase tracking-wide md:text-left">
+          © 2025 SIIR 272. Todos los derechos reservados.
+        </p>
+        <div class="flex flex-col items-center gap-3 md:items-end">
+          <p class="text-sm font-semibold uppercase tracking-wide text-white">SIGUENOS</p>
+          <div class="flex flex-wrap items-center justify-center gap-3 md:justify-end" aria-label="Redes sociales">
+            <a
+              href="https://www.facebook.com/cbtis272cancun/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-gray-200 transition-colors hover:bg-white/20 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+              aria-label="Facebook"
+            >
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a
+              href="#"
+              class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-gray-200 transition-colors hover:bg-white/20 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+              aria-label="YouTube"
+            >
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <a
+              href="#"
+              class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-gray-200 transition-colors hover:bg-white/20 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+              aria-label="X"
+            >
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a
+              href="#"
+              class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-gray-200 transition-colors hover:bg-white/20 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+              aria-label="Instagram"
+            >
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </footer>
 
-  <script>
-    // Cargar logros dinámicamente
-    async function cargarLogros() {
-      try {
-        // Usar window.location.origin en producción para que funcione con cualquier dominio
-        const BASE_URL = window.location.origin.includes('localhost')
-          ? 'http://localhost:3001'
-          : window.location.origin;
-        
-        const response = await fetch(`${BASE_URL}/api/logros`);
-        if (!response.ok) {
-          throw new Error('Error al cargar logros');
-        }
-        
-        const logros = await response.json();
-        const container = document.getElementById('logrosSection');
-        
-        if (logros.length === 0) {
-          container.innerHTML = `
-            <div class="col-span-2 text-center text-gray-500 py-8">
-              <p>No hay logros disponibles en este momento.</p>
-            </div>
-          `;
-          return;
-        }
-        
-        container.innerHTML = logros.map(logro => `
-          <div class="flex items-start space-x-4">
-            <img src="/images/Icon-Logros.svg" alt="Icono logro" class="w-9 h-9 md:w-10 md:h-10">
-            <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex-1">
-              <h3 class="text-sm md:text-base font-semibold text-gray-900">${logro.titulo}</h3>
-              <p class="text-xs md:text-sm text-gray-600 mt-2">
-                ${logro.descripcion}
-              </p>
-            </div>
-          </div>
-        `).join('');
-      } catch (error) {
-        console.error('Error cargando logros:', error);
-        const container = document.getElementById('logrosSection');
-        container.innerHTML = `
-          <div class="col-span-2 text-center text-gray-500 py-8">
-            <p>Error al cargar los logros. Por favor, recarga la página.</p>
-          </div>
-        `;
-      }
-    }
-
-    // Cargar logros cuando se carga la página
-    document.addEventListener('DOMContentLoaded', cargarLogros);
-  </script>
   <script>
     // Intercepta clicks en enlaces a login y redirige al dashboard si existe sesión válida
     function parseJwt(token) {
@@ -412,6 +766,5 @@
     // Adjuntar al cargar la página (y también después de cambios dinámicos si aplica)
     document.addEventListener('DOMContentLoaded', attachLoginInterceptor);
   </script>
-  <script src="/js/chatbot.js"></script>
 </body>
 </html>
