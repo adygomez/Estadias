@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Cargar usuarios
   cargarUsuarios();
+  cargarEventos();
 
   // Event listeners
   document.getElementById('logoutBtn').addEventListener('click', () => {
@@ -82,6 +83,30 @@ document.addEventListener('DOMContentLoaded', async () => {
     e.preventDefault();
     await guardarUsuario();
   });
+
+  const btnAgregarEvento = document.getElementById('btnAgregarEvento');
+  if (btnAgregarEvento) {
+    btnAgregarEvento.addEventListener('click', () => abrirModalEvento(null));
+  }
+  const eventoForm = document.getElementById('eventoForm');
+  if (eventoForm) {
+    eventoForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await guardarEvento();
+    });
+  }
+  const eventoImagen = document.getElementById('eventoImagen');
+  if (eventoImagen) {
+    eventoImagen.addEventListener('change', () => {
+      const f = eventoImagen.files && eventoImagen.files[0];
+      const wrap = document.getElementById('eventoPreviewWrap');
+      const img = document.getElementById('eventoPreviewImg');
+      if (f && wrap && img) {
+        img.src = URL.createObjectURL(f);
+        wrap.classList.remove('hidden');
+      }
+    });
+  }
 });
 
 // Función para cargar usuarios
@@ -282,6 +307,189 @@ async function eliminarUsuario(id, username) {
   } catch (error) {
     console.error('Error al eliminar usuario:', error);
     alert('Error al eliminar usuario. Por favor, intenta nuevamente.');
+  }
+}
+
+// ——— Eventos (página Cultura y deporte) ———
+
+function abrirModalEvento(id) {
+  const label = document.getElementById('eventoModalLabel');
+  const form = document.getElementById('eventoForm');
+  const eventoId = document.getElementById('eventoId');
+  const reqSpan = document.getElementById('eventoImagenRequired');
+  const previewWrap = document.getElementById('eventoPreviewWrap');
+  const previewImg = document.getElementById('eventoPreviewImg');
+  const imagenInput = document.getElementById('eventoImagen');
+
+  if (!form || !label) return;
+
+  form.reset();
+  if (eventoId) eventoId.value = '';
+  if (imagenInput) imagenInput.required = true;
+  if (reqSpan) reqSpan.style.display = 'inline';
+  if (previewWrap) previewWrap.classList.add('hidden');
+  if (previewImg) {
+    previewImg.removeAttribute('src');
+    previewImg.alt = '';
+  }
+
+  if (!id) {
+    label.textContent = 'Agregar evento';
+    const modal = new bootstrap.Modal(document.getElementById('eventoModal'));
+    modal.show();
+    return;
+  }
+
+  label.textContent = 'Editar evento';
+  if (imagenInput) imagenInput.required = false;
+  if (reqSpan) reqSpan.style.display = 'none';
+
+  authenticatedFetch(`${BASE_URL}/api/dashboard/evento/${id}`)
+    .then((res) => (res && res.ok ? res.json() : Promise.reject()))
+    .then((ev) => {
+      if (eventoId) eventoId.value = ev._id;
+      document.getElementById('eventoTitulo').value = ev.titulo || '';
+      document.getElementById('eventoDescripcion').value = ev.descripcion || '';
+      document.getElementById('eventoOrden').value =
+        ev.orden !== undefined && ev.orden !== null ? String(ev.orden) : '';
+      if (ev.imagen && previewImg && previewWrap) {
+        const src =
+          ev.imagen.indexOf('http') === 0
+            ? ev.imagen
+            : BASE_URL + (ev.imagen.charAt(0) === '/' ? ev.imagen : '/' + ev.imagen);
+        previewImg.src = src;
+        previewImg.alt = ev.titulo || 'Vista previa';
+        previewWrap.classList.remove('hidden');
+      }
+      const modal = new bootstrap.Modal(document.getElementById('eventoModal'));
+      modal.show();
+    })
+    .catch(() => {
+      alert('No se pudo cargar el evento.');
+    });
+}
+
+async function cargarEventos() {
+  const tbody = document.getElementById('eventosTable');
+  if (!tbody) return;
+
+  try {
+    const res = await authenticatedFetch(`${BASE_URL}/api/dashboard/eventos`);
+    if (!res) return;
+    const eventos = await res.json();
+
+    if (!eventos.length) {
+      tbody.innerHTML =
+        '<tr><td colspan="4" class="px-6 py-4 text-center text-gray-500">No hay eventos. Agrega uno con el botón superior.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = eventos
+      .map((ev) => {
+        const thumb =
+          ev.imagen && ev.imagen.indexOf('http') === 0
+            ? ev.imagen
+            : BASE_URL + (ev.imagen && ev.imagen.charAt(0) === '/' ? ev.imagen : '/' + (ev.imagen || ''));
+        const tituloEsc = String(ev.titulo || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/"/g, '&quot;');
+        return `
+        <tr class="hover:bg-gray-50">
+          <td class="px-4 py-3 text-sm text-gray-700">${ev.orden ?? ''}</td>
+          <td class="px-4 py-3">
+            <img src="${thumb}" alt="" class="h-14 w-20 object-cover rounded border border-gray-200 bg-gray-100" />
+          </td>
+          <td class="px-4 py-3 text-sm font-medium text-gray-900">${tituloEsc}</td>
+          <td class="px-4 py-3 text-sm">
+            <button type="button" class="text-blue-600 hover:text-blue-900 mr-3 btnEditarEvento" data-id="${ev._id}">Editar</button>
+            <button type="button" class="text-red-600 hover:text-red-900 btnEliminarEvento" data-id="${ev._id}">Eliminar</button>
+          </td>
+        </tr>`;
+      })
+      .join('');
+
+    tbody.querySelectorAll('.btnEditarEvento').forEach((btn) => {
+      btn.addEventListener('click', () => abrirModalEvento(btn.dataset.id));
+    });
+    tbody.querySelectorAll('.btnEliminarEvento').forEach((btn) => {
+      btn.addEventListener('click', () => eliminarEvento(btn.dataset.id));
+    });
+  } catch (e) {
+    console.error(e);
+    tbody.innerHTML =
+      '<tr><td colspan="4" class="px-6 py-4 text-center text-red-600">Error al cargar eventos.</td></tr>';
+  }
+}
+
+async function guardarEvento() {
+  const id = document.getElementById('eventoId').value;
+  const titulo = document.getElementById('eventoTitulo').value.trim();
+  const descripcion = document.getElementById('eventoDescripcion').value.trim();
+  const ordenRaw = document.getElementById('eventoOrden').value.trim();
+  const imagenInput = document.getElementById('eventoImagen');
+  const file = imagenInput && imagenInput.files && imagenInput.files[0];
+
+  if (!titulo || !descripcion) {
+    alert('Título y descripción son obligatorios.');
+    return;
+  }
+  if (!id && !file) {
+    alert('Debes seleccionar una imagen para el nuevo evento.');
+    return;
+  }
+
+  const fd = new FormData();
+  fd.append('titulo', titulo);
+  fd.append('descripcion', descripcion);
+  if (ordenRaw !== '') fd.append('orden', ordenRaw);
+  if (file) fd.append('imagen', file);
+
+  try {
+    const url = id
+      ? `${BASE_URL}/api/dashboard/evento/${id}`
+      : `${BASE_URL}/api/dashboard/evento`;
+    const res = await authenticatedFetch(url, {
+      method: id ? 'PUT' : 'POST',
+      body: fd,
+    });
+    if (!res) return;
+    if (res.ok) {
+      const modal = bootstrap.Modal.getInstance(document.getElementById('eventoModal'));
+      if (modal) modal.hide();
+      cargarEventos();
+    } else {
+      const err = await res.json().catch(() => ({}));
+      alert(err.message || 'Error al guardar el evento.');
+    }
+  } catch (e) {
+    console.error(e);
+    alert('Error al guardar el evento.');
+  }
+}
+
+async function eliminarEvento(id) {
+  if (
+    !confirm(
+      '¿Eliminar este evento? Se borrará también la imagen del servidor.'
+    )
+  ) {
+    return;
+  }
+  try {
+    const res = await authenticatedFetch(`${BASE_URL}/api/dashboard/evento/${id}`, {
+      method: 'DELETE',
+    });
+    if (!res) return;
+    if (res.ok) {
+      cargarEventos();
+    } else {
+      const err = await res.json().catch(() => ({}));
+      alert(err.message || 'Error al eliminar.');
+    }
+  } catch (e) {
+    console.error(e);
+    alert('Error al eliminar el evento.');
   }
 }
 

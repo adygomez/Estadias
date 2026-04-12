@@ -64,10 +64,20 @@ app.get('/api/config', (req, res) => {
 
 // Endpoint público para obtener logros (sin autenticación)
 const Logro = require('./models/Logro');
+const Evento = require('./models/Evento');
 app.get('/api/logros', async (req, res) => {
   try {
     const logros = await Logro.find({ activo: true }).sort({ orden: 1 });
     res.json(logros);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+app.get('/api/eventos', async (req, res) => {
+  try {
+    const eventos = await Evento.find().sort({ orden: 1, createdAt: 1 });
+    res.json(eventos);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

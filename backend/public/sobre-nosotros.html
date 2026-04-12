@@ -9,6 +9,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@400;500;600;700&family=Work+Sans:wght@700;800;900&display=swap" rel="stylesheet">
   <link rel="icon" href="/favicon.png" type="image/png">
+  <style>
+    .clubes-card {
+      padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 4vw, 5rem) clamp(2.75rem, 6vw, 6.875rem);
+    }
+  </style>
 </head>
 <body class="relative min-h-screen font-['Montserrat']">
   <div id="site-header"></div>
@@ -255,15 +260,244 @@
     </section>
 
     <div class="mx-auto max-w-[1600px] px-4 pb-10 pt-10 sm:px-6 sm:pb-12 sm:pt-12 md:px-8 md:pb-14 md:pt-14">
-      <section class="w-full text-center" aria-labelledby="clubes-titulo">
+      <section id="clubes" class="w-full scroll-mt-28" aria-labelledby="clubes-titulo">
         <h2
           id="clubes-titulo"
-          class="font-['Work_Sans'] font-black uppercase leading-[0.9] tracking-tight text-[#4C0000] text-[clamp(2.25rem,12vw,5.5rem)] lg:leading-[0.82] lg:text-[clamp(4rem,12vw,10.5rem)]"
+          class="text-center font-['Work_Sans'] font-black uppercase leading-[0.9] tracking-tight text-[#4C0000] text-[clamp(2.25rem,12vw,5.5rem)] lg:leading-[0.82] lg:text-[clamp(4rem,12vw,10.5rem)]"
         >
           CLUBES
         </h2>
+
+        <div
+          class="mt-10 grid w-full grid-cols-1 gap-8 md:mt-12 md:grid-cols-2 md:gap-8 lg:mt-14 lg:gap-10"
+          role="list"
+        >
+          <article
+            class="clubes-card flex flex-col bg-[#520000] text-left text-white"
+            role="listitem"
+            aria-labelledby="club-card-robotica"
+          >
+            <h3
+              id="club-card-robotica"
+              class="font-['Work_Sans'] font-bold leading-tight text-[clamp(1.5rem,4vw,2.125rem)]"
+            >
+              Robótica
+            </h3>
+            <p class="mt-4 font-['Inter'] font-normal leading-relaxed text-[clamp(1rem,2vw,1.125rem)]">
+              El Club de Robótica del CBTIS 272 es un espacio dedicado al desarrollo de habilidades tecnológicas y de innovación. En este club, los estudiantes diseñan, construyen y programan prototipos robóticos, aplicando conocimientos de electrónica y programación.
+            </p>
+            <p class="mt-3 font-['Inter'] font-normal leading-relaxed text-[clamp(1rem,2vw,1.125rem)]">
+              Se fomenta el trabajo en equipo, la creatividad y la resolución de problemas, además de impulsar la participación en concursos y proyectos tecnológicos.
+            </p>
+            <img
+              src="images/image%20122.webp"
+              alt="Actividades del club de Robótica"
+              class="mt-6 block h-auto w-full max-w-full rounded-sm object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </article>
+
+          <article
+            class="clubes-card flex flex-col bg-[#520000] text-left text-white"
+            role="listitem"
+            aria-labelledby="club-card-ciencias"
+          >
+            <h3
+              id="club-card-ciencias"
+              class="font-['Work_Sans'] font-bold leading-tight text-[clamp(1.5rem,4vw,2.125rem)]"
+            >
+              Ciencias
+            </h3>
+            <p class="mt-4 font-['Inter'] font-normal leading-relaxed text-[clamp(1rem,2vw,1.125rem)]">
+              El Club de Ciencias está orientado al desarrollo del pensamiento científico mediante la experimentación y la investigación. Los estudiantes participan en proyectos, prácticas y actividades relacionadas con la física, la química y la biología.
+            </p>
+            <p class="mt-3 font-['Inter'] font-normal leading-relaxed text-[clamp(1rem,2vw,1.125rem)]">
+              Este club impulsa la curiosidad, el análisis y la comprensión de los fenómenos naturales, así como la aplicación del método científico.
+            </p>
+            <img
+              src="images/image%20123.webp"
+              alt="Actividades del club de Ciencias"
+              class="mt-6 block h-auto w-full max-w-full rounded-sm object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </article>
+
+          <article
+            class="clubes-card flex flex-col bg-[#520000] text-left text-white"
+            role="listitem"
+            aria-labelledby="club-card-lectura"
+          >
+            <h3
+              id="club-card-lectura"
+              class="font-['Work_Sans'] font-bold leading-tight text-[clamp(1.5rem,4vw,2.125rem)]"
+            >
+              Lectura
+            </h3>
+            <p class="mt-4 font-['Inter'] font-normal leading-relaxed text-[clamp(1rem,2vw,1.125rem)]">
+              El Club de Lectura promueve el hábito de la lectura y el desarrollo de habilidades de comprensión y expresión. A través de la lectura de diversos textos, los estudiantes participan en actividades de análisis, reflexión y discusión.
+            </p>
+            <p class="mt-3 font-['Inter'] font-normal leading-relaxed text-[clamp(1rem,2vw,1.125rem)]">
+              Este espacio contribuye al fortalecimiento del pensamiento crítico, la creatividad y la comunicación oral y escrita.
+            </p>
+            <img
+              src="images/image%20124.webp"
+              alt="Actividades del club de Lectura"
+              class="mt-6 block h-auto w-full max-w-full rounded-sm object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </article>
+
+          <article
+            class="clubes-card flex flex-col bg-[#520000] text-left text-white"
+            role="listitem"
+            aria-labelledby="club-card-matematicas"
+          >
+            <h3
+              id="club-card-matematicas"
+              class="font-['Work_Sans'] font-bold leading-tight text-[clamp(1.5rem,4vw,2.125rem)]"
+            >
+              Matemáticas
+            </h3>
+            <p class="mt-4 font-['Inter'] font-normal leading-relaxed text-[clamp(1rem,2vw,1.125rem)]">
+              El Club de Matemáticas tiene como objetivo fortalecer el pensamiento lógico y el razonamiento analítico de los estudiantes. A través de la resolución de problemas, retos matemáticos y actividades dinámicas, los integrantes desarrollan habilidades que les permiten enfrentar con mayor facilidad contenidos académicos y competencias escolares.
+            </p>
+            <p class="mt-3 font-['Inter'] font-normal leading-relaxed text-[clamp(1rem,2vw,1.125rem)]">
+              También se promueve la participación en concursos y eventos académicos.
+            </p>
+            <img
+              src="images/image%20125.webp"
+              alt="Actividades del club de Matemáticas"
+              class="mt-6 block h-auto w-full max-w-full rounded-sm object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </article>
+        </div>
       </section>
+
+      <section id="eventos" class="mt-16 w-full scroll-mt-28 sm:mt-20 md:mt-24" aria-labelledby="eventos-titulo">
+        <h2
+          id="eventos-titulo"
+          class="text-center font-['Work_Sans'] font-black uppercase leading-[0.9] tracking-tight text-[#4C0000] text-[clamp(2.25rem,12vw,5.5rem)] lg:leading-[0.82] lg:text-[clamp(4rem,12vw,10.5rem)]"
+        >
+          EVENTOS
+        </h2>
+
+        <div
+          id="eventos-grid"
+          class="mt-10 grid w-full grid-cols-1 gap-8 sm:mt-12 sm:grid-cols-2 sm:gap-8 lg:mt-14 lg:grid-cols-3 lg:gap-10"
+          role="list"
+          aria-busy="true"
+          aria-live="polite"
+        >
+          <p
+            id="eventos-estado"
+            class="col-span-full text-center font-['Inter'] text-gray-600 py-10"
+          >
+            Cargando eventos…
+          </p>
+        </div>
+      </section>
+
+      <!-- Galería: imagen principal + 6 miniaturas (misma implementación que en index.html) -->
+      <section
+        class="mt-16 scroll-mt-20 bg-[#4C0000] py-8 sm:mt-20 md:mt-24 md:py-12 lg:py-14"
+        aria-label="Galería de fotos del plantel"
+      >
+        <div class="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
+          <div
+            id="galeria-fotos-cultura-root"
+            class="flex min-h-0 flex-col gap-2 sm:gap-3 md:gap-4"
+          >
+            <div class="relative aspect-video w-full overflow-hidden bg-black/25">
+              <img
+                id="galeria-fotos-cultura-main"
+                src="/images/image%2080.webp"
+                alt="Fotografía destacada de la galería institucional"
+                class="absolute inset-0 h-full w-full object-cover object-center"
+                width="1200"
+                height="675"
+                decoding="async"
+              />
+            </div>
+            <div
+              id="galeria-fotos-cultura-thumbs"
+              class="grid grid-cols-3 gap-2 sm:grid-cols-6 sm:gap-2.5 md:gap-3"
+              role="list"
+              aria-label="Miniaturas de la galería"
+            ></div>
+          </div>
+        </div>
+      </section>
+      <script>
+        (function () {
+          var nums = [80, 75, 81, 83, 87, 91, 94];
+          var paths = nums.map(function (n) {
+            return '/images/image%20' + n + '.webp';
+          });
+          var mainIdx = 0;
+          var mainEl = document.getElementById('galeria-fotos-cultura-main');
+          var thumbsEl = document.getElementById('galeria-fotos-cultura-thumbs');
+          if (!mainEl || !thumbsEl) return;
+
+          function render() {
+            mainEl.src = paths[mainIdx];
+            thumbsEl.innerHTML = '';
+            paths.forEach(function (src, i) {
+              if (i === mainIdx) return;
+              var btn = document.createElement('button');
+              btn.type = 'button';
+              btn.setAttribute('role', 'listitem');
+              btn.className =
+                'group relative aspect-square w-full cursor-pointer overflow-hidden border-0 bg-black/20 p-0 outline-none ring-2 ring-transparent transition duration-200 hover:opacity-95 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#4C0000]';
+              btn.setAttribute(
+                'aria-label',
+                'Ampliar imagen ' + nums[i] + ' en la vista principal'
+              );
+              var img = document.createElement('img');
+              img.src = src;
+              img.alt = '';
+              img.className = 'h-full w-full object-cover';
+              img.loading = 'lazy';
+              img.decoding = 'async';
+              img.width = 200;
+              img.height = 200;
+              btn.appendChild(img);
+              btn.addEventListener('click', function () {
+                mainIdx = i;
+                render();
+              });
+              thumbsEl.appendChild(btn);
+            });
+          }
+          render();
+        })();
+      </script>
     </div>
+
+    <!-- Mapa embebido: CBTIS 272 (mismo bloque que en index.html) -->
+    <section
+      class="scroll-mt-20 bg-white pb-10 md:pb-14 lg:pb-16"
+      aria-label="Ubicación del plantel en el mapa"
+    >
+      <div class="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8">
+        <div
+          class="relative h-[200px] w-full overflow-hidden rounded-lg bg-neutral-200 shadow-sm sm:h-[230px] md:h-[260px] lg:h-[280px]"
+        >
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14881.398573680744!2d-86.903761!3d21.178265!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f4dd34f2889cd67%3A0x827ed2d8c6290bb6!2sCBTIS%20272!5e0!3m2!1ses-419!2smx!4v1775955645389!5m2!1ses-419!2smx"
+            class="absolute inset-0 h-full w-full border-0"
+            title="Ubicación CBTIS 272 en Google Maps"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+    </section>
   </main>
 
   <div id="site-footer"></div>
@@ -443,6 +677,87 @@
       requestAnimationFrame(function () {
         go(0);
       });
+    })();
+  </script>
+  <script>
+    (function initEventosDesdeApi() {
+      var BASE_URL =
+        window.location.origin.indexOf('localhost') !== -1
+          ? 'http://localhost:3001'
+          : window.location.origin;
+      var grid = document.getElementById('eventos-grid');
+      var estado = document.getElementById('eventos-estado');
+      if (!grid) return;
+
+      function escapeHtml(s) {
+        return String(s)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      function imgSrc(url) {
+        if (!url) return '';
+        if (url.indexOf('http') === 0) return url;
+        return BASE_URL + (url.charAt(0) === '/' ? url : '/' + url);
+      }
+
+      fetch(BASE_URL + '/api/eventos')
+        .then(function (r) {
+          if (!r.ok) throw new Error('Error al cargar eventos');
+          return r.json();
+        })
+        .then(function (eventos) {
+          if (estado) estado.remove();
+          grid.setAttribute('aria-busy', 'false');
+          if (!eventos.length) {
+            var vacio = document.createElement('p');
+            vacio.id = 'eventos-estado';
+            vacio.className =
+              "col-span-full text-center font-['Inter'] text-gray-600 py-10";
+            vacio.textContent =
+              'No hay eventos publicados por el momento.';
+            grid.appendChild(vacio);
+            return;
+          }
+          eventos.forEach(function (ev, i) {
+            var titulo = escapeHtml(ev.titulo);
+            var desc = escapeHtml(ev.descripcion);
+            var idSlug = String(ev._id || 'ev-' + i).replace(/[^a-zA-Z0-9_-]/g, '');
+            var imgUrl = imgSrc(ev.imagen);
+            var alt = escapeHtml(ev.titulo);
+            grid.insertAdjacentHTML(
+              'beforeend',
+              '<article class="clubes-card flex flex-col bg-[#520000] text-left text-white" role="listitem" aria-labelledby="evento-dyn-' +
+                idSlug +
+                '">' +
+                '<h3 id="evento-dyn-' +
+                idSlug +
+                '" class="font-[\'Work_Sans\'] font-bold leading-tight text-[clamp(1.5rem,4vw,2.125rem)]">' +
+                titulo +
+                '</h3>' +
+                '<p class="mt-4 font-[\'Inter\'] font-normal leading-relaxed text-[clamp(1rem,2vw,1.125rem)]">' +
+                desc +
+                '</p>' +
+                '<img src="' +
+                escapeHtml(imgUrl) +
+                '" alt="' +
+                alt +
+                '" class="mt-6 block h-auto w-full max-w-full rounded-sm object-cover" loading="lazy" decoding="async"/>' +
+                '</article>'
+            );
+          });
+        })
+        .catch(function () {
+          grid.setAttribute('aria-busy', 'false');
+          if (estado) {
+            estado.textContent =
+              'No se pudieron cargar los eventos. Intenta más tarde.';
+            estado.className =
+              "col-span-full text-center font-['Inter'] text-red-700 py-10";
+          }
+        });
     })();
   </script>
 </body>

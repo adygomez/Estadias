@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Panel Administrativo | Gestión de Usuarios</title>
+  <title>Panel Administrativo | Usuarios y eventos</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -70,6 +70,36 @@
         </table>
       </div>
     </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+        <div>
+          <h2 class="text-2xl font-bold text-gray-800">Eventos (Cultura y deporte)</h2>
+          <p class="text-sm text-gray-600 mt-1">Se muestran en la página pública en la sección EVENTOS (tres columnas en pantallas grandes).</p>
+        </div>
+        <button id="btnAgregarEvento" type="button" class="mt-4 md:mt-0 bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors duration-200 font-semibold">
+          + Agregar evento
+        </button>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-200">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Orden</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Vista</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Título</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="eventosTable" class="bg-white divide-y divide-gray-200">
+            <tr>
+              <td colspan="4" class="px-6 py-4 text-center text-gray-500">Cargando eventos…</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
   <!-- Modal para Crear/Editar Usuario -->
@@ -120,6 +150,61 @@
                 <option value="subdireccion">Subdirección</option>
                 <option value="control_escolar">Control Escolar</option>
               </select>
+            </div>
+
+            <div class="flex justify-end space-x-3 mt-6">
+              <button type="button" class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="px-6 py-2 bg-[#4C0000] hover:bg-[#6a0000] text-white rounded-lg transition-colors duration-200 font-semibold">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Eventos -->
+  <div class="modal fade" id="eventoModal" tabindex="-1" aria-labelledby="eventoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-[#4C0000] text-white">
+          <h5 class="modal-title text-xl font-bold" id="eventoModalLabel">Agregar evento</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body bg-gray-50 p-6">
+          <form id="eventoForm">
+            <input type="hidden" id="eventoId" />
+
+            <div class="mb-4">
+              <label for="eventoTitulo" class="block text-sm font-medium text-gray-700 mb-2">Título *</label>
+              <input type="text" id="eventoTitulo" required maxlength="200"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" />
+            </div>
+
+            <div class="mb-4">
+              <label for="eventoDescripcion" class="block text-sm font-medium text-gray-700 mb-2">Descripción *</label>
+              <textarea id="eventoDescripcion" required rows="4" maxlength="8000"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent"></textarea>
+            </div>
+
+            <div class="mb-4">
+              <label for="eventoOrden" class="block text-sm font-medium text-gray-700 mb-2">Orden (menor = primero)</label>
+              <input type="number" id="eventoOrden" step="1"
+                class="w-full max-w-xs px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4C0000] focus:border-transparent" />
+              <p class="text-xs text-gray-500 mt-1">Opcional al crear: se asigna automáticamente al final si lo dejas vacío.</p>
+            </div>
+
+            <div class="mb-4">
+              <label for="eventoImagen" class="block text-sm font-medium text-gray-700 mb-2">
+                Imagen <span id="eventoImagenRequired" class="text-red-500">*</span>
+              </label>
+              <input type="file" id="eventoImagen" accept="image/jpeg,image/png,image/gif,image/webp"
+                class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#4C0000] file:text-white" />
+              <p class="text-xs text-gray-500 mt-1">JPEG, PNG, GIF o WebP. Máx. 8 MB.</p>
+            </div>
+
+            <div id="eventoPreviewWrap" class="mb-4 hidden">
+              <span class="block text-sm font-medium text-gray-700 mb-2">Vista previa</span>
+              <img id="eventoPreviewImg" src="" alt="" class="max-h-48 rounded border border-gray-200 object-contain bg-white" />
             </div>
 
             <div class="flex justify-end space-x-3 mt-6">
