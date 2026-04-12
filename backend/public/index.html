@@ -12,140 +12,8 @@
   <link rel="icon" href="/favicon.png" type="image/png">
 </head>
 <body class="relative min-h-screen font-['Montserrat']">
-<!-- Navbar Principal -->
-<nav class="relative z-50 bg-[#4C0000] w-full py-3">
-  <div class="flex items-center justify-between px-4 md:px-6">
-    <div class="flex items-center space-x-4"></div>
-
-    <div class="flex items-center gap-3 md:gap-6">
-      <!-- Escritorio: enlaces + submenús hover -->
-      <div class="hidden md:flex items-center gap-4 lg:gap-6">
-        <a href="index.html" class="text-white hover:text-gray-200 transition-colors duration-200 font-medium">Home</a>
-
-        <div class="relative group">
-          <span class="text-white font-medium cursor-default flex items-center gap-1 py-1 border-b-2 border-transparent group-hover:border-white/40">
-            Sobre nosotros
-            <svg class="w-4 h-4 opacity-80" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-          </span>
-          <div class="absolute left-0 top-full pt-2 min-w-[17rem] opacity-0 invisible pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition-opacity duration-150 z-50">
-            <div class="bg-[#4C0000] border border-red-800/50 rounded-lg shadow-lg py-2">
-              <a href="logros-carreras.html#eventos" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Eventos</a>
-              <a href="logros-carreras.html#actividades-deportivas" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Actividades deportivas y culturas</a>
-              <a href="logros-carreras.html#clubes" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Clubes</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="relative group">
-          <span class="text-white font-medium cursor-default flex items-center gap-1 py-1 border-b-2 border-transparent group-hover:border-white/40">
-            Oferta educativa
-            <svg class="w-4 h-4 opacity-80" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-          </span>
-          <div class="absolute left-0 top-full pt-2 min-w-[17rem] opacity-0 invisible pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition-opacity duration-150 z-50">
-            <div class="bg-[#4C0000] border border-red-800/50 rounded-lg shadow-lg py-2">
-              <a href="index.html#ventas" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Ventas</a>
-              <a href="index.html#programacion" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Programación</a>
-              <a href="index.html#preparacion-alimentos-bebidas" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Preparación de alimentos y bebidas</a>
-              <a href="index.html#robotica" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Robótica</a>
-              <a href="index.html#gestion-empresarial" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Gestión e Innovación turística</a>
-              <a href="index.html#educacion-dual" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Educacion Dual</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="relative group">
-          <span class="text-white font-medium cursor-default flex items-center gap-1 py-1 border-b-2 border-transparent group-hover:border-white/40">
-            Servicios escolares
-            <svg class="w-4 h-4 opacity-80" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-          </span>
-          <div class="absolute left-0 top-full pt-2 min-w-[14rem] opacity-0 invisible pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition-opacity duration-150 z-50">
-            <div class="bg-[#4C0000] border border-red-800/50 rounded-lg shadow-lg py-2">
-              <a href="inscripcion.html" class="block px-4 py-2 text-sm text-white hover:bg-black/25 transition-colors">Proceso de admisión</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <a href="login.html" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2 shrink-0">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-        </svg>
-        <span class="text-white">Iniciar Sesión</span>
-      </a>
-
-      <button type="button" id="nav-burger" class="md:hidden text-white hover:text-gray-200 p-1 rounded focus:outline-none focus:ring-2 focus:ring-white/40" onclick="toggleMobileMenu()" aria-expanded="false" aria-controls="mobile-menu">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
-      </button>
-    </div>
-  </div>
-
-  <!-- Móvil: panel hamburguesa -->
-  <div id="mobile-menu" class="md:hidden border-t border-red-800 hidden">
-    <div class="px-4 md:px-6 py-4 space-y-1 text-white">
-      <a href="index.html" class="block py-2 font-medium hover:text-gray-200 transition-colors">Home</a>
-
-      <details class="group border-b border-red-800/60 pb-2 mb-2">
-        <summary class="cursor-pointer list-none py-2 font-medium flex items-center justify-between [&::-webkit-details-marker]:hidden">
-          Sobre nosotros
-          <svg class="w-4 h-4 opacity-80 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-        </summary>
-        <div class="pl-3 mt-1 space-y-1 border-l border-red-800/50 ml-1">
-          <a href="logros-carreras.html#eventos" class="block py-1.5 text-sm text-gray-200 hover:text-white">Eventos</a>
-          <a href="logros-carreras.html#actividades-deportivas" class="block py-1.5 text-sm text-gray-200 hover:text-white">Actividades deportivas y culturas</a>
-          <a href="logros-carreras.html#clubes" class="block py-1.5 text-sm text-gray-200 hover:text-white">Clubes</a>
-        </div>
-      </details>
-
-      <details class="group border-b border-red-800/60 pb-2 mb-2">
-        <summary class="cursor-pointer list-none py-2 font-medium flex items-center justify-between [&::-webkit-details-marker]:hidden">
-          Oferta educativa
-          <svg class="w-4 h-4 opacity-80 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-        </summary>
-        <div class="pl-3 mt-1 space-y-1 border-l border-red-800/50 ml-1">
-          <a href="index.html#ventas" class="block py-1.5 text-sm text-gray-200 hover:text-white">Ventas</a>
-          <a href="index.html#programacion" class="block py-1.5 text-sm text-gray-200 hover:text-white">Programación</a>
-          <a href="index.html#preparacion-alimentos-bebidas" class="block py-1.5 text-sm text-gray-200 hover:text-white">Preparación de alimentos y bebidas</a>
-          <a href="index.html#robotica" class="block py-1.5 text-sm text-gray-200 hover:text-white">Robótica</a>
-          <a href="index.html#gestion-empresarial" class="block py-1.5 text-sm text-gray-200 hover:text-white">Gestión e Innovación turística</a>
-          <a href="index.html#educacion-dual" class="block py-1.5 text-sm text-gray-200 hover:text-white">Educacion Dual</a>
-        </div>
-      </details>
-
-      <details class="group border-b border-red-800/60 pb-2">
-        <summary class="cursor-pointer list-none py-2 font-medium flex items-center justify-between [&::-webkit-details-marker]:hidden">
-          Servicios escolares
-          <svg class="w-4 h-4 opacity-80 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-        </summary>
-        <div class="pl-3 mt-1 space-y-1 border-l border-red-800/50 ml-1">
-          <a href="inscripcion.html" class="block py-1.5 text-sm text-gray-200 hover:text-white">Proceso de admisión</a>
-        </div>
-      </details>
-    </div>
-  </div>
-</nav>
-
-  <script>
-    function toggleMobileMenu() {
-      const mobileMenu = document.getElementById('mobile-menu');
-      const btn = document.getElementById('nav-burger');
-      mobileMenu.classList.toggle('hidden');
-      const open = !mobileMenu.classList.contains('hidden');
-      if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    }
-    document.addEventListener('DOMContentLoaded', function () {
-      const panel = document.getElementById('mobile-menu');
-      if (!panel) return;
-      panel.querySelectorAll('a[href]').forEach(function (a) {
-        a.addEventListener('click', function () {
-          panel.classList.add('hidden');
-          const btn = document.getElementById('nav-burger');
-          if (btn) btn.setAttribute('aria-expanded', 'false');
-        });
-      });
-    });
-  </script>
+  <div id="site-header"></div>
+  <script src="/js/site-shell.js" defer></script>
 
   <!-- Sección Principal con Imagen de Fondo -->
   <div class="relative w-full h-[16.25rem] flex items-center justify-center overflow-hidden" style="background: url('/images/imagen-home.png') no-repeat center center; background-size: cover;">
@@ -579,9 +447,11 @@
   <!-- Sobre nosotros: accesos circulares al menú Sobre nosotros -->
   <section class="scroll-mt-20 bg-white py-12 md:py-16 lg:py-20" aria-labelledby="sobre-nosotros-accesos-titulo">
     <div class="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
-      <h2 id="sobre-nosotros-accesos-titulo" class="font-['Work_Sans'] text-2xl font-bold uppercase tracking-[0.12em] text-neutral-900 sm:text-3xl md:tracking-[0.18em]">
-        Sobre nosotros
-      </h2>
+      <div class="text-center">
+        <h2 id="sobre-nosotros-accesos-titulo" class="font-['Work_Sans'] font-black uppercase leading-[0.9] tracking-tight text-[#4C0000] text-[clamp(2.25rem,11vw,10.5rem)]">
+          SOBRE NOSOTROS
+        </h2>
+      </div>
       <div class="mx-auto mt-10 grid max-w-5xl grid-cols-1 items-center justify-items-center gap-10 sm:mt-12 md:mt-14 md:max-w-none md:grid-cols-3 md:gap-8 lg:gap-12 xl:gap-16">
         <a
           href="logros-carreras.html#eventos"
@@ -621,79 +491,7 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-[#4C0000] text-white py-10 px-6 md:px-12">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid gap-8 md:grid-cols-3 text-sm md:text-base">
-        <div class="space-y-3">
-          <h3 class="text-lg font-semibold uppercase tracking-wide">CBTIS 272</h3>
-          <p class="text-gray-200">
-            Portal oficial de nuestro plantel.
-          </p>
-        </div>
-        <div class="space-y-3">
-          <h3 class="text-lg font-semibold uppercase tracking-wide">Oferta Academica</h3>
-          <ul class="space-y-1 text-gray-200">
-            <li><a href="#ventas" class="transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#4C0000] rounded-sm">Ventas</a></li>
-            <li><a href="#programacion" class="transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#4C0000] rounded-sm">Programación</a></li>
-            <li><a href="#preparacion-alimentos-bebidas" class="transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#4C0000] rounded-sm">Preparación de alimentos y bebidas</a></li>
-            <li><a href="#gestion-empresarial" class="transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#4C0000] rounded-sm">Gestión e Innovación turística</a></li>
-            <li><a href="#robotica" class="transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#4C0000] rounded-sm">Robotica</a></li>
-            <li><a href="#educacion-dual" class="transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#4C0000] rounded-sm">Educacion Dual</a></li>
-          </ul>
-        </div>
-        <div class="space-y-3">
-          <h3 class="text-lg font-semibold uppercase tracking-wide">Contacto</h3>
-          <div class="space-y-1 text-gray-200">
-            <p>Avenida arco norte entre avenida isla saona y calle isla magdalena</p>
-            <p>Tel: 9983213282</p>
-            <p>Correo: cbtis272.dir@dgeti.sems.gob.mx</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="border-t border-gray-500 mt-10 pt-6 flex flex-col items-center gap-6 md:flex-row md:items-center md:justify-between md:gap-8">
-        <p class="text-center text-xs md:text-sm text-gray-200 uppercase tracking-wide md:text-left">
-          © 2025 SIIR 272. Todos los derechos reservados.
-        </p>
-        <div class="flex flex-col items-center gap-3 md:items-end">
-          <p class="text-sm font-semibold uppercase tracking-wide text-white">SIGUENOS</p>
-          <div class="flex flex-wrap items-center justify-center gap-3 md:justify-end" aria-label="Redes sociales">
-            <a
-              href="https://www.facebook.com/cbtis272cancun/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-gray-200 transition-colors hover:bg-white/20 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-              aria-label="Facebook"
-            >
-              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            </a>
-            <a
-              href="#"
-              class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-gray-200 transition-colors hover:bg-white/20 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-              aria-label="YouTube"
-            >
-              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-            </a>
-            <a
-              href="#"
-              class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-gray-200 transition-colors hover:bg-white/20 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-              aria-label="X"
-            >
-              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </a>
-            <a
-              href="#"
-              class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-gray-200 transition-colors hover:bg-white/20 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-              aria-label="Instagram"
-            >
-              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
+  <div id="site-footer"></div>
 
   <script>
     // Intercepta clicks en enlaces a login y redirige al dashboard si existe sesión válida
@@ -763,8 +561,8 @@
       });
     }
 
-    // Adjuntar al cargar la página (y también después de cambios dinámicos si aplica)
-    document.addEventListener('DOMContentLoaded', attachLoginInterceptor);
+    // Tras cargar header/footer desde partials (site-shell.js)
+    document.addEventListener('site:shell-ready', attachLoginInterceptor);
   </script>
 </body>
 </html>
