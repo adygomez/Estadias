@@ -454,19 +454,19 @@
       </div>
       <div class="mx-auto mt-10 grid max-w-5xl grid-cols-1 items-center justify-items-center gap-10 sm:mt-12 md:mt-14 md:max-w-none md:grid-cols-3 md:gap-8 lg:gap-12 xl:gap-16">
         <a
-          href="logros-carreras.html#eventos"
+          href="sobre-nosotros.html#eventos"
           class="flex aspect-square w-[min(85vw,280px)] cursor-pointer items-center justify-center rounded-full border-2 border-neutral-900 bg-white px-5 text-center font-['Inter'] text-sm font-medium leading-snug text-neutral-900 antialiased transition duration-200 hover:border-[#4C0000] hover:bg-[#4C0000]/5 hover:text-[#4C0000] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4C0000] focus-visible:ring-offset-2 md:w-full md:max-w-[220px] lg:max-w-[250px] xl:max-w-[270px]"
         >
           Noticias y eventos
         </a>
         <a
-          href="logros-carreras.html#actividades-deportivas"
+          href="sobre-nosotros.html#cultura-y-deporte"
           class="flex aspect-square w-[min(85vw,280px)] cursor-pointer items-center justify-center rounded-full border-2 border-neutral-900 bg-white px-4 text-center font-['Inter'] text-sm font-medium leading-tight text-neutral-900 antialiased transition duration-200 hover:border-[#4C0000] hover:bg-[#4C0000]/5 hover:text-[#4C0000] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4C0000] focus-visible:ring-offset-2 md:w-full md:max-w-[220px] lg:max-w-[250px] xl:max-w-[270px]"
         >
           Actividades deportivas y culturales
         </a>
         <a
-          href="logros-carreras.html#clubes"
+          href="sobre-nosotros.html#clubes"
           class="flex aspect-square w-[min(85vw,280px)] cursor-pointer items-center justify-center rounded-full border-2 border-neutral-900 bg-white px-5 text-center font-['Inter'] text-sm font-medium leading-snug text-neutral-900 antialiased transition duration-200 hover:border-[#4C0000] hover:bg-[#4C0000]/5 hover:text-[#4C0000] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4C0000] focus-visible:ring-offset-2 md:w-full md:max-w-[220px] lg:max-w-[250px] xl:max-w-[270px]"
         >
           Clubes y talleres
@@ -541,15 +541,9 @@
                 role = payload?.role;
               }
               
-              // Redirigir según el rol
               if (role === 'admin') {
                 window.location.href = '/admin-panel';
-              } else if (role === 'subdireccion') {
-                window.location.href = '/dashboard-subdireccion';
-              } else if (role === 'control_escolar') {
-                window.location.href = '/dashboard-controlEscolar';
               } else {
-                // Si no se puede determinar el rol, redirigir al login
                 window.location.href = '/login.html';
               }
             }

@@ -134,16 +134,11 @@
         localStorage.setItem('user', JSON.stringify(data.user));
         localStorage.setItem('login', 'true'); // Mantener para compatibilidad
         
-        // Redirigir según el rol del usuario
         const role = data.user.role;
         if (role === 'admin') {
           window.location.href = '/admin-panel';
-        } else if (role === 'subdireccion') {
-          window.location.href = '/dashboard-subdireccion';
-        } else if (role === 'control_escolar') {
-          window.location.href = '/dashboard-controlEscolar';
         } else {
-          alert('Rol no reconocido. Contacte al administrador.');
+          alert('Acceso no autorizado. Solo cuentas de administrador pueden entrar.');
           localStorage.removeItem('token');
           localStorage.removeItem('user');
           localStorage.removeItem('login');

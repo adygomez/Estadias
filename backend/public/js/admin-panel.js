@@ -52,9 +52,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   try {
     const verifyRes = await authenticatedFetch('/api/auth/verify-admin');
     if (!verifyRes || !verifyRes.ok) {
-      const data = await verifyRes.json();
+      const data = await verifyRes.json().catch(() => ({}));
       alert(data.message || 'Acceso denegado. Solo los administradores pueden acceder a esta sección.');
-      window.location.href = '/dashboard-subdireccion';
+      window.location.href = '/login.html';
       return;
     }
   } catch (error) {
@@ -119,17 +119,11 @@ async function cargarUsuarios() {
     const tbody = document.getElementById('usuariosTable');
     
     if (usuarios.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="3" class="px-6 py-4 text-center text-gray-500">No hay usuarios registrados</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="2" class="px-6 py-4 text-center text-gray-500">No hay usuarios registrados</td></tr>';
       return;
     }
 
     tbody.innerHTML = usuarios.map(usuario => {
-      const rolTexto = {
-        'admin': 'Administrador',
-        'subdireccion': 'Subdirección',
-        'control_escolar': 'Control Escolar'
-      }[usuario.role] || usuario.role;
-
       const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
       const esUsuarioActual = currentUser.id === usuario._id;
 
@@ -139,21 +133,11 @@ async function cargarUsuarios() {
             <div class="text-sm font-medium text-gray-900">${usuario.username}</div>
             ${esUsuarioActual ? '<span class="text-xs text-blue-600">(Tú)</span>' : ''}
           </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <span class="px-2 py-1 text-xs font-semibold rounded-full ${
-              usuario.role === 'admin' ? 'bg-purple-100 text-purple-800' :
-              usuario.role === 'subdireccion' ? 'bg-blue-100 text-blue-800' :
-              'bg-green-100 text-green-800'
-            }">
-              ${rolTexto}
-            </span>
-          </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
             <button 
               class="text-blue-600 hover:text-blue-900 mr-3 btnEditarUsuario" 
               data-id="${usuario._id}"
               data-username="${usuario.username}"
-              data-role="${usuario.role}"
             >
               Editar
             </button>
@@ -171,13 +155,11 @@ async function cargarUsuarios() {
       `;
     }).join('');
 
-    // Agregar event listeners a los botones
     document.querySelectorAll('.btnEditarUsuario').forEach(btn => {
       btn.addEventListener('click', () => {
         const id = btn.dataset.id;
         const username = btn.dataset.username;
-        const role = btn.dataset.role;
-        abrirModalEditar(id, username, role);
+        abrirModalEditar(id, username);
       });
     });
 
@@ -208,11 +190,10 @@ function abrirModalCrear() {
 }
 
 // Función para abrir modal de editar
-function abrirModalEditar(id, username, role) {
+function abrirModalEditar(id, username) {
   document.getElementById('usuarioModalLabel').textContent = 'Editar Usuario';
   document.getElementById('usuarioId').value = id;
   document.getElementById('usuarioUsername').value = username;
-  document.getElementById('usuarioRole').value = role;
   document.getElementById('usuarioPassword').value = '';
   document.getElementById('usuarioPassword').required = false;
   document.getElementById('passwordRequired').style.display = 'none';
@@ -226,15 +207,13 @@ async function guardarUsuario() {
   const id = document.getElementById('usuarioId').value;
   const username = document.getElementById('usuarioUsername').value;
   const password = document.getElementById('usuarioPassword').value;
-  const role = document.getElementById('usuarioRole').value;
 
-  if (!username || !role) {
+  if (!username) {
     alert('Por favor completa todos los campos requeridos');
     return;
   }
 
-  // Si es edición y no hay contraseña, no incluirla
-  const data = { username, role };
+  const data = { username };
   if (password || !id) {
     if (!password && !id) {
       alert('La contraseña es requerida para crear un nuevo usuario');
