@@ -12,7 +12,7 @@ const getToken = () => {
 const authenticatedFetch = async (url, options = {}) => {
   const token = getToken();
   if (!token) {
-    window.location.href = '/login.html';
+    window.location.href = '/login';
     return;
   }
 
@@ -33,7 +33,7 @@ const authenticatedFetch = async (url, options = {}) => {
     localStorage.removeItem('user');
     localStorage.removeItem('login');
     alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
-    window.location.href = '/login.html';
+    window.location.href = '/login';
     return;
   }
 
@@ -44,7 +44,7 @@ const authenticatedFetch = async (url, options = {}) => {
 document.addEventListener('DOMContentLoaded', async () => {
   const token = getToken();
   if (!token) {
-    window.location.href = '/login.html';
+    window.location.href = '/login';
     return;
   }
 
@@ -54,12 +54,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!verifyRes || !verifyRes.ok) {
       const data = await verifyRes.json().catch(() => ({}));
       alert(data.message || 'Acceso denegado. Solo los administradores pueden acceder a esta sección.');
-      window.location.href = '/login.html';
+      window.location.href = '/login';
       return;
     }
   } catch (error) {
     console.error('Error verificando autenticación:', error);
-    window.location.href = '/login.html';
+    window.location.href = '/login';
     return;
   }
 
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     localStorage.removeItem('login');
-    window.location.href = '/login.html';
+    window.location.href = '/login';
   });
 
   document.getElementById('btnCrearUsuario').addEventListener('click', () => {

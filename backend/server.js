@@ -39,7 +39,48 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, 'public')));
+const publicDir = path.join(__dirname, 'public');
+function querySuffix(req) {
+  return req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+}
+
+// Redirecciones 301 desde URLs con .html hacia rutas limpias
+const legacyHtmlRedirects = {
+  '/index.html': '/',
+  '/ventas.html': '/ventas',
+  '/programacion.html': '/programacion',
+  '/preparacion-alimentos-bebidas.html': '/preparacion-alimentos-bebidas',
+  '/gestion-innovacion-turistica.html': '/gestion-innovacion-turistica',
+  '/robotica.html': '/robotica',
+  '/educacion-dual.html': '/educacion-dual',
+  '/sobre-nosotros.html': '/sobre-nosotros',
+  '/servicios-escolares.html': '/servicios-escolares',
+  '/login.html': '/login',
+  '/register-admin.html': '/register-admin'
+};
+Object.entries(legacyHtmlRedirects).forEach(([from, to]) => {
+  app.get(from, (req, res) => res.redirect(301, to + querySuffix(req)));
+});
+
+app.get('/inicio', (req, res) => res.redirect(301, '/' + querySuffix(req)));
+
+const htmlPages = [
+  ['/ventas', 'ventas.html'],
+  ['/programacion', 'programacion.html'],
+  ['/preparacion-alimentos-bebidas', 'preparacion-alimentos-bebidas.html'],
+  ['/gestion-innovacion-turistica', 'gestion-innovacion-turistica.html'],
+  ['/robotica', 'robotica.html'],
+  ['/educacion-dual', 'educacion-dual.html'],
+  ['/sobre-nosotros', 'sobre-nosotros.html'],
+  ['/servicios-escolares', 'servicios-escolares.html'],
+  ['/login', 'login.html'],
+  ['/register-admin', 'register-admin.html']
+];
+htmlPages.forEach(([route, file]) => {
+  app.get(route, (req, res) => res.sendFile(path.join(publicDir, file)));
+});
+
+app.use(express.static(publicDir));
 app.use('/pdfs', express.static(path.join(__dirname, 'public/pdfs')));
 
 app.use('/api', require('./routers/auth.js'));

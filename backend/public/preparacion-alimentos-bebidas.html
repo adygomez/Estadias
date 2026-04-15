@@ -582,7 +582,7 @@
     }
 
     function attachLoginInterceptor() {
-      const selectors = 'a[href$="login.html"], a[href$="/login.html"]';
+      const selectors = 'a[href="/login"], a[href$="/login"], a[href$="login.html"], a[href$="/login.html"]';
       document.querySelectorAll(selectors).forEach(a => {
         if (a.dataset.loginIntercept === 'true') return;
         a.dataset.loginIntercept = 'true';
@@ -610,7 +610,7 @@
               if (role === 'admin') {
                 window.location.href = '/admin-panel';
               } else {
-                window.location.href = '/login.html';
+                window.location.href = '/login';
               }
             }
           } catch (err) {
