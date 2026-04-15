@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ventas | CBTIS 272</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@400;500;600;700&family=Work+Sans:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <style>
+    /* Solapamiento del bloque rojo con el banner */
+    .ventas-hero__overlap {
+      --ventas-banner-pull: 11rem;
+      margin-top: -3.5rem;
+    }
+    @media (min-width: 640px) {
+      .ventas-hero__overlap {
+        margin-top: -5rem;
+      }
+    }
+    @media (min-width: 768px) {
+      .ventas-hero__overlap {
+        margin-top: -7rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .ventas-hero__overlap {
+        margin-top: calc(-1 * var(--ventas-banner-pull));
+      }
+    }
+    .ventas-acc-details > summary {
+      list-style: none;
+    }
+    .ventas-acc-details > summary::-webkit-details-marker {
+      display: none;
+    }
+    .ventas-acc-details[open] > summary .ventas-acc-icon-plus {
+      display: none;
+    }
+    .ventas-acc-details:not([open]) > summary .ventas-acc-icon-minus {
+      display: none;
+    }
+    .ventas-acc-details[open] > summary .ventas-acc-heading {
+      color: #ff8f00;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen font-['Montserrat']">
+  <div id="site-header"></div>
+  <script src="/js/site-shell.js" defer></script>
+
+  <main id="contenido-principal" class="bg-white">
+    <section class="relative w-full scroll-mt-28 pb-0" aria-labelledby="ventas-titulo">
+      <!-- Banner -->
+      <div
+        class="relative h-[clamp(22rem,48vh,38rem)] w-full overflow-hidden"
+        aria-hidden="true"
+      >
+        <div
+          class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style="background-image: url('images/image 84.webp')"
+        ></div>
+      </div>
+
+      <!-- Bloque rojo ~680×620; imagen pegada a la derecha y alineada abajo (como referencia) -->
+      <div
+        class="ventas-hero__overlap relative z-10 mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8"
+      >
+        <div
+          class="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-start lg:gap-0"
+        >
+          <div
+            class="w-full max-w-[min(680px,100%)] shrink-0 bg-[#520000] shadow-xl lg:max-w-[min(680px,calc(47vw-0.75rem))] lg:min-h-[620px] lg:rounded-r-none rounded-lg pt-[clamp(2.5rem,5vw,5rem)] px-[clamp(1.5rem,4vw,5rem)] pb-[clamp(4rem,7vw,6.875rem)]"
+          >
+            <h1
+              id="ventas-titulo"
+              class="font-['Work_Sans'] font-bold leading-tight tracking-tight text-white text-[clamp(1.75rem,4.5vw,2.25rem)] lg:text-[36px]"
+            >
+              Ventas
+            </h1>
+            <p class="mt-5 font-['Inter'] text-base leading-relaxed text-white/95 lg:mt-6 lg:text-[18px]">
+              La carrera de Técnico en Ventas forma estudiantes con habilidades para comercializar productos y servicios,
+              atender clientes y apoyar en la administración del área de ventas. Durante su formación, desarrollan
+              competencias en comunicación, análisis de mercado y estrategias de venta, así como valores y habilidades
+              socioemocionales.
+            </p>
+          </div>
+
+          <div class="ventas-hero__side-image w-full max-w-[min(580px,100%)] shrink-0 lg:max-w-[min(580px,calc(42vw-0.5rem))]">
+            <div class="aspect-[580/326] w-full overflow-hidden rounded-lg shadow-lg lg:rounded-l-none lg:rounded-r-lg">
+              <img
+                src="images/image 85.webp"
+                alt="Imagen relacionada con la carrera Técnico en Ventas"
+                class="h-full w-full object-cover object-center"
+                width="580"
+                height="326"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OBJETIVO: franja #4C0000 más alta; icono shape-purple + título (~200px max) sobre el límite; texto abajo a la derecha -->
+    <section class="relative mt-14 overflow-hidden scroll-mt-24 sm:mt-20 md:mt-24 lg:mt-28" aria-labelledby="ventas-objetivo-titulo">
+      <div
+        class="h-[clamp(7.5rem,26vw,14rem)] min-h-[6.5rem] bg-[#4C0000] sm:min-h-[8rem] md:h-[clamp(8.5rem,20vw,13rem)]"
+        aria-hidden="true"
+      ></div>
+      <div
+        class="relative flex min-h-0 flex-col bg-[#FF8F00] pb-10 pt-0 sm:pb-12 md:pb-14 lg:min-h-[min(52vh,32rem)] lg:pb-16"
+      >
+        <div
+          class="pointer-events-none absolute bottom-0 right-[-20%] z-0 h-[min(95vw,26rem)] w-[min(95vw,26rem)] translate-y-1/4 rounded-full bg-white/12 sm:right-[-12%] md:h-[30rem] md:w-[30rem] md:translate-y-0"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="relative z-10 mx-auto flex w-full max-w-[1600px] flex-col px-4 max-lg:flex-none sm:px-6 lg:flex-1 lg:px-8"
+        >
+          <div
+            class="absolute left-4 right-4 top-0 z-20 max-w-none -translate-y-[30%] sm:left-6 sm:right-6 lg:left-8 lg:right-auto lg:max-w-[calc(100%-4rem)] lg:-translate-y-1/2 xl:max-w-none"
+          >
+            <!-- Hasta lg: columna (icono arriba, título abajo). Desde lg: fila con solape tipo desktop. -->
+            <div
+              class="relative flex w-full min-w-0 flex-col items-start gap-3 sm:gap-3.5 md:gap-4 lg:flex-row lg:items-end lg:gap-0"
+            >
+              <img
+                src="images/shape-purple.svg"
+                alt=""
+                class="relative z-[1] aspect-square shrink-0 max-lg:mx-0 max-lg:max-h-[132px] max-lg:max-w-[132px] max-lg:translate-x-0 max-lg:translate-y-0 max-lg:w-[min(8.25rem,34vw)] lg:w-[min(225px,40vw)] lg:max-h-[225px] lg:max-w-[225px] lg:translate-x-[clamp(0.5rem,4.5vw,3.25rem)] lg:translate-y-[clamp(1.4rem,3.8vw,2.65rem)]"
+                width="225"
+                height="225"
+                loading="lazy"
+                decoding="async"
+              />
+              <h2
+                id="ventas-objetivo-titulo"
+                class="relative z-[2] w-full min-w-0 max-w-full shrink font-['Work_Sans'] font-bold uppercase leading-[0.9] tracking-tight text-white drop-shadow-sm max-lg:ml-0 max-lg:text-left lg:-ml-[clamp(1.25rem,7.5vw,5.5rem)] lg:w-auto lg:max-w-none lg:leading-[0.82] max-lg:text-[clamp(2.75rem,calc(0.65rem+7.25vw),4.75rem)] lg:text-[clamp(3.5rem,16vw,12.5rem)]"
+              >
+                OBJETIVO
+              </h2>
+            </div>
+          </div>
+          <p
+            class="relative z-10 max-w-3xl self-end pt-[clamp(9.5rem,26vw,12rem)] text-right font-['Inter'] text-[clamp(0.9375rem,2.1vw,1.125rem)] leading-relaxed text-white max-lg:mt-0 sm:max-w-2xl md:text-lg lg:mt-auto lg:pt-[clamp(7rem,18vw,12rem)]"
+          >
+            Formar técnicos en ventas competentes para identificar necesidades del cliente, ofrecer soluciones adecuadas
+            y contribuir al cumplimiento de metas comerciales, con base en valores, ética profesional y dominio de
+            herramientas de comunicación y gestión del área de ventas en distintos contextos productivos y de servicios.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Perfil de Egreso: fondo #FF6400; imagen izquierda (~800×457); texto derecha centrado en altura -->
+    <section
+      class="scroll-mt-24 bg-[#FF6400] px-[clamp(1.25rem,5vw,3.375rem)] pb-[clamp(3.5rem,9vw,5.625rem)] pt-[clamp(2rem,7vw,3.375rem)]"
+      aria-labelledby="ventas-perfil-titulo"
+    >
+      <div class="mx-auto flex max-w-[1600px] flex-col items-stretch gap-10 lg:flex-row lg:items-center lg:gap-12 xl:gap-14">
+        <div class="w-full shrink-0 lg:max-w-[min(800px,52%)]">
+          <div class="aspect-[800/457] w-full max-w-[800px] overflow-hidden rounded-lg shadow-lg">
+            <img
+              src="images/image 85.webp"
+              alt="Imagen relacionada con la carrera Técnico en Ventas"
+              class="h-full w-full object-cover object-center"
+              width="800"
+              height="457"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+        <div class="flex min-h-0 flex-1 flex-col justify-center lg:max-w-none lg:flex-1 lg:pl-2 xl:pl-4">
+          <h3
+            id="ventas-perfil-titulo"
+            class="font-['Work_Sans'] font-semibold leading-tight text-white text-[clamp(1.5rem,3vw,2rem)]"
+          >
+            Perfil de Egreso
+          </h3>
+          <p class="mt-5 font-['Inter'] text-[clamp(1rem,2.2vw,1.125rem)] leading-relaxed text-white md:text-lg">
+            El egresado aplicará técnicas de prospección y negociación, utilizará información de mercado para tomar
+            decisiones acertadas y apoyará la administración del punto de venta con actitud de servicio, trabajo en equipo
+            y responsabilidad social, alineado a la normatividad y a las buenas prácticas del sector.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Misma estructura que Perfil de Egreso; texto izquierda / imagen derecha; naranja #FF8F00 (como bloque OBJETIVO) -->
+    <section
+      class="scroll-mt-24 bg-[#FF8F00] px-[clamp(1.25rem,5vw,3.375rem)] pb-[clamp(3.5rem,9vw,5.625rem)] pt-[clamp(2rem,7vw,3.375rem)]"
+      aria-labelledby="ventas-ambito-titulo"
+    >
+      <div class="mx-auto flex max-w-[1600px] flex-col items-stretch gap-10 lg:flex-row lg:items-center lg:gap-12 xl:gap-14">
+        <div class="flex min-h-0 flex-1 flex-col justify-center lg:max-w-none lg:flex-1 lg:pr-2 xl:pr-4">
+          <h3
+            id="ventas-ambito-titulo"
+            class="font-['Work_Sans'] font-semibold leading-tight text-white text-[clamp(1.5rem,3vw,2rem)]"
+          >
+            Ámbito laboral
+          </h3>
+          <p class="mt-5 font-['Inter'] text-[clamp(1rem,2.2vw,1.125rem)] leading-relaxed text-white md:text-lg">
+            El técnico en ventas puede desempeñarse en comercios, empresas de servicios, áreas de atención a clientes y
+            puntos de venta físicos o digitales, participando en la promoción de productos, seguimiento de pedidos y
+            apoyo a metas comerciales bajo supervisión.
+          </p>
+        </div>
+        <div class="w-full shrink-0 lg:max-w-[min(800px,52%)]">
+          <div class="aspect-[800/457] w-full max-w-[800px] overflow-hidden rounded-lg shadow-lg lg:ml-auto">
+            <img
+              src="images/image 85.webp"
+              alt="Imagen relacionada con la carrera Técnico en Ventas"
+              class="h-full w-full object-cover object-center"
+              width="800"
+              height="457"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mapa curricular: mismo encabezado que Oferta académica en index; debajo: Semestral + 3 años (como tarjetas del home) -->
+    <section id="ventas-mapa-curricular" class="scroll-mt-20 bg-white py-10 md:py-14 lg:py-20" aria-labelledby="ventas-mapa-curricular-titulo">
+      <div class="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <h2 id="ventas-mapa-curricular-titulo" class="font-['Work_Sans'] font-black leading-[0.9] tracking-tight text-[#4C0000] text-[clamp(4rem,12vw,10.5rem)]">
+            Mapa
+          </h2>
+          <p class="mt-1 font-['Work_Sans'] font-bold leading-tight text-[#4C0000] text-[clamp(1.875rem,3.8vw,3.125rem)]">
+            Curricular
+          </p>
+        </div>
+        <div
+          class="mx-auto mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 sm:mt-10 md:gap-x-12"
+          role="group"
+          aria-label="Modalidad y duración"
+        >
+          <div class="flex items-center gap-2.5 font-['Inter'] font-normal leading-tight text-[#4C0000]">
+            <svg
+              aria-hidden="true"
+              class="h-5 w-5 shrink-0 text-[#FF8F00]"
+              viewBox="0 0 640 512"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+            >
+              <path d="M622.34 153.2L343.4 67.5c-15.2-4.67-31.6-4.67-46.79 0L17.66 153.2c-23.54 7.23-23.54 38.36 0 45.59l48.63 14.94c-10.67 13.19-17.23 29.28-17.88 46.9C38.78 266.15 32 276.11 32 288c0 10.78 5.68 19.85 13.86 25.65L20.33 428.53C18.11 438.52 25.71 448 35.94 448h56.11c10.24 0 17.84-9.48 15.62-19.47L82.14 313.65C90.32 307.85 96 298.78 96 288c0-11.57-6.47-21.25-15.66-26.87.76-15.02 8.44-28.3 20.69-36.72L296.6 284.5c9.06 2.78 26.44 6.25 46.79 0l278.95-85.7c23.55-7.24 23.55-38.36 0-45.6zM352.79 315.09c-28.53 8.76-52.84 3.92-65.59 0l-145.02-44.55L128 384c0 35.35 85.96 64 192 64s192-28.65 192-64l-14.18-113.47-145.03 44.56z"></path>
+            </svg>
+            <span class="text-[clamp(1.125rem,4.2vw,1.5rem)]">Semestral</span>
+          </div>
+          <div class="flex items-center gap-2.5 font-['Inter'] font-normal leading-tight text-[#4C0000]">
+            <svg
+              aria-hidden="true"
+              class="h-5 w-5 shrink-0 text-[#FF8F00]"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+            >
+              <path d="M400 64h-48V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H160V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 400H54a6 6 0 0 1-6-6V160h352v298a6 6 0 0 1-6 6zm-52.849-200.65L198.842 404.519c-4.705 4.667-12.303 4.637-16.971-.068l-75.091-75.699c-4.667-4.705-4.637-12.303.068-16.971l22.719-22.536c4.705-4.667 12.303-4.637 16.97.069l44.104 44.461 111.072-110.181c4.705-4.667 12.303-4.637 16.971.068l22.536 22.718c4.667 4.705 4.636 12.303-.069 16.97z"></path>
+            </svg>
+            <span class="text-[clamp(1.125rem,4.2vw,1.5rem)]">3 años</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mapa por semestre: acordeón 6 semestres, 2 columnas (estilo referencia) -->
+    <section class="scroll-mt-20 bg-white pb-12 md:pb-16 lg:pb-20" aria-label="Asignaturas por semestre">
+      <div class="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 gap-0 lg:grid-cols-2 lg:gap-x-8 xl:gap-x-12">
+          <!-- Columna izquierda: semestres 1–3 -->
+          <div class="flex flex-col border-t border-neutral-200 lg:border-t-0">
+            <details class="ventas-acc-details group border-b border-neutral-200" open>
+              <summary
+                class="flex cursor-pointer items-center gap-3 bg-[#EEEEEE] py-3.5 pl-4 pr-3 transition-colors hover:bg-[#e6e6e6] md:py-4 md:pl-5"
+              >
+                <span class="relative flex h-5 w-5 shrink-0 items-center justify-center" aria-hidden="true">
+                  <span class="ventas-acc-icon-plus inline-flex items-center justify-center text-[#292929]">
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+                      <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+                    </svg>
+                  </span>
+                  <span class="ventas-acc-icon-minus inline-flex items-center justify-center text-[#FF8F00]">
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+                      <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+                    </svg>
+                  </span>
+                </span>
+                <span class="ventas-acc-heading font-['Work_Sans'] text-sm font-semibold uppercase tracking-wide text-neutral-800 md:text-base">
+                  Primer semestre
+                </span>
+              </summary>
+              <div class="border-b border-neutral-200 bg-white px-4 py-4 pl-[3.25rem] md:px-5 md:pl-14 md:py-5">
+                <ul class="space-y-3 font-['Inter'] text-xs font-medium uppercase tracking-wide text-neutral-600 md:text-sm md:tracking-normal">
+                  <li>Inglés I</li>
+                  <li>Desarrollo humano y valores</li>
+                  <li>Funciones matemáticas</li>
+                  <li>Introducción a la venta</li>
+                  <li>Comunicación y habilidades digitales</li>
+                  <li>Administración básica</li>
+                </ul>
+              </div>
+            </details>
+            <details class="ventas-acc-details group border-b border-neutral-200">
+              <summary
+                class="flex cursor-pointer items-center gap-3 bg-[#EEEEEE] py-3.5 pl-4 pr-3 transition-colors hover:bg-[#e6e6e6] md:py-4 md:pl-5"
+              >
+                <span class="relative flex h-5 w-5 shrink-0 items-center justify-center" aria-hidden="true">
+                  <span class="ventas-acc-icon-plus inline-flex items-center justify-center text-[#292929]">
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+                      <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+                    </svg>
+                  </span>
+                  <span class="ventas-acc-icon-minus inline-flex items-center justify-center text-[#FF8F00]">
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+                      <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+                    </svg>
+                  </span>
+                </span>
+                <span class="ventas-acc-heading font-['Work_Sans'] text-sm font-semibold uppercase tracking-wide text-neutral-800 md:text-base">
+                  Segundo semestre
+                </span>
+              </summary>
+              <div class="border-b border-neutral-200 bg-white px-4 py-4 pl-[3.25rem] md:px-5 md:pl-14 md:py-5">
+                <ul class="space-y-3 font-['Inter'] text-xs font-medium uppercase tracking-wide text-neutral-600 md:text-sm md:tracking-normal">
+                  <li>Inglés II</li>
+                  <li>Geometría y trigonometría</li>
+                  <li>Química aplicada</li>
+                  <li>Fundamentos de mercadotecnia</li>
+                  <li>Atención y servicio al cliente</li>
+                </ul>
+              </div>
+            </details>
+            <details class="ventas-acc-details group border-b border-neutral-200">
+              <summary
+                class="flex cursor-pointer items-center gap-3 bg-[#EEEEEE] py-3.5 pl-4 pr-3 transition-colors hover:bg-[#e6e6e6] md:py-4 md:pl-5"
+              >
+                <span class="relative flex h-5 w-5 shrink-0 items-center justify-center" aria-hidden="true">
+                  <span class="ventas-acc-icon-plus inline-flex items-center justify-center text-[#292929]">
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+                      <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+                    </svg>
+                  </span>
+                  <span class="ventas-acc-icon-minus inline-flex items-center justify-center text-[#FF8F00]">
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+                      <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+                    </svg>
+                  </span>
+                </span>
+                <span class="ventas-acc-heading font-['Work_Sans'] text-sm font-semibold uppercase tracking-wide text-neutral-800 md:text-base">
+                  Tercer semestre
+                </span>
+              </summary>
+              <div class="border-b border-neutral-200 bg-white px-4 py-4 pl-[3.25rem] md:px-5 md:pl-14 md:py-5">
+                <ul class="space-y-3 font-['Inter'] text-xs font-medium uppercase tracking-wide text-neutral-600 md:text-sm md:tracking-normal">
+                  <li>Inglés III</li>
+                  <li>Probabilidad y estadística</li>
+                  <li>Entorno económico</li>
+                  <li>Estrategias de venta</li>
+                  <li>Ética profesional</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+          <!-- Columna derecha: semestres 4–6 -->
+          <div class="flex flex-col border-t border-neutral-200 lg:border-t-0">
+            <details class="ventas-acc-details group border-b border-neutral-200">
+              <summary
+                class="flex cursor-pointer items-center gap-3 bg-[#EEEEEE] py-3.5 pl-4 pr-3 transition-colors hover:bg-[#e6e6e6] md:py-4 md:pl-5"
+              >
+                <span class="relative flex h-5 w-5 shrink-0 items-center justify-center" aria-hidden="true">
+                  <span class="ventas-acc-icon-plus inline-flex items-center justify-center text-[#292929]">
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+                      <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+                    </svg>
+                  </span>
+                  <span class="ventas-acc-icon-minus inline-flex items-center justify-center text-[#FF8F00]">
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+                      <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+                    </svg>
+                  </span>
+                </span>
+                <span class="ventas-acc-heading font-['Work_Sans'] text-sm font-semibold uppercase tracking-wide text-neutral-800 md:text-base">
+                  Cuarto semestre
+                </span>
+              </summary>
+              <div class="border-b border-neutral-200 bg-white px-4 py-4 pl-[3.25rem] md:px-5 md:pl-14 md:py-5">
+                <ul class="space-y-3 font-['Inter'] text-xs font-medium uppercase tracking-wide text-neutral-600 md:text-sm md:tracking-normal">
+                  <li>Inglés IV</li>
+                  <li>Informática aplicada a las ventas</li>
+                  <li>Investigación de mercados</li>
+                  <li>Negociación empresarial</li>
+                </ul>
+              </div>
+            </details>
+            <details class="ventas-acc-details group border-b border-neutral-200">
+              <summary
+                class="flex cursor-pointer items-center gap-3 bg-[#EEEEEE] py-3.5 pl-4 pr-3 transition-colors hover:bg-[#e6e6e6] md:py-4 md:pl-5"
+              >
+                <span class="relative flex h-5 w-5 shrink-0 items-center justify-center" aria-hidden="true">
+                  <span class="ventas-acc-icon-plus inline-flex items-center justify-center text-[#292929]">
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+                      <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+                    </svg>
+                  </span>
+                  <span class="ventas-acc-icon-minus inline-flex items-center justify-center text-[#FF8F00]">
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+                      <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+                    </svg>
+                  </span>
+                </span>
+                <span class="ventas-acc-heading font-['Work_Sans'] text-sm font-semibold uppercase tracking-wide text-neutral-800 md:text-base">
+                  Quinto semestre
+                </span>
+              </summary>
+              <div class="border-b border-neutral-200 bg-white px-4 py-4 pl-[3.25rem] md:px-5 md:pl-14 md:py-5">
+                <ul class="space-y-3 font-['Inter'] text-xs font-medium uppercase tracking-wide text-neutral-600 md:text-sm md:tracking-normal">
+                  <li>Inglés V</li>
+                  <li>Administración de ventas</li>
+                  <li>Logística comercial</li>
+                  <li>Proyecto integrador I</li>
+                </ul>
+              </div>
+            </details>
+            <details class="ventas-acc-details group border-b border-neutral-200">
+              <summary
+                class="flex cursor-pointer items-center gap-3 bg-[#EEEEEE] py-3.5 pl-4 pr-3 transition-colors hover:bg-[#e6e6e6] md:py-4 md:pl-5"
+              >
+                <span class="relative flex h-5 w-5 shrink-0 items-center justify-center" aria-hidden="true">
+                  <span class="ventas-acc-icon-plus inline-flex items-center justify-center text-[#292929]">
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+                      <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+                    </svg>
+                  </span>
+                  <span class="ventas-acc-icon-minus inline-flex items-center justify-center text-[#FF8F00]">
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+                      <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+                    </svg>
+                  </span>
+                </span>
+                <span class="ventas-acc-heading font-['Work_Sans'] text-sm font-semibold uppercase tracking-wide text-neutral-800 md:text-base">
+                  Sexto semestre
+                </span>
+              </summary>
+              <div class="border-b border-neutral-200 bg-white px-4 py-4 pl-[3.25rem] md:px-5 md:pl-14 md:py-5">
+                <ul class="space-y-3 font-['Inter'] text-xs font-medium uppercase tracking-wide text-neutral-600 md:text-sm md:tracking-normal">
+                  <li>Inglés VI</li>
+                  <li>Expansión comercial</li>
+                  <li>Formación para el trabajo</li>
+                  <li>Proyecto integrador II</li>
+                  <li>Estadía profesional</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Competencias y Habilidades: grid 3 columnas; iconos #FF8F00; títulos #60120B; texto #333 -->
+    <section
+      class="scroll-mt-24 bg-white px-4 py-12 sm:px-6 md:py-16 lg:px-8 lg:py-20"
+      aria-labelledby="ventas-competencias-titulo"
+    >
+      <div class="mx-auto max-w-[1600px]">
+        <h2
+          id="ventas-competencias-titulo"
+          class="mb-10 text-center font-['Work_Sans'] font-bold text-[#60120B] text-[clamp(1.5rem,4vw,2.25rem)] md:mb-14"
+        >
+          Competencias y Habilidades
+        </h2>
+        <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-12 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-14">
+          <article class="flex flex-col items-center text-center">
+            <div class="mb-5 flex h-20 w-20 shrink-0 items-center justify-center md:h-[5.25rem] md:w-[5.25rem]">
+              <img
+                src="images/competencias-ventas-1.svg"
+                alt=""
+                class="h-full w-full object-contain"
+                width="80"
+                height="80"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <h3 class="mb-4 max-w-sm font-['Work_Sans'] font-bold text-[#60120B] text-lg md:text-xl">
+              Gestión del punto de venta
+            </h3>
+            <p class="max-w-sm font-['Inter'] text-sm leading-relaxed text-[#333333] md:text-base">
+              Gestionar el área comercial mediante el cumplimiento de los procesos operativos y administrativos,
+              considerando las necesidades del cliente, la misión y la visión de la institución para contribuir a la
+              optimización de recursos y al logro de los objetivos de ventas.
+            </p>
+          </article>
+          <article class="flex flex-col items-center text-center">
+            <div class="mb-5 flex h-20 w-20 shrink-0 items-center justify-center md:h-[5.25rem] md:w-[5.25rem]">
+              <img
+                src="images/competencias-ventas-2.svg"
+                alt=""
+                class="h-full w-full object-contain"
+                width="80"
+                height="80"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <h3 class="mb-4 max-w-sm font-['Work_Sans'] font-bold text-[#60120B] text-lg md:text-xl">
+              Tomar medidas
+            </h3>
+            <p class="max-w-sm font-['Inter'] text-sm leading-relaxed text-[#333333] md:text-base">
+              Realizar el análisis del mercado y el seguimiento de indicadores mediante herramientas y criterios
+              comerciales, aplicando la normatividad vigente para respaldar decisiones y asegurar el correcto desempeño
+              de las actividades de venta.
+            </p>
+          </article>
+          <article class="flex flex-col items-center text-center">
+            <div class="mb-5 flex h-20 w-20 shrink-0 items-center justify-center md:h-[5.25rem] md:w-[5.25rem]">
+              <img
+                src="images/competencias-ventas-3.svg"
+                alt=""
+                class="h-full w-full object-contain"
+                width="80"
+                height="80"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <h3 class="mb-4 max-w-sm font-['Work_Sans'] font-bold text-[#60120B] text-lg md:text-xl">
+              Propuestas y soluciones comerciales
+            </h3>
+            <p class="max-w-sm font-['Inter'] text-sm leading-relaxed text-[#333333] md:text-base">
+              Desarrollar propuestas de valor aplicando principios de mercadotecnia, administración y normatividad para
+              generar alternativas que optimicen recursos, fortalezcan la relación con el cliente y favorezcan el uso
+              eficiente de la información, con base en las necesidades detectadas en el entorno.
+            </p>
+          </article>
+          <article class="flex flex-col items-center text-center">
+            <div class="mb-5 flex h-20 w-20 shrink-0 items-center justify-center md:h-[5.25rem] md:w-[5.25rem]">
+              <img
+                src="images/competencias-ventas-4.svg"
+                alt=""
+                class="h-full w-full object-contain"
+                width="80"
+                height="80"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <h3 class="mb-4 max-w-sm font-['Work_Sans'] font-bold text-[#60120B] text-lg md:text-xl">
+              Comunicación en inglés
+            </h3>
+            <p class="max-w-sm font-['Inter'] text-sm leading-relaxed text-[#333333] md:text-base">
+              Comunicar información básica sobre sí mismo, otros y su profesión, a través de expresiones sencillas,
+              aisladas y estereotipadas, en forma productiva y receptiva en el idioma inglés de acuerdo al nivel A1,
+              usuario básico, del Marco Común Europeo de Referencia para las Lenguas, para contribuir en el desempeño de
+              sus funciones en su entorno laboral, social y personal.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Mapa embebido: CBTIS 272 (mismo bloque que en index.html) -->
+  <section class="scroll-mt-20 bg-white pb-10 md:pb-14 lg:pb-16" aria-label="Ubicación del plantel en el mapa">
+    <div class="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8">
+      <div class="relative h-[200px] w-full overflow-hidden rounded-lg bg-neutral-200 shadow-sm sm:h-[230px] md:h-[260px] lg:h-[280px]">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14881.398573680744!2d-86.903761!3d21.178265!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f4dd34f2889cd67%3A0x827ed2d8c6290bb6!2sCBTIS%20272!5e0!3m2!1ses-419!2smx!4v1775955645389!5m2!1ses-419!2smx"
+          class="absolute inset-0 h-full w-full border-0"
+          title="Ubicación CBTIS 272 en Google Maps"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+
+  <script>
+    function parseJwt(token) {
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function tokenValido(token) {
+      const p = parseJwt(token);
+      if (!p || !p.exp) return false;
+      return Date.now() / 1000 < p.exp;
+    }
+
+    function attachLoginInterceptor() {
+      const selectors = 'a[href$="login.html"], a[href$="/login.html"]';
+      document.querySelectorAll(selectors).forEach(a => {
+        if (a.dataset.loginIntercept === 'true') return;
+        a.dataset.loginIntercept = 'true';
+        a.addEventListener('click', (ev) => {
+          try {
+            const token = localStorage.getItem('token');
+            if (token && tokenValido(token)) {
+              ev.preventDefault();
+              const userStr = localStorage.getItem('user');
+              let role = null;
+
+              if (userStr) {
+                try {
+                  const user = JSON.parse(userStr);
+                  role = user.role;
+                } catch (e) {
+                  const payload = parseJwt(token);
+                  role = payload?.role;
+                }
+              } else {
+                const payload = parseJwt(token);
+                role = payload?.role;
+              }
+
+              if (role === 'admin') {
+                window.location.href = '/admin-panel';
+              } else {
+                window.location.href = '/login.html';
+              }
+            }
+          } catch (err) {
+            console.error('Error comprobando token al hacer click en login:', err);
+          }
+        });
+      });
+    }
+
+    document.addEventListener('site:shell-ready', attachLoginInterceptor);
+  </script>
+</body>
+</html>
