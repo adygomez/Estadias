@@ -12,6 +12,25 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
   : ['http://localhost:3001', 'http://localhost:3000'];
 
+// Hosts permitidos por defecto en producción (además de los que vengan en ALLOWED_ORIGINS).
+// Coincide con cualquier subdominio del host indicado, anclado al final del hostname para
+// evitar matches accidentales tipo "cbtis272.mx.malicioso.com".
+const allowedHostSuffixes = [
+  'railway.app',
+  'cbtis272.mx'
+];
+
+const matchesAllowedHost = (origin) => {
+  try {
+    const { hostname } = new URL(origin);
+    return allowedHostSuffixes.some(
+      suffix => hostname === suffix || hostname.endsWith('.' + suffix)
+    );
+  } catch (_) {
+    return false;
+  }
+};
+
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
@@ -20,7 +39,7 @@ const corsOptions = {
       return callback(null, true);
     }
 
-    if (origin.includes('railway.app')) {
+    if (matchesAllowedHost(origin)) {
       return callback(null, true);
     }
 
